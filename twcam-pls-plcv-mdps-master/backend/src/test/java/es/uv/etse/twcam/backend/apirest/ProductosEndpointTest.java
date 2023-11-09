@@ -300,7 +300,7 @@ public class ProductosEndpointTest {
 
         HttpServletRequest request = mock(HttpServletRequest.class);
 
-        StringBuffer buffer = new StringBuffer("http://localhost:8080/plc-pls-mps-tutorial/api/productos/10000");
+        StringBuffer buffer = new StringBuffer("http://localhost:8080/proyecto-discoteca/api/productos/10000");
         when(request.getRequestURL()).thenReturn(buffer);
 
         HttpServletResponse response = mock(HttpServletResponse.class);
@@ -329,7 +329,7 @@ public class ProductosEndpointTest {
 
         HttpServletRequest request = mock(HttpServletRequest.class);
 
-        StringBuffer buffer = new StringBuffer("http://localhost:8080/plc-pls-mps-tutorial/api/productos/1");
+        StringBuffer buffer = new StringBuffer("http://localhost:8080/proyecto-discoteca/api/productos/1");
         when(request.getRequestURL()).thenReturn(buffer);
 
         HttpServletResponse response = mock(HttpServletResponse.class);
@@ -365,7 +365,7 @@ public class ProductosEndpointTest {
 
         HttpServletRequest request = mock(HttpServletRequest.class);
 
-        StringBuffer urlBuffer = new StringBuffer("http://localhost:8080/plc-pls-mps-tutorial/api/productos/10000");
+        StringBuffer urlBuffer = new StringBuffer("http://localhost:8080/proyecto-discoteca/api/productos/10000");
 
         when(request.getRequestURL()).thenReturn(urlBuffer);
 
@@ -414,7 +414,7 @@ public class ProductosEndpointTest {
 
         HttpServletRequest request = mock(HttpServletRequest.class);
 
-        StringBuffer urlBuffer = new StringBuffer("http://localhost:8080/plc-pls-mps-tutorial/api/productos/10000");
+        StringBuffer urlBuffer = new StringBuffer("http://localhost:8080/proyecto-discoteca/api/productos/10000");
 
         when(request.getRequestURL()).thenReturn(urlBuffer);
 
@@ -464,7 +464,7 @@ public class ProductosEndpointTest {
 
         HttpServletRequest request = mock(HttpServletRequest.class);
 
-        StringBuffer urlBuffer = new StringBuffer("http://localhost:8080/plc-pls-mps-tutorial/api/productos/1");
+        StringBuffer urlBuffer = new StringBuffer("http://localhost:8080/proyecto-discoteca/api/productos/1");
 
         when(request.getRequestURL()).thenReturn(urlBuffer);
 
