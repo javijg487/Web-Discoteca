@@ -86,7 +86,7 @@ component "Back-end" <<$java>> as server {
 user  -right-> browser 
 browser --right-> angular : http://localhost:4200/
 angular -right- client
-client ..right..> rest : http://localhost:8080/plc-pls-mps-tutorial/api/productos
+client ..right..> rest : http://localhost:8080/proyecto-discoteca/api/productos
 rest -right- api
 api -down-> business
 ----
@@ -138,10 +138,10 @@ El  <<lst:test-rest>> proporciona algunos comandos `curl` cite:[curl:website] pa
 .Comandos `curl` para probar el `API REST`
 [source,sh]
 ----
-$ curl -X GET http://localhost:8080/plc-pls-mps-tutorial/api/productos/ <1>
-$ curl -X GET http://localhost:8080/plc-pls-mps-tutorial/api/productos?oferta=true <2>
-$ curl -X GET http://localhost:8080/plc-pls-mps-tutorial/api/productos/1 <3>
-$ curl -X PUT  http://localhost:8080/plc-pls-mps-tutorial/api/productos/1 \ <4>
+$ curl -X GET http://localhost:8080/proyecto-discoteca/api/productos/ <1>
+$ curl -X GET http://localhost:8080/proyecto-discoteca/api/productos?oferta=true <2>
+$ curl -X GET http://localhost:8080/proyecto-discoteca/api/productos/1 <3>
+$ curl -X PUT  http://localhost:8080/proyecto-discoteca/api/productos/1 \ <4>
        -H 'Content-Type: application/json' \     
        -d '{"id":1,"nombre":"Producto 1", \
 	   "precio": 300,"imagen":"/assets/images/movil1.jpg","oferta":"true", \
