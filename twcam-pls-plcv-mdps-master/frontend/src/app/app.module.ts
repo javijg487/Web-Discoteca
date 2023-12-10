@@ -90,7 +90,6 @@ import { baseURL } from './compartido/baseurl';
     ProcesaHTTPMsjService
  
   ],
-  entryComponents:[ LoginComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
