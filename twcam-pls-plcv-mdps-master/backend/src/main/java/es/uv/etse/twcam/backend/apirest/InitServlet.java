@@ -16,6 +16,9 @@ import es.uv.etse.twcam.backend.business.Producto;
 import es.uv.etse.twcam.backend.business.ProductException;
 import es.uv.etse.twcam.backend.business.ProductsService;
 import es.uv.etse.twcam.backend.business.ProductsServiceDictionaryImpl;
+import es.uv.etse.twcam.backend.business.Login.Usuario;
+import es.uv.etse.twcam.backend.business.Login.UsuarioService;
+import es.uv.etse.twcam.backend.business.Login.UsuarioServiceImpl;
 
 /**
  * Servlet de inicializaci&oacute;n
@@ -46,7 +49,13 @@ public class InitServlet extends HttpServlet {
 
             initProductsService(jsonStream); // <3>
 
-            logger.info("mps-tutoriplc-pls-al apirest is started");
+            String jsonFileusu = getServletConfig().getInitParameter("json-database-usuarios"); // <1>
+
+            InputStream jsonStreamusu = getServletContext().getResourceAsStream(jsonFileusu); // <2>
+
+            initUsuarioService(jsonStreamusu); // <3>
+
+            logger.info("proyecto-discoteca apirest is started");
 
         } catch (Exception e) {
             logger.error("proyecto-discoteca apirest is not able to be started: ", e);
@@ -76,6 +85,32 @@ public class InitServlet extends HttpServlet {
         }
 
         logger.info("Cargados {} productos", productos.length);
+
+        return service;
+    }
+
+    /**
+     * Crea el servicio de productos y lo inicializa a partir de un stream JSON.
+     * 
+     * @param jsonStream Stream JSON
+     * @throws Exception Indicador de errores
+     */
+    public static UsuarioService initUsuarioService(InputStream jsonStream)
+            throws ProductException { // <3>
+
+                UsuarioServiceImpl service = UsuarioServiceImpl.getInstance();
+
+        Reader jsonReader = new InputStreamReader(jsonStream);
+
+        Gson gson = new GsonBuilder().create();
+
+        Usuario[] usuarios = gson.fromJson(jsonReader, Usuario[].class);
+
+        for (Usuario usuario : usuarios) {
+            service.create(usuario);
+        }
+
+        logger.info("Cargados {} usuarios", usuarios.length);
 
         return service;
     }
