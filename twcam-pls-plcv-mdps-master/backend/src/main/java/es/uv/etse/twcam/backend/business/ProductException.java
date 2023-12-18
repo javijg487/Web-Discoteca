@@ -11,6 +11,4 @@ public class ProductException extends Exception {
 		super(msg);
 	}
 
-
-
 }
