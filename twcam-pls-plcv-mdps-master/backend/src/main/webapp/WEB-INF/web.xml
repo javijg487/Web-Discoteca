@@ -18,6 +18,10 @@
         <param-name>json-database</param-name>
         <param-value>/WEB-INF/db.json</param-value>
      </init-param>
+     <init-param>
+        <param-name>json-database-usuarios</param-name>
+        <param-value>/WEB-INF/usuarios.json</param-value>
+     </init-param>
      <load-on-startup>1</load-on-startup>
  </servlet>
 
