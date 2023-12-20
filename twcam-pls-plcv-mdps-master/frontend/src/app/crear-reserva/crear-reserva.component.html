@@ -1,0 +1,93 @@
+<div class="container" fxLayout="column" fxLayoutGap="10px">
+  <div fxFlex>
+    <div>
+      <h3>Nueva reserva</h3>
+      <hr />
+    </div>
+  </div>
+  <form [formGroup]="eventoForm" novalidate class="invitados-form">
+    <div class="invitados">
+      <div
+        formArrayName="invitados"
+        *ngFor="let t of invitados.controls; let i = index"
+      >
+        <div [formGroupName]="i">
+          <div class="invitado-fields">
+            <div>
+              <p>Invitado {{ i + 1 }}</p>
+            </div>
+            <div>
+              <mat-form-field>
+                <input
+                  matInput
+                  formControlName="nombre"
+                  placeholder="Nombre"
+                  type="text"
+                  required
+                />
+                <mat-hint>
+                  <span
+                    *ngIf="
+                      invitados.controls[i]
+                        .get('nombre')
+                        ?.hasError('required') &&
+                      invitados.controls[i].get('nombre')?.touched
+                    "
+                  >
+                    {{ erroresForm.nombre }}</span
+                  >
+                </mat-hint>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <input
+                  matInput
+                  formControlName="dni"
+                  placeholder="DNI"
+                  type="text"
+                  required
+                />
+                <mat-hint>
+                  <span
+                    *ngIf="
+                      invitados.controls[i].get('dni')?.hasError('required') &&
+                      invitados.controls[i].get('dni')?.touched
+                    "
+                  >
+                    {{ erroresForm.dni }}</span
+                  >
+                </mat-hint>
+              </mat-form-field>
+            </div>
+            <button
+              type="button"
+              color="warn"
+              (click)="removeInvitado(i)"
+              mat-raised-button
+              *ngIf="invitados.length > 1"
+            >
+              Remover
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="button" color="primary" (click)="addInvitado()" mat-mini-fab>
+      +
+    </button>
+
+    <div>
+      <button
+        (click)="onSubmit()"
+        type="button"
+        [disabled]="eventoForm.invalid"
+        color="primary"
+        mat-raised-button
+        class="submit-button"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

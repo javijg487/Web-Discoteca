@@ -12,8 +12,9 @@ public class Reserva {
   private String estado;
   private ArrayList<Invitado> invitados;
 
-  public Reserva(Integer id, String usuario, ArrayList<Invitado> invitados, String estado) {
+  public Reserva(Integer id, Integer eventoId, String usuario, ArrayList<Invitado> invitados, String estado) {
     this.id = id;
+    this.eventoId = eventoId;
     this.usuario = usuario;
     this.estado = estado;
     this.invitados = invitados;
