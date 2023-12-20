@@ -1,8 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, HostListener } from '@angular/core';
 
-import { faHome, faInfo, faList, faAddressCard, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faInfo, faList, faAddressCard, faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LoginComponent } from '../login/login.component';
+import { AutenticarService } from '../services/autenticar.service';
 
 @Component({
   selector: 'app-cabecera',
@@ -16,16 +17,39 @@ export class CabeceraComponent implements OnInit {
   faList = faList;
   faAddressCard = faAddressCard;
   faSignInAlt = faSignInAlt;
+  faSignOutAlt = faSignOutAlt;
 
-  constructor(public dialogo: MatDialog,
-    @Inject('baseURL') public BaseURL:string) { }
+  login = {nombre: '', rol: ''};
+
+
+
+
+  constructor(private autenticarService: AutenticarService, public dialogo: MatDialog,
+    @Inject('baseURL') public BaseURL:string) { 
+      this.autenticarService.getLogin().subscribe(login => this.login = login);
+ console.log("Login actualizado1", this.login);
+    }
 
   ngOnInit(): void {
   }
 
-  abrirFormularioLogin() {   
-    this.dialogo.open(LoginComponent, {width: '500px', height: '450px'}); 
-    }
+  
+
+
+    @HostListener('window:storage', ['$event'])
+    procesar(event: StorageEvent) {
+  this.autenticarService.getLogin().subscribe(login => {
+    this.login = login;
+    console.log("Login actualizado:", this.login);
+  });
+  console.log("Se pasa el procesar");
+}
+  
+cerrarSesion() {
+  this.autenticarService.cerrarSesion().subscribe(login => this.login = login);
+  console.log("Login actualizado_cerrarSesion", this.login);
+  return false;
+  }
    
 
 }

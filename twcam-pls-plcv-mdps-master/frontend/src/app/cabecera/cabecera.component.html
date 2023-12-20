@@ -7,9 +7,17 @@
     <a mat-button routerLink="/contacto" routerLinkActive="activo"><fa-icon [icon]="faAddressCard"></fa-icon> Contacto </a>
     
     <span class="flex-spacer"></span>	
-    <a mat-button (click)="abrirFormularioLogin()">
-    <fa-icon [icon]="faSignInAlt"></fa-icon>Login</a>
-
+    <div *ngIf="login.nombre == null || login.nombre == ''; else elseBlock">
+    <a mat-button routerLink="/login" routerLinkActive="activo">
+    <fa-icon [icon]="faSignInAlt"></fa-icon> Login</a>
+  </div>
+  <ng-template #elseBlock>
+ <div>
+  <span  >
+  {{login.nombre}} <a href=" " (click)="cerrarSesion()"><fa-icon [icon]="faSignOutAlt"  class = "color_out"></fa-icon> </a>
+  </span>
+ </div>
+  </ng-template>
   
   </mat-toolbar>
   

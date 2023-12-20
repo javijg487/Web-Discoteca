@@ -5,6 +5,7 @@ import { DetalleProductoComponent } from "./detalle-producto/detalle-producto.co
 import { InicioComponent } from "./inicio/inicio.component";
 import { NosotrosComponent } from "./nosotros/nosotros.component";
 import { ContactoComponent } from "./contacto/contacto.component";
+import { LoginComponent } from "./login/login.component";
 import { CrearReservaComponent } from "./crear-reserva/crear-reserva.component";
 
 export const rutas: Routes = [
@@ -12,6 +13,7 @@ export const rutas: Routes = [
   { path: "productos", component: ProductosComponent },
   { path: "contacto", component: ContactoComponent },
   { path: "nosotros", component: NosotrosComponent },
+  { path: "login", component: LoginComponent },
   { path: "crear-reserva/:eventoId", component: CrearReservaComponent },
   { path: "detalleProducto/:id", component: DetalleProductoComponent },
   { path: "", redirectTo: "/inicio", pathMatch: "full" },
