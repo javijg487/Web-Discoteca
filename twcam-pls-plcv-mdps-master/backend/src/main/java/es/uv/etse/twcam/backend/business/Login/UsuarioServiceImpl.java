@@ -5,7 +5,6 @@ import java.util.Map;
 
 import es.uv.etse.twcam.backend.business.IncorrectProductException;
 import es.uv.etse.twcam.backend.business.ProductException;
-import es.uv.etse.twcam.backend.business.Producto;
 import es.uv.etse.twcam.backend.business.UsuarioNotExistException;
 
 public class UsuarioServiceImpl implements UsuarioService {

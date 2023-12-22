@@ -22,6 +22,10 @@
         <param-name>json-database-usuarios</param-name>
         <param-value>/WEB-INF/usuarios.json</param-value>
      </init-param>
+     <init-param>
+        <param-name>json-database-canciones</param-name>
+        <param-value>/WEB-INF/canciones.json</param-value>
+     </init-param>
      <load-on-startup>1</load-on-startup>
  </servlet>
 
