@@ -16,6 +16,9 @@ import es.uv.etse.twcam.backend.business.Producto;
 import es.uv.etse.twcam.backend.business.ProductException;
 import es.uv.etse.twcam.backend.business.ProductsService;
 import es.uv.etse.twcam.backend.business.ProductsServiceDictionaryImpl;
+import es.uv.etse.twcam.backend.business.Canciones.Cancion;
+import es.uv.etse.twcam.backend.business.Canciones.CancionService;
+import es.uv.etse.twcam.backend.business.Canciones.CancionServiceImpl;
 import es.uv.etse.twcam.backend.business.Login.Usuario;
 import es.uv.etse.twcam.backend.business.Login.UsuarioService;
 import es.uv.etse.twcam.backend.business.Login.UsuarioServiceImpl;
@@ -54,6 +57,12 @@ public class InitServlet extends HttpServlet {
             InputStream jsonStreamusu = getServletContext().getResourceAsStream(jsonFileusu); // <2>
 
             initUsuarioService(jsonStreamusu); // <3>
+
+             String jsonFilecancion = getServletConfig().getInitParameter("json-database-canciones"); // <1>
+
+            InputStream jsonStreamcancion = getServletContext().getResourceAsStream(jsonFilecancion); // <2>
+
+            initCancionService(jsonStreamcancion);
 
             logger.info("proyecto-discoteca apirest is started");
 
@@ -111,6 +120,26 @@ public class InitServlet extends HttpServlet {
         }
 
         logger.info("Cargados {} usuarios", usuarios.length);
+
+        return service;
+    }
+
+    public static CancionService initCancionService(InputStream jsonStream)
+            throws ProductException { // <3>
+
+        CancionServiceImpl service = CancionServiceImpl.getInstance();
+
+        Reader jsonReader = new InputStreamReader(jsonStream);
+
+        Gson gson = new GsonBuilder().create();
+
+        Cancion[] canciones = gson.fromJson(jsonReader, Cancion[].class);
+
+        for (Cancion cancion : canciones) {
+            service.create(cancion);
+        }
+
+        logger.info("Cargados {} productos", canciones.length);
 
         return service;
     }
