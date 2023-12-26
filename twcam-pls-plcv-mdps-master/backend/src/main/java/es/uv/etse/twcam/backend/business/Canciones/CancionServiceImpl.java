@@ -7,8 +7,6 @@ import java.util.Map;
 
 import es.uv.etse.twcam.backend.business.IncorrectProductException;
 import es.uv.etse.twcam.backend.business.ProductException;
-import es.uv.etse.twcam.backend.business.Login.Usuario;
-import es.uv.etse.twcam.backend.business.Reserva.Reserva;
 
 
 public class CancionServiceImpl implements CancionService{
@@ -62,9 +60,12 @@ public class CancionServiceImpl implements CancionService{
     public List<Cancion> getByduracion(String duracion) {
 		
 		List<Cancion> cancionesDuracion = new ArrayList<>();
+		int tiempototal = Integer.parseInt(duracion.split(":")[0])*60 + Integer.parseInt(duracion.split(":")[1]);
 
 		for(Cancion cancion : dictionary.values()){
-			if(!cancionesDuracion.contains(cancion)&&cancion.getDuracion().equals(duracion)){
+			String duracioncancion = cancion.getDuracion();
+			int tiempototalcancion = Integer.parseInt(duracioncancion.split(":")[0])*60 + Integer.parseInt(duracioncancion.split(":")[1]);
+			if(!cancionesDuracion.contains(cancion)&&tiempototalcancion>tiempototal){
 			cancionesDuracion.add(cancion);
 			}
 		}
