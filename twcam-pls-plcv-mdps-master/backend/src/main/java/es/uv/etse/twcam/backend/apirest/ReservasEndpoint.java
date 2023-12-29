@@ -38,12 +38,23 @@ public class ReservasEndpoint extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 
+    Integer id = null;
     String result = null;
     String username = request.getParameter("username");
 
     logger.info("GET at {} with username: {}", request.getContextPath(), username);
 
-    if (username == null) {
+    try {
+      id = getReservaId(request, false);
+    } catch (Exception ex) {
+      logger.error("Error al obtener el ID", ex);
+    }
+
+    if (id != null) {
+      Reserva reserva = null;
+      reserva = service.getById(id);
+      result = g.toJson(reserva);
+    } else if (username == null) {
       List<Reserva> reservas = null;
       reservas = service.listAll();
       result = g.toJson(reservas);
@@ -107,7 +118,7 @@ public class ReservasEndpoint extends HttpServlet {
     String nuevoEstado = getReservaFromInputStream(request.getInputStream()).getEstado();
 
     try {
-      id = getReservaId(request);
+      id = getReservaId(request, true);
     } catch (Exception e) {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       logger.error("El ID no fue provisto", e);
@@ -151,7 +162,7 @@ public class ReservasEndpoint extends HttpServlet {
     }
   }
 
-  private Integer getReservaId(HttpServletRequest request) throws APIRESTException {
+  private Integer getReservaId(HttpServletRequest request, Boolean required) throws APIRESTException {
 
     String url = request.getRequestURL().toString();
 
@@ -166,7 +177,10 @@ public class ReservasEndpoint extends HttpServlet {
     String id = url.substring(posIni + 1, posEnd);
 
     if (id.trim().isEmpty()) {
-      throw new APIRESTException("Faltan parámetros en el EndPoint");
+      if (required) {
+        throw new APIRESTException("Faltan parámetros en el EndPoint");
+      }
+      return null;
     }
 
     return Integer.parseInt(id);

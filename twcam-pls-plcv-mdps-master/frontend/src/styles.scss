@@ -24,16 +24,23 @@ $divider-color:        #BDBDBD;
 
 // some basic resets 
 
+app-root {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 body { 
   padding: 0; 
   margin: 0; 
   font-family: sans-serif; 
-  
+  min-height: 100vh;
+  display:flex; flex-direction:column;
 }
 
 .container {
-    margin: 20px;
-    display:flex;
+    margin: 50px 10%;
 }/* You can add global styles to this file, and also import other style files */
 
 

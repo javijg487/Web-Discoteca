@@ -1,0 +1,97 @@
+<!-- pedir-cancion.component.html -->
+
+<div class="container-flex">
+  <div class="filtro-container">
+    <h2>Filtros</h2>
+
+    <div>
+      <h3 class="titulo">Temática <input type="checkbox" [(ngModel)]="ActivarTematica" /></h3>
+
+      <div>
+        <label>
+          <input type="checkbox" [(ngModel)]="filtroTematica" [disabled]="!ActivarTematica" />
+          Rock
+        </label>
+        <label>
+          <input type="checkbox" [(ngModel)]="filtroTematica2" [disabled]="!ActivarTematica" />
+          Electro
+        </label>
+        <label>
+          <input type="checkbox" [(ngModel)]="filtroTematica3" [disabled]="!ActivarTematica" />
+          Reggaeton
+        </label>
+        <label>
+          <input type="checkbox" [(ngModel)]="filtroTematica4" [disabled]="!ActivarTematica" />
+          Pop
+        </label>
+      </div>
+    </div>
+
+
+
+
+    <h3 class="titulo">Autor <input type="checkbox" [(ngModel)]="ActivarAutor" /></h3>
+
+    <mat-form-field class="centrar agrandar" [formGroup]="opinionForm" *ngIf="ActivarAutor">
+      <input matInput  formControlName="autor" placeholder="Autor" type="text" required>
+    </mat-form-field>
+
+    <h3 class="titulo">Duración <input type="checkbox" [(ngModel)]="ActivarDuracion" /></h3>
+    <div>
+      <mat-slider min="0" max="5" step="1" value="1" [formGroup]="opinionForm" class="centrar agrandar" discrete
+        discrete [disabled]="!ActivarDuracion">
+        <input matSliderThumb formControlName="duracion" placeholder="Duracion">
+      </mat-slider>
+
+      <div *ngIf="ActivarDuracion"><b>Duración:</b> más de <b>{{opinionForm.value.duracion}}</b> minutos</div>
+    </div>
+
+    <h3 class="titulo"> </h3>
+    <button type="button" (click)="quitarFiltro()"  mat-button class="quitarfiltro-button" [disabled]="isDisabled()">
+      Quitar Filtros
+      
+    </button>
+    <button type="button" (click)="filtrarCancion()"  mat-button class="filtrar-button" [disabled]="isDisabled()">
+      Filtrar
+      
+    </button>
+
+  </div>
+
+
+
+  <div class="canciones-container">
+    <div class="texto-color">
+      <h2 class="titulo">Listado de Canciones</h2>
+
+      <div *ngIf="errorMensaje">
+        <p>{{ errorMensaje }}</p>
+      </div>
+
+      <div *ngIf="vCanciones.length === 0 && !errorMensaje">
+        <p>No hay canciones disponibles.</p>
+      </div>
+
+      <div *ngIf="vCanciones.length > 0">
+        
+          
+          <div class = "selected" *ngFor="let cancion of vCanciones" (click)="onSelectCancion(cancion)"
+          [class.selected-fijo]="cancion === cancionSeleccionada">
+
+          {{ cancion.nombre }} - {{ cancion.autor }}
+            
+          
+          </div>
+        
+        <button class = "reproducir-button" [disabled]="isDisabledReproducir()" (click)="reproducirCancion()">Reproducir</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="reproducir-container">
+    <div class="texto-color">
+      <h2 class="titulo">Reproduciendo</h2>
+      <h3>{{cancionReproducida}}</h3>
+
+</div>
