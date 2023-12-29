@@ -48,6 +48,7 @@ import { CrearReservaComponent } from "./crear-reserva/crear-reserva.component";
 import { ListReservasComponent } from './list-reservas/list-reservas.component';
 import { MatTableModule } from "@angular/material/table";
 import { PagosComponent } from './pagos/pagos.component';
+import { PedirCancionComponent } from './pedir-cancion/pedir-cancion.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { PagosComponent } from './pagos/pagos.component';
     CrearReservaComponent,
     ListReservasComponent,
     PagosComponent,
+    PedirCancionComponent,
   ],
   imports: [
     BrowserModule,

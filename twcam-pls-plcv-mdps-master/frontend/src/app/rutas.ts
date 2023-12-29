@@ -9,6 +9,7 @@ import { LoginComponent } from "./login/login.component";
 import { CrearReservaComponent } from "./crear-reserva/crear-reserva.component";
 import { ListReservasComponent } from "./list-reservas/list-reservas.component";
 import { PagosComponent } from "./pagos/pagos.component";
+import { PedirCancionComponent } from "./pedir-cancion/pedir-cancion.component";
 
 export const rutas: Routes = [
   { path: "inicio", component: InicioComponent },
@@ -20,5 +21,6 @@ export const rutas: Routes = [
   { path: "crear-reserva/:eventoId", component: CrearReservaComponent },
   { path: "detalleProducto/:id", component: DetalleProductoComponent },
   { path: "pagos/:reservaId", component: PagosComponent },
+  {path: "canciones", component: PedirCancionComponent},
   { path: "", redirectTo: "/inicio", pathMatch: "full" },
 ];
