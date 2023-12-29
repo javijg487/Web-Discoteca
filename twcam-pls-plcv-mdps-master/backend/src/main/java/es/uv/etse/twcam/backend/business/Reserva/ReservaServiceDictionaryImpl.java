@@ -76,7 +76,7 @@ public class ReservaServiceDictionaryImpl implements ReservaService {
 
 	public Reserva create(Reserva reserva) {
 		reserva.setId(currentIndex);
-		reserva.setEstado("Pendiente");
+		reserva.setEstado("Pendiente de Pago");
 
 		dictionary.put(currentIndex, reserva);
 		currentIndex += 1;

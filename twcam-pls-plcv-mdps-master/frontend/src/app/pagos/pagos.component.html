@@ -1,0 +1,55 @@
+<div class="container" fxLayout="column" fxLayoutGap="10px">
+  <div fxFlex>
+    <div>
+      <h3>Pago de la reserva</h3>
+      <hr />
+    </div>
+  </div>
+  <h3>Lista de invitados</h3>
+  <div *ngFor="let invitado of reserva.invitados" class="invitado-row">
+    <span><strong>Nombre:</strong> {{ invitado.nombre }}</span>
+    <span><strong>DNI:</strong> {{ invitado.dni }}</span>
+  </div>
+  <h3>Datos del pago</h3>
+  <form [formGroup]="pagosForm" novalidate class="pagos-form">
+    <div>
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          placeholder="Numero de tarjeta"
+          type="number"
+          formControlName="numero"
+        />
+        <mat-error>{{ erroresForm.numero }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="mid-width">
+        <input
+          matInput
+          placeholder="Fecha de vencimiento"
+          type="text"
+          formControlName="fechaVencimiento"
+        />
+        <mat-error>{{ erroresForm.fechaVencimiento }}</mat-error>
+      </mat-form-field>
+      <mat-form-field class="mid-width">
+        <input
+          matInput
+          placeholder="Codigo de seguridad"
+          type="text"
+          formControlName="cvv"
+        />
+        <mat-error>{{ erroresForm.cvv }}</mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+  <button
+    mat-raised-button
+    color="primary"
+    class="pagar-button"
+    (click)="pagar()"
+  >
+    Pagar
+  </button>
+</div>
