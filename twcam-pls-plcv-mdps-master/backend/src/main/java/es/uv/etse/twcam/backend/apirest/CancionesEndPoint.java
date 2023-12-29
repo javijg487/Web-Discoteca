@@ -191,8 +191,8 @@ public class CancionesEndPoint extends HttpServlet {
 	private void addCORSHeaders(HttpServletResponse response) { // <2>
 		response.addHeader("Content-Type", "application/json");
 		response.addHeader("Access-Control-Allow-Credentials", "true");
-		response.addHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
-		response.addHeader("Access-Control-Allow-Headers", "authorization,content-type");
+		response.addHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST, DELETE");
+		response.addHeader("Access-Control-Allow-Headers", "authorization,content-type, action");
 		response.addHeader("Access-Control-Allow-Origin", "*");
 	}
 }
