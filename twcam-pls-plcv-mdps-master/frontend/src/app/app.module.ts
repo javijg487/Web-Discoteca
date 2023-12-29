@@ -45,9 +45,6 @@ import { ContactoComponent } from "./contacto/contacto.component";
 import { LoginComponent } from "./login/login.component";
 import { baseURL } from "./compartido/baseurl";
 import { CrearReservaComponent } from "./crear-reserva/crear-reserva.component";
-import { ListReservasComponent } from './list-reservas/list-reservas.component';
-import { MatTableModule } from "@angular/material/table";
-import { PagosComponent } from './pagos/pagos.component';
 
 @NgModule({
   declarations: [
@@ -61,8 +58,6 @@ import { PagosComponent } from './pagos/pagos.component';
     ContactoComponent,
     LoginComponent,
     CrearReservaComponent,
-    ListReservasComponent,
-    PagosComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,7 +81,6 @@ import { PagosComponent } from './pagos/pagos.component';
     MatSliderModule,
     MatProgressSpinnerModule,
     HttpClientModule,
-    MatTableModule
   ],
   providers: [
     ProductoService,

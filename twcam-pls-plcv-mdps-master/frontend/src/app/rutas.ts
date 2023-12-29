@@ -7,8 +7,6 @@ import { NosotrosComponent } from "./nosotros/nosotros.component";
 import { ContactoComponent } from "./contacto/contacto.component";
 import { LoginComponent } from "./login/login.component";
 import { CrearReservaComponent } from "./crear-reserva/crear-reserva.component";
-import { ListReservasComponent } from "./list-reservas/list-reservas.component";
-import { PagosComponent } from "./pagos/pagos.component";
 
 export const rutas: Routes = [
   { path: "inicio", component: InicioComponent },
@@ -16,9 +14,7 @@ export const rutas: Routes = [
   { path: "contacto", component: ContactoComponent },
   { path: "nosotros", component: NosotrosComponent },
   { path: "login", component: LoginComponent },
-  { path: "reservas", component: ListReservasComponent },
   { path: "crear-reserva/:eventoId", component: CrearReservaComponent },
   { path: "detalleProducto/:id", component: DetalleProductoComponent },
-  { path: "pagos/:reservaId", component: PagosComponent },
   { path: "", redirectTo: "/inicio", pathMatch: "full" },
 ];

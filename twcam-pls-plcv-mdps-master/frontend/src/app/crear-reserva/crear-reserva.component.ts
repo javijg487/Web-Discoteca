@@ -7,9 +7,10 @@ import {
   FormArray,
   Validators,
 } from "@angular/forms";
+import { baseAPIURL, httpOptions } from "../compartido/baseurl";
+import { catchError, throwError } from "rxjs";
 import { ReservaService } from "../services/reserva.service";
-import { ActivatedRoute, Router } from "@angular/router";
-import { getUserData } from "../utils/getUserData";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-crear-reserva",
@@ -19,13 +20,12 @@ import { getUserData } from "../utils/getUserData";
 export class CrearReservaComponent {
   eventoForm!: FormGroup;
   eventoId!: String;
-  username: String = getUserData().nombre;
+
 
   constructor(
     private fb: FormBuilder,
     private reservaService: ReservaService,
-    private route: ActivatedRoute,
-    private router: Router
+    private route: ActivatedRoute
   ) {}
 
   erroresForm: any = {
@@ -38,8 +38,8 @@ export class CrearReservaComponent {
       invitados: this.fb.array([this.createInvitado()], Validators.required),
     });
 
-    this.route.params.subscribe((params) => {
-      this.eventoId = params["eventoId"];
+    this.route.params.subscribe(params => {
+      this.eventoId = params['eventoId'];
     });
   }
 
@@ -63,16 +63,9 @@ export class CrearReservaComponent {
   }
 
   onSubmit() {
+    console.log("entre");
     if (this.eventoForm.status == "VALID") {
-      this.reservaService
-        .enviarReserva({
-          ...this.eventoForm.value,
-          eventoId: this.eventoId,
-          usuario: this.username,
-        })
-        .subscribe((reserva) => {
-          this.router.navigate([`/pagos/${reserva.id}`]);
-        });
+      this.reservaService.enviarReserva({...this.eventoForm.value, eventoId: this.eventoId}).subscribe();
     }
   }
 }
