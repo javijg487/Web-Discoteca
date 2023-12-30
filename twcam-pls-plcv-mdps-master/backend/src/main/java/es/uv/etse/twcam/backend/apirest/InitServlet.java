@@ -19,6 +19,9 @@ import es.uv.etse.twcam.backend.business.ProductsServiceDictionaryImpl;
 import es.uv.etse.twcam.backend.business.Canciones.Cancion;
 import es.uv.etse.twcam.backend.business.Canciones.CancionService;
 import es.uv.etse.twcam.backend.business.Canciones.CancionServiceImpl;
+import es.uv.etse.twcam.backend.business.ListaCanciones.ListaCanciones;
+import es.uv.etse.twcam.backend.business.ListaCanciones.ListaCancionesImpl;
+import es.uv.etse.twcam.backend.business.ListaCanciones.ListaCancionesService;
 import es.uv.etse.twcam.backend.business.Login.Usuario;
 import es.uv.etse.twcam.backend.business.Login.UsuarioService;
 import es.uv.etse.twcam.backend.business.Login.UsuarioServiceImpl;
@@ -58,11 +61,17 @@ public class InitServlet extends HttpServlet {
 
             initUsuarioService(jsonStreamusu); // <3>
 
-             String jsonFilecancion = getServletConfig().getInitParameter("json-database-canciones"); // <1>
+            String jsonFilecancion = getServletConfig().getInitParameter("json-database-canciones"); // <1>
 
             InputStream jsonStreamcancion = getServletContext().getResourceAsStream(jsonFilecancion); // <2>
 
             initCancionService(jsonStreamcancion);
+
+            String jsonlistaCanciones = getServletConfig().getInitParameter("json-database-listaCanciones"); // <1>
+
+            InputStream jsonStreamlistaCanciones = getServletContext().getResourceAsStream(jsonlistaCanciones); // <2>
+
+            initListaCancionService(jsonStreamlistaCanciones);
 
             logger.info("proyecto-discoteca apirest is started");
 
@@ -107,7 +116,7 @@ public class InitServlet extends HttpServlet {
     public static UsuarioService initUsuarioService(InputStream jsonStream)
             throws ProductException { // <3>
 
-                UsuarioServiceImpl service = UsuarioServiceImpl.getInstance();
+        UsuarioServiceImpl service = UsuarioServiceImpl.getInstance();
 
         Reader jsonReader = new InputStreamReader(jsonStream);
 
@@ -139,7 +148,27 @@ public class InitServlet extends HttpServlet {
             service.create(cancion);
         }
 
-        logger.info("Cargados {} productos", canciones.length);
+        logger.info("Cargados {} canciones", canciones.length);
+
+        return service;
+    }
+
+    public static ListaCancionesService initListaCancionService(InputStream jsonStream)
+            throws ProductException { // <3>
+
+        ListaCancionesImpl service = ListaCancionesImpl.getInstance();
+
+        Reader jsonReader = new InputStreamReader(jsonStream);
+
+        Gson gson = new GsonBuilder().create();
+
+        ListaCanciones[] listaCanciones = gson.fromJson(jsonReader, ListaCanciones[].class);
+
+        for (ListaCanciones evento : listaCanciones) {
+            service.create(evento);
+        }
+
+        logger.info("Cargados {} listaCanciones", listaCanciones.length);
 
         return service;
     }

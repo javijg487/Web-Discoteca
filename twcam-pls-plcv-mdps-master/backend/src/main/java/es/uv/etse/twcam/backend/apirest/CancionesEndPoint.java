@@ -1,8 +1,6 @@
 package es.uv.etse.twcam.backend.apirest;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -15,8 +13,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import es.uv.etse.twcam.backend.business.Canciones.Cancion;
-import es.uv.etse.twcam.backend.business.Canciones.CancionService;
-import es.uv.etse.twcam.backend.business.Canciones.CancionServiceImpl;
+import es.uv.etse.twcam.backend.business.ListaCanciones.ListaCancionesImpl;
+import es.uv.etse.twcam.backend.business.ListaCanciones.ListaCancionesService;
 
 import org.apache.logging.log4j.*;
 
@@ -43,7 +41,7 @@ public class CancionesEndPoint extends HttpServlet {
 	/**
 	 * Servicio sobre productos.
 	 */
-	private static CancionService service = CancionServiceImpl.getInstance();
+	private static ListaCancionesService service2 = ListaCancionesImpl.getInstance();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -62,37 +60,50 @@ public class CancionesEndPoint extends HttpServlet {
 		String autor = null;
 		String action = null;
 		List<Cancion> canciones = null;
+		Integer idEvento = null;
 
 		action = request.getHeader("Action");
 
 		logger.info("GET at {} with {}", request.getContextPath(), action); // <7>
 
 		try {
+			idEvento = getEventoId(request, true);
+		} catch (Exception ex) {
+			logger.error("Error al obtener el ID", ex);
+		}
 
-			switch (action) {
-				case "Duracion":
-					duracion = request.getParameter("duracion");
-					canciones = service.getByduracion(duracion);
-					break;
-				case "Autor":
-					autor = request.getParameter("autor");
-					canciones = service.getByautor(autor);
-					break;
-				case "Tematica":
-					tematica = request.getParameter("tematica");
-					canciones = service.getBytematica(tematica);
-					break;
-				case "Todas":
-					canciones = service.listAll();
-					break;
+		try {
+			if (idEvento != null) {
 
-				default:
-					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-					response.getWriter().write("Accion invalida");
+				switch (action) {
+					case "Duracion":
+						duracion = request.getParameter("duracion");
+						canciones = service2.getByduracion(duracion, idEvento);
+						break;
+					case "Autor":
+						autor = request.getParameter("autor");
+						canciones = service2.getByautor(autor, idEvento);
+						break;
+					case "Tematica":
+						tematica = request.getParameter("tematica");
+						canciones = service2.getBytematica(tematica, idEvento);
+						break;
+					case "Todas":
+						canciones = service2.listAllCanciones(idEvento);
+						break;
 
+					default:
+						response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+						response.getWriter().write("Accion invalida");
+
+				}
+
+				result = g.toJson(canciones);
+
+			} else {
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				result = "{}";
 			}
-
-			result = g.toJson(canciones);
 
 		} catch (Exception e) {
 			logger.info("No se ha podido obtener el identificador para filtrar del request");
@@ -118,6 +129,91 @@ public class CancionesEndPoint extends HttpServlet {
 		}
 	}
 
+	
+
+	@Override
+	protected void doPut(HttpServletRequest request, HttpServletResponse response){
+		Integer id = null;
+		Integer idEvento = null;
+		
+		try {
+			idEvento = getEventoId(request, true);
+		} catch (Exception ex) {
+			logger.error("Error al obtener el ID del evento", ex);
+		}
+
+		if (idEvento != null) {
+			try {
+				id = Integer.parseInt(request.getParameter("pendiente"));
+			} catch (Exception e) {
+				logger.info("No se ha podido obtener el identificador del request"); // <7>
+			}
+			if (id == null) {
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				addCORSHeaders(response);
+				logger.error("ID de cancion no proporcionado en la solicitud PUT");
+			} else {
+				try {
+					service2.editarEstado(id, idEvento);
+					logger.info("PUT  at {} with ID: {}", request.getContextPath(), id); // <7>
+					response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+					addCORSHeaders(response);
+				} catch (Exception e) {
+					response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+					logger.error("cancion no encontrado para editar", e);
+				}
+			}
+		} else {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			logger.error("Id del evento nulo");
+		}
+
+
+
+		
+	}
+
+	@Override
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) {
+		Integer id = null;
+		Integer idEvento = null;
+
+		try {
+			idEvento = getEventoId(request, true);
+		} catch (Exception ex) {
+			logger.error("Error al obtener el ID del evento", ex);
+		}
+
+		if (idEvento != null) {
+
+			try {
+				id = Integer.parseInt(request.getParameter("eliminar"));
+			} catch (Exception e) {
+				logger.info("No se ha podido obtener el identificador del request"); // <7>
+			}
+
+			if (id == null) {
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				addCORSHeaders(response);
+				logger.error("ID de cancion no proporcionado en la solicitud DELETE");
+			} else {
+				try {
+					service2.remove(id,idEvento);
+					logger.info("DELETE at {} with ID: {}", request.getContextPath(), id); // <7>
+					response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+					addCORSHeaders(response);
+				} catch (Exception e) {
+					response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+					logger.error("cancion no encontrado para eliminar", e);
+				}
+			}
+		} else {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			logger.error("Id del evento nulo");
+		}
+
+	}
+
 	@Override
 	protected void doOptions(HttpServletRequest request, HttpServletResponse response) {
 
@@ -132,53 +228,29 @@ public class CancionesEndPoint extends HttpServlet {
 		}
 	}
 
-	@Override
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response) {
-		Integer id = null;
+	private Integer getEventoId(HttpServletRequest request, Boolean required) throws APIRESTException {
 
-		try {
-			id = Integer.parseInt(request.getParameter("eliminar"));
-		} catch (Exception e) {
-			logger.info("No se ha podido obtener el identificador del request"); // <7>
+		String url = request.getRequestURL().toString();
+
+		int posIni = url.lastIndexOf("/");
+
+		int posEnd = url.lastIndexOf("?");
+
+		if (posEnd < 0) {
+			posEnd = url.length();
 		}
 
-		if (id == null) {
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			addCORSHeaders(response);
-			logger.error("ID de cancion no proporcionado en la solicitud DELETE");
-		} else {
-			try {
-				service.remove(id);
-				logger.info("DELETE at {} with ID: {}", request.getContextPath(), id); // <7>
-				response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-				addCORSHeaders(response);
-			} catch (Exception e) {
-				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-				logger.error("cancion no encontrado para eliminar", e);
+		String id = url.substring(posIni + 1, posEnd);
+
+		if (id.trim().isEmpty()) {
+			if (required) {
+				throw new APIRESTException("Faltan parámetros en el EndPoint");
 			}
-		}
-	}
-
-	/**
-	 * Obtiene el Product de un stream JSON
-	 * 
-	 * @param stream Stream JSON
-	 * @return Product
-	 */
-	private Cancion getCancionFromInputStream(InputStream stream) {
-
-		Cancion can = null;
-
-		try {
-
-			can = g.fromJson(new InputStreamReader(stream), Cancion.class); // <4>
-
-		} catch (Exception e) {
-			can = null;
-			logger.error("Error al obtener Cancion desde JSON", e); // <7>
+			return null;
 		}
 
-		return can;
+		return Integer.parseInt(id);
+
 	}
 
 	/**
