@@ -102,7 +102,7 @@ public class ListaCancionesImpl implements ListaCancionesService {
         for (ListaCanciones listaCanciones : dictionary.values()) {
             if (listaCanciones.getIdEvento().equals(idEvento)) {
                 for (Cancion cancion : listaCanciones.getCanciones()) {
-                     String autorCancion = cancion.getAutor().toLowerCase();
+                    String autorCancion = cancion.getAutor().toLowerCase();
                     if (!cancionesAutor.contains(cancion) && autorCancion.contains(autor)) {
                         cancionesAutor.add(cancion);
                     }
@@ -136,7 +136,8 @@ public class ListaCancionesImpl implements ListaCancionesService {
                 for (Cancion cancion : listaCanciones.getCanciones()) {
                     if (cancion.getID().equals(id)) {
                         if (listaCanciones.getCancionReproducida() == null) {
-                            listaCanciones.setCancionReproducida(new ArrayList<>()); // O inicializa la lista apropiadamente
+                            listaCanciones.setCancionReproducida(new ArrayList<>()); // O inicializa la lista
+                                                                                     // apropiadamente
                         }
                         listaCanciones.getCancionReproducida().add(cancion);
                         return cancion;
@@ -174,19 +175,38 @@ public class ListaCancionesImpl implements ListaCancionesService {
 
     @Override
     public Cancion remove(Integer id, Integer idEvento) throws CancionNotExistException {
-
+        List<Cancion> cancionesAEliminar = new ArrayList<>();
         for (ListaCanciones listaCanciones : dictionary.values()) {
+
             if (listaCanciones.getIdEvento().equals(idEvento)) {
                 for (Cancion cancion : listaCanciones.getCanciones()) {
                     if (cancion.getID().equals(id)) {
-                        listaCanciones.getCanciones().remove(cancion);
-                        listaCanciones.getCancionesPendientes().remove(cancion);
-                        listaCanciones.getCancionReproducida().remove(cancion);
-                        return cancion;
+                        cancionesAEliminar.add(cancion);
+
                     }
+                }
+                listaCanciones.getCanciones().removeAll(cancionesAEliminar);
+
+                listaCanciones.getCancionesPendientes().removeAll(cancionesAEliminar);
+                return cancionesAEliminar.get(cancionesAEliminar.size() - 1);
+            }
+        }
+        throw new CancionNotExistException(id);
+    }
+
+    @Override
+    public Cancion removeReproducidas(Integer id, Integer idEvento) throws CancionNotExistException {
+        ListaCanciones listaCanciones = dictionary.get(String.valueOf(idEvento));
+
+        if (listaCanciones != null) {
+            for (Cancion cancion : listaCanciones.getCancionReproducida()) {
+                if (cancion.getID().equals(id)) {
+                    listaCanciones.getCancionReproducida().remove(cancion);
+                    return cancion;
                 }
             }
         }
+
         throw new CancionNotExistException(id);
     }
 }

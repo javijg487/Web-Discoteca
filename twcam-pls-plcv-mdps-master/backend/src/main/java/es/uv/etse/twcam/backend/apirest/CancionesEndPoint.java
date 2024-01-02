@@ -186,13 +186,14 @@ public class CancionesEndPoint extends HttpServlet {
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) {
 		Integer id = null;
 		Integer idEvento = null;
+		String[] pathParts = null;
+		String pathInfo = request.getPathInfo();
 
 		try {
 			idEvento = getEventoId(request, true);
 		} catch (Exception ex) {
 			logger.error("Error al obtener el ID del evento", ex);
 		}
-
 		if (idEvento != null) {
 
 			try {
@@ -201,14 +202,25 @@ public class CancionesEndPoint extends HttpServlet {
 				logger.info("No se ha podido obtener el identificador del request"); // <7>
 			}
 
+			logger.info("DELETE at {} with ID: {}", request.getContextPath(), id);
+
+			
+        if (pathInfo != null) {
+             pathParts = pathInfo.split("/");
+			 System.out.println("RUTA COMPLETA "+ pathInfo);
+        }
+
 			if (id == null) {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				addCORSHeaders(response);
 				logger.error("ID de cancion no proporcionado en la solicitud DELETE");
 			} else {
 				try {
-					service2.remove(id, idEvento);
-					logger.info("DELETE at {} with ID: {}", request.getContextPath(), id); // <7>
+					if (pathParts != null && pathParts[1].equals("reproducir")){
+						service2.removeReproducidas(id, idEvento);
+					}else{
+						service2.remove(id, idEvento);
+					}
 					response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 					addCORSHeaders(response);
 				} catch (Exception e) {
