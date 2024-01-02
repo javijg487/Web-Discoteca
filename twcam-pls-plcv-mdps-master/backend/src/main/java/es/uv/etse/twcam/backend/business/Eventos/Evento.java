@@ -9,28 +9,23 @@ import es.uv.etse.twcam.backend.business.Reserva.Reserva;
 
 public class Evento {
     private Integer id;
+    private String nombre;
     private Usuario dj;
-    private LocalDateTime fecha;
+    private String fecha;
     private String tematica;
-    private ArrayList<Cancion> cancionesDisponibles;
     /*
      * Me falta añadir la Pista
      */
-    private ArrayList<Cancion> cancionesReproducidas;
-    private ArrayList<Cancion> peticiones;
-    private ArrayList<Reserva> reservas;
+    
 
-    public Evento(Integer id, Usuario dj, LocalDateTime fecha, String tematica, ArrayList<Cancion> cancionesDisponibles,
-            ArrayList<Cancion> cancionesReproducidas, ArrayList<Cancion> peticiones, ArrayList<Reserva> reservas) {
+    public Evento(Integer id,String nombre, Usuario dj, String fecha, String tematica) {
         
+        this.nombre = nombre;
         this.id = id;
         this.dj = dj;
         this.fecha = fecha;
         this.tematica = tematica;
-        this.cancionesDisponibles = cancionesDisponibles;
-        this.cancionesReproducidas = cancionesReproducidas;
-        this.peticiones = peticiones;
-        this.reservas = reservas;
+        
     }
 
     public Integer getId(){
@@ -41,7 +36,7 @@ public class Evento {
         return dj;
     }
 
-    public LocalDateTime getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
@@ -49,24 +44,10 @@ public class Evento {
         return tematica;
     }
 
-    public ArrayList<Cancion> getCancionesDisponibles() {
-        return cancionesDisponibles;
+    public String getNombre() {
+        return nombre;
     }
 
-    public ArrayList<Cancion> getCancionesRepro() {
-        return cancionesReproducidas;
-    }
-
-    public ArrayList<Cancion> getPeticiones() {
-        return peticiones;
-    }
-
-
-    public ArrayList<Reserva> getReservas(){
-        return reservas;
-    }
-
-    /*
     public void setId(Integer id){
         this.id = id;
     }
@@ -75,30 +56,16 @@ public class Evento {
         this.dj = dj;
     }
 
-    public void setFecha(LocalDateTime fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public void setTematica(String tematica) {
         this.tematica = tematica;
-    }
-
-    public void setCancionesDisponibles(ArrayList<Cancion> cancionesDisponibles) {
-        this.cancionesDisponibles = cancionesDisponibles;
-    }
-
-    public void setCancionesRepro(ArrayList<Cancion> cancionesReproducidas) {
-        this.cancionesReproducidas = cancionesReproducidas;
-    }
-
-    public void setPeticiones(ArrayList<Cancion> peticiones) {
-        this.peticiones = peticiones;
-    }
-
-    public void setReservas(ArrayList<Reserva> reservas){
-        this.reservas = reservas;
-    }
-     */
-    
+    }   
 
 }

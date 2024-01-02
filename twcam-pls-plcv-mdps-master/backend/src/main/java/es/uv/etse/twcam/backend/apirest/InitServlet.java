@@ -19,6 +19,9 @@ import es.uv.etse.twcam.backend.business.ProductsServiceDictionaryImpl;
 import es.uv.etse.twcam.backend.business.Canciones.Cancion;
 import es.uv.etse.twcam.backend.business.Canciones.CancionService;
 import es.uv.etse.twcam.backend.business.Canciones.CancionServiceImpl;
+import es.uv.etse.twcam.backend.business.Eventos.Evento;
+import es.uv.etse.twcam.backend.business.Eventos.EventoService;
+import es.uv.etse.twcam.backend.business.Eventos.EventoServiceImpl;
 import es.uv.etse.twcam.backend.business.ListaCanciones.ListaCanciones;
 import es.uv.etse.twcam.backend.business.ListaCanciones.ListaCancionesImpl;
 import es.uv.etse.twcam.backend.business.ListaCanciones.ListaCancionesService;
@@ -73,8 +76,16 @@ public class InitServlet extends HttpServlet {
 
             initListaCancionService(jsonStreamlistaCanciones);
 
+            String jsonEventos = getServletConfig().getInitParameter("json-database-eventos"); // <1>
+
+            InputStream jsonStreamEventos = getServletContext().getResourceAsStream(jsonEventos); // <2>
+
+            initEventoService(jsonStreamEventos);
+
             logger.info("proyecto-discoteca apirest is started");
 
+            
+            
         } catch (Exception e) {
             logger.error("proyecto-discoteca apirest is not able to be started: ", e);
             throw new ServletException(e);
@@ -169,6 +180,26 @@ public class InitServlet extends HttpServlet {
         }
 
         logger.info("Cargados {} listaCanciones", listaCanciones.length);
+
+        return service;
+    }
+
+    public static EventoService initEventoService(InputStream jsonStream)
+            throws ProductException { // <3>
+
+        EventoServiceImpl service = EventoServiceImpl.getInstance();
+
+        Reader jsonReader = new InputStreamReader(jsonStream);
+
+        Gson gson = new GsonBuilder().create();
+
+        Evento[] eventos = gson.fromJson(jsonReader, Evento[].class);
+
+        for (Evento evento : eventos) {
+            service.create(evento);
+        }
+
+        logger.info("Cargados {} productos", eventos.length);
 
         return service;
     }

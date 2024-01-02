@@ -1,0 +1,29 @@
+[
+    {
+        "id": 1,
+        "nombre": "Evento 1",
+        "dj": {
+            "nombre": "DJ 1"
+        },
+        "fecha": "2024-06-15T21:00",
+        "tematica": "Rock"
+    },
+    {
+        "id": 2,
+        "nombre": "Evento 2",
+        "dj": {
+            "nombre": "DJ 2"
+        },
+        "fecha": "2024-06-15T21:00",
+        "tematica": "Reggaeton"
+    },
+    {
+        "id": 3,
+        "nombre": "Evento 3",
+        "dj": {
+            "nombre": "DJ 3"
+        },
+        "fecha": "2024-06-15T21:00",
+        "tematica": "Pop"
+    }
+]
