@@ -7,7 +7,7 @@ body {
 
 
 .canciones-container {
-    max-width: 400px;
+    min-width: 400px;
     margin: 100px 0 100px 100px;
     background-color: #06232c;
     padding: 20px;
@@ -86,14 +86,16 @@ body {
     background-color: #e0ab4c;
   }
 
+
   .selected{
     list-style: none;
     
   }
   .reproducir-container {
-    max-width: 450px;
+    min-width: 300px;
+    max-width: 300px;
     max-height: 100px;
-    margin: 100px 0 100px 500px;
+    margin: 100px 0 100px 100px;
     background-color: #06232c;
     padding: 20px;
     border-radius: 8px;

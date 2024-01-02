@@ -5,6 +5,7 @@ export class Cancion{
     autor: string;
     duracion: string;
     tematica: string;
+    estado: string;
 
     constructor(){
         this.id = -1;
@@ -12,7 +13,7 @@ export class Cancion{
 		this.autor = "";
         this.duracion = "";
         this.tematica = "";
-        
+        this.estado = "";
         
     }
 }

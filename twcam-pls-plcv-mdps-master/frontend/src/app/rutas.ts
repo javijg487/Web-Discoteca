@@ -21,6 +21,6 @@ export const rutas: Routes = [
   { path: "crear-reserva/:eventoId", component: CrearReservaComponent },
   { path: "detalleProducto/:id", component: DetalleProductoComponent },
   { path: "pagos/:reservaId", component: PagosComponent },
-  {path: "canciones", component: PedirCancionComponent},
+  {path: "canciones/:eventoId", component: PedirCancionComponent},
   { path: "", redirectTo: "/inicio", pathMatch: "full" },
 ];

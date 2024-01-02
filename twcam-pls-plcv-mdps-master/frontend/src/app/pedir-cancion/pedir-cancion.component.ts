@@ -2,6 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Cancion } from '../compartido/cancion';
 import { PedirCancionService } from '../services/pedir-cancion.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { getUserData } from "../utils/getUserData";
 
 @Component({
   selector: 'app-pedir-cancion',
@@ -14,6 +16,8 @@ export class PedirCancionComponent implements OnInit {
   cancionSeleccionada: Cancion | null = null;
   cancionReproducida: string = "Ninguna canción se esta repoduciendo";
   errorMensaje: string = "";
+  Idevento : number = -1;
+  userRole: string = getUserData().rol;
 
   duracion: string = "";
   autor: string = "";
@@ -22,6 +26,7 @@ export class PedirCancionComponent implements OnInit {
   ActivarDuracion: boolean = false;
   ActivarTematica: boolean = false;
   ActivarAutor: boolean = false;
+  mostrarMensaje: boolean =true;
 
   vCancionesfiltro: Cancion[] = [];
 
@@ -31,29 +36,30 @@ export class PedirCancionComponent implements OnInit {
   filtroTematica4: boolean = false;
 
 
-  constructor(private pedirCancionService: PedirCancionService,
+  constructor(private pedirCancionService: PedirCancionService, private route: ActivatedRoute,
     @Inject('baseURL') public BaseURL: string, private fb: FormBuilder) {
     this.opinionForm = this.fb.group({ duracion: ['1'], autor: [''] });
   }
 
 
   ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.Idevento = params["eventoId"];
+    });
     this.getTodasCanciones();
   }
 
   getTodasCanciones():void{
-    this.pedirCancionService.getCanciones().subscribe(canciones => this.vCanciones = canciones,
-      errorMensaje => this.errorMensaje = <any>errorMensaje);
+    this.pedirCancionService.getCanciones(this.Idevento).subscribe(canciones => this.vCanciones = canciones);
   }
+
   getDuracion(): void {
     this.duracion = this.opinionForm.value.duracion + ":00";
-    this.pedirCancionService.getCancionesDuracion(this.duracion).subscribe(canciones => this.vCanciones = canciones,
-      errorMensaje => this.errorMensaje = <any>errorMensaje);
+    this.pedirCancionService.getCancionesDuracion(this.duracion,this.Idevento).subscribe(canciones => this.vCanciones = canciones);
   }
 
   getAutor(): void {
-    this.pedirCancionService.getCancionesAutor(this.opinionForm.value.autor).subscribe(canciones => this.vCanciones = canciones,
-      errorMensaje => this.errorMensaje = <any>errorMensaje);
+    this.pedirCancionService.getCancionesAutor(this.opinionForm.value.autor,this.Idevento).subscribe(canciones => this.vCanciones = canciones);
   }
 
   getTematica(): void {
@@ -66,12 +72,19 @@ export class PedirCancionComponent implements OnInit {
     } else if (this.filtroTematica4) {
       this.tematica = "pop";
     }
-    this.pedirCancionService.getCancionesTematica(this.tematica).subscribe(canciones => this.vCanciones = canciones,
+    this.pedirCancionService.getCancionesTematica(this.tematica,this.Idevento).subscribe(canciones => this.vCanciones = canciones);
+  }
+
+  pasarCancionPendiente(cancion:Cancion):void{
+    this.pedirCancionService.editarEstadoCancion(cancion.id,this.Idevento).subscribe(
       errorMensaje => this.errorMensaje = <any>errorMensaje);
+      setTimeout(() => {
+        this.getTodasCanciones();
+      }, 100);
   }
 
   deleteCanciones(cancion: Cancion): void {
-    this.pedirCancionService.deleteCancion(cancion.id).subscribe(
+    this.pedirCancionService.deleteCancion(cancion.id,this.Idevento).subscribe(
       errorMensaje => this.errorMensaje = <any>errorMensaje);
       setTimeout(() => {
         this.getTodasCanciones();
@@ -99,6 +112,10 @@ export class PedirCancionComponent implements OnInit {
     this.deleteCanciones(this.cancionSeleccionada!); //Para indicar que seguro que no es nulo (!)
   }
 
+  pedirCancion(){
+    this.pasarCancionPendiente(this.cancionSeleccionada!);
+    
+  }
 
   isDisabled(): boolean {
     return !(this.ActivarAutor || this.ActivarTematica || this.ActivarDuracion);
@@ -107,12 +124,15 @@ export class PedirCancionComponent implements OnInit {
   isDisabledReproducir(): boolean {
     return this.cancionSeleccionada == null;
   }
+
   quitarFiltro():void{
     this.ActivarDuracion= false;
     this.ActivarTematica= false;
     this.ActivarAutor = false;
     this.getTodasCanciones();
   }
+
+
 
 
 }

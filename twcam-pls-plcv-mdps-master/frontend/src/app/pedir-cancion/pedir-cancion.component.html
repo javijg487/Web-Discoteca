@@ -33,7 +33,7 @@
     <h3 class="titulo">Autor <input type="checkbox" [(ngModel)]="ActivarAutor" /></h3>
 
     <mat-form-field class="centrar agrandar" [formGroup]="opinionForm" *ngIf="ActivarAutor">
-      <input matInput  formControlName="autor" placeholder="Autor" type="text" required>
+      <input matInput formControlName="autor" placeholder="Autor" type="text" required>
     </mat-form-field>
 
     <h3 class="titulo">Duración <input type="checkbox" [(ngModel)]="ActivarDuracion" /></h3>
@@ -47,13 +47,13 @@
     </div>
 
     <h3 class="titulo"> </h3>
-    <button type="button" (click)="quitarFiltro()"  mat-button class="quitarfiltro-button" [disabled]="isDisabled()">
+    <button type="button" (click)="quitarFiltro()" mat-button class="quitarfiltro-button" [disabled]="isDisabled()">
       Quitar Filtros
-      
+
     </button>
-    <button type="button" (click)="filtrarCancion()"  mat-button class="filtrar-button" [disabled]="isDisabled()">
+    <button type="button" (click)="filtrarCancion()" mat-button class="filtrar-button" [disabled]="isDisabled()">
       Filtrar
-      
+
     </button>
 
   </div>
@@ -73,25 +73,71 @@
       </div>
 
       <div *ngIf="vCanciones.length > 0">
-        
-          
-          <div class = "selected" *ngFor="let cancion of vCanciones" (click)="onSelectCancion(cancion)"
+
+
+        <div class="selected" *ngFor="let cancion of vCanciones" (click)="onSelectCancion(cancion)"
           [class.selected-fijo]="cancion === cancionSeleccionada">
 
           {{ cancion.nombre }} - {{ cancion.autor }}
-            
-          
-          </div>
-        
-        <button class = "reproducir-button" [disabled]="isDisabledReproducir()" (click)="reproducirCancion()">Reproducir</button>
+
+
+        </div>
+        <p> </p>
+        <div *ngIf="userRole=='dj';else pedircancion">
+          <button class="reproducir-button" [disabled]="isDisabledReproducir()"
+            (click)="reproducirCancion()">Reproducir</button>
+        </div>
+        <ng-template #pedircancion>
+          <button class="reproducir-button" [disabled]="isDisabledReproducir()" (click)="pedirCancion()">Pedir
+            Canción</button>
+        </ng-template>
       </div>
     </div>
 
   </div>
 
+  <div class="canciones-container">
+    <div class="texto-color">
+      <h2 class="titulo">Listado de Peticiones</h2>
+
+      <div *ngIf="errorMensaje">
+        <p>{{ errorMensaje }}</p>
+      </div>
+
+
+      <div *ngIf="(vCanciones.length === 0 && !errorMensaje)">
+        <p>No hay canciones pendientes.</p>
+      </div>
+
+      <div *ngIf="vCanciones.length > 0">
+
+
+        <div class="selected" *ngFor="let cancion of vCanciones" (click)="onSelectCancion(cancion)"
+          [class.selected-fijo]="cancion === cancionSeleccionada">
+          <ng-container *ngIf="cancion.estado === 'pendiente'">
+            {{ cancion.nombre }} - {{ cancion.autor }}
+          </ng-container>
+  
+        </div>
+
+        <p> </p>
+        <div *ngIf="userRole=='dj'">
+          <button class="reproducir-button" [disabled]="isDisabledReproducir()"
+            (click)="reproducirCancion()">Reproducir</button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+
   <div class="reproducir-container">
     <div class="texto-color">
       <h2 class="titulo">Reproduciendo</h2>
+
       <h3>{{cancionReproducida}}</h3>
 
+    </div>
+  </div>
 </div>
