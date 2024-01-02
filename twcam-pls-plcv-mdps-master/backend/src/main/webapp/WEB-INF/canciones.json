@@ -4,95 +4,95 @@
         "nombre": "Bohemian Rhapsody",
         "autor": "Queen",
         "duracion": "5:55",
-        "tematica": "rock",
-        "estado": "disponible"
+        "tematica": "rock"
+          
       },
       {
         "id": 2,
         "nombre": "Blinding Lights",
         "autor": "The Weeknd",
         "duracion": "3:20",
-        "tematica": "electro",
-        "estado": "disponible"
+        "tematica": "electro"
+          
       },
       {
         "id": 3,
         "nombre": "Despacito",
         "autor": "Luis Fonsi",
         "duracion": "3:49",
-        "tematica": "reggaeton",
-        "estado": "disponible"
+        "tematica": "reggaeton"
+          
       },
       {
         "id": 4,
         "nombre": "Shape of You",
         "autor": "Ed Sheeran",
         "duracion": "3:49",
-        "tematica": "pop",
-        "estado": "disponible"
+        "tematica": "pop"
+          
       },
       {
         "id": 5,
         "nombre": "Stairway to Heaven",
         "autor": "Led Zeppelin",
         "duracion": "8:02",
-        "tematica": "rock",
-        "estado": "disponible"
+        "tematica": "rock"
+          
       },
       {
         "id": 6,
         "nombre": "Titanium",
         "autor": "David Guetta ft. Sia",
         "duracion": "4:05",
-        "tematica": "electro",
-        "estado": "disponible"
+        "tematica": "electro"
+          
       },
       {
         "id": 7,
         "nombre": "Dákiti",
         "autor": "Bad Bunny, Jhay Cortez",
         "duracion": "3:25",
-        "tematica": "reggaeton",
-        "estado": "disponible"
+        "tematica": "reggaeton"
+          
       },
       {
         "id": 8,
         "nombre": "Uptown Funk",
         "autor": "Mark Ronson ft. Bruno Mars",
         "duracion": "4:31",
-        "tematica": "pop",
-        "estado": "disponible"
+        "tematica": "pop"
+          
       },
       {
         "id": 9,
         "nombre": "Hotel California",
         "autor": "Eagles",
         "duracion": "6:30",
-        "tematica": "rock",
-        "estado": "disponible"
+        "tematica": "rock"
+          
       },
       {
         "id": 10,
         "nombre": "Wake Me Up",
         "autor": "Avicii",
         "duracion": "4:09",
-        "tematica": "electro",
-        "estado": "disponible"
+        "tematica": "electro"
+          
       },
       {
         "id": 11,
         "nombre": "Bailando",
         "autor": "Enrique Iglesias ft. Gente de Zona",
         "duracion": "4:03",
-        "tematica": "reggaeton",
-        "estado": "disponible"
+        "tematica": "reggaeton"
+          
       },
       {
         "id": 12,
         "nombre": "Happy",
         "autor": "Pharrell Williams",
         "duracion": "3:53",
-        "tematica": "pop",
-        "estado": "disponible"
+        "tematica": "pop"
+          
       }
 ]  

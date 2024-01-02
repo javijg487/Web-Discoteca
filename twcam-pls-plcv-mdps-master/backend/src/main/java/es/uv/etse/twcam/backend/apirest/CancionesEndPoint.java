@@ -91,6 +91,12 @@ public class CancionesEndPoint extends HttpServlet {
 					case "Todas":
 						canciones = service2.listAllCanciones(idEvento);
 						break;
+					case "Pendientes":
+						canciones = service2.mostrarPendientes(idEvento);
+						break;
+					case "Reproducir":
+						canciones = service2.mostrarReproducida(idEvento);
+						break;
 
 					default:
 						response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -132,10 +138,13 @@ public class CancionesEndPoint extends HttpServlet {
 	
 
 	@Override
-	protected void doPut(HttpServletRequest request, HttpServletResponse response){
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) {
 		Integer id = null;
 		Integer idEvento = null;
-		
+		String action = null;
+
+		action = request.getHeader("Action");
+
 		try {
 			idEvento = getEventoId(request, true);
 		} catch (Exception ex) {
@@ -144,33 +153,33 @@ public class CancionesEndPoint extends HttpServlet {
 
 		if (idEvento != null) {
 			try {
-				id = Integer.parseInt(request.getParameter("pendiente"));
-			} catch (Exception e) {
-				logger.info("No se ha podido obtener el identificador del request"); // <7>
-			}
-			if (id == null) {
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				addCORSHeaders(response);
-				logger.error("ID de cancion no proporcionado en la solicitud PUT");
-			} else {
-				try {
-					service2.editarEstado(id, idEvento);
-					logger.info("PUT  at {} with ID: {}", request.getContextPath(), id); // <7>
-					response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-					addCORSHeaders(response);
-				} catch (Exception e) {
-					response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-					logger.error("cancion no encontrado para editar", e);
+				switch (action) {
+					case "Pendiente":
+						id = Integer.parseInt(request.getParameter("pendiente"));
+						service2.editarEstado(id, idEvento);
+						break;
+					case "Reproducido":
+
+						id = Integer.parseInt(request.getParameter("reproducir"));
+						service2.pasarReproducir(id, idEvento);
+						break;
+					default:
+						response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+						response.getWriter().write("Accion invalida");
 				}
+				logger.info("PUT  at {} with ID: {}", request.getContextPath(), id); // <7>
+				response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+				addCORSHeaders(response);
+			} catch (Exception e) {
+				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+				logger.error("cancion no encontrado para editar", e);
+				logger.info("No se ha podido obtener el identificador del request");
 			}
 		} else {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			logger.error("Id del evento nulo");
 		}
 
-
-
-		
 	}
 
 	@Override
@@ -198,7 +207,7 @@ public class CancionesEndPoint extends HttpServlet {
 				logger.error("ID de cancion no proporcionado en la solicitud DELETE");
 			} else {
 				try {
-					service2.remove(id,idEvento);
+					service2.remove(id, idEvento);
 					logger.info("DELETE at {} with ID: {}", request.getContextPath(), id); // <7>
 					response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 					addCORSHeaders(response);

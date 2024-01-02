@@ -6,7 +6,7 @@ public class Cancion {
     private String autor;
     private String duracion;
     private String tematica;
-    private String estado;
+    
 
 
     public Cancion(int id, String nombre, String autor, String duracion, String tematica, String estado) {
@@ -16,7 +16,7 @@ public class Cancion {
 		this.autor = autor;
         this.duracion = duracion;
         this.tematica = tematica;
-        this.estado = estado;
+        
     }
 
     public Integer getID(){
@@ -39,10 +39,6 @@ public class Cancion {
         return tematica;
     }
 
-    public String getEstado(){
-        return estado;
-    }
-
     public void setID(Integer id) {
         this.id = id;
     }
@@ -63,7 +59,4 @@ public class Cancion {
         this.tematica = tematica;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
 }

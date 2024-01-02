@@ -5,8 +5,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import es.uv.etse.twcam.backend.business.IncorrectProductException;
-import es.uv.etse.twcam.backend.business.ProductException;
 import es.uv.etse.twcam.backend.business.Canciones.Cancion;
 import es.uv.etse.twcam.backend.business.Canciones.CancionNotExistException;
 
@@ -99,11 +97,13 @@ public class ListaCancionesImpl implements ListaCancionesService {
     @Override
     public List<Cancion> getByautor(String autor, Integer idEvento) {
         List<Cancion> cancionesAutor = new ArrayList<>();
+        autor = autor.toLowerCase();
 
         for (ListaCanciones listaCanciones : dictionary.values()) {
             if (listaCanciones.getIdEvento().equals(idEvento)) {
                 for (Cancion cancion : listaCanciones.getCanciones()) {
-                    if (!cancionesAutor.contains(cancion) && cancion.getAutor().equals(autor)) {
+                     String autorCancion = cancion.getAutor().toLowerCase();
+                    if (!cancionesAutor.contains(cancion) && autorCancion.contains(autor)) {
                         cancionesAutor.add(cancion);
                     }
                 }
@@ -119,14 +119,57 @@ public class ListaCancionesImpl implements ListaCancionesService {
             if (listaCanciones.getIdEvento().equals(idEvento)) {
                 for (Cancion cancion : listaCanciones.getCanciones()) {
                     if (cancion.getID().equals(id)) {
-                        cancion.setEstado("pendiente");
+                        listaCanciones.getCancionesPendientes().add(cancion);
                         return cancion;
                     }
                 }
             }
         }
         throw new CancionNotExistException(id);
-        
+
+    }
+
+    @Override
+    public Cancion pasarReproducir(Integer id, Integer idEvento) throws CancionNotExistException {
+        for (ListaCanciones listaCanciones : dictionary.values()) {
+            if (listaCanciones.getIdEvento().equals(idEvento)) {
+                for (Cancion cancion : listaCanciones.getCanciones()) {
+                    if (cancion.getID().equals(id)) {
+                        if (listaCanciones.getCancionReproducida() == null) {
+                            listaCanciones.setCancionReproducida(new ArrayList<>()); // O inicializa la lista apropiadamente
+                        }
+                        listaCanciones.getCancionReproducida().add(cancion);
+                        return cancion;
+                    }
+                }
+            }
+        }
+        throw new CancionNotExistException(id);
+
+    }
+
+    @Override
+    public List<Cancion> mostrarPendientes(Integer idEvento) {
+        List<Cancion> cancionesPendientes = new ArrayList<>();
+
+        for (ListaCanciones listaCanciones : dictionary.values()) {
+            if (listaCanciones.getIdEvento().equals(idEvento)) {
+                cancionesPendientes.addAll(listaCanciones.getCancionesPendientes());
+            }
+        }
+
+        return cancionesPendientes;
+    }
+
+    @Override
+    public List<Cancion> mostrarReproducida(Integer idEvento) {
+        List<Cancion> cancionesReproducida = new ArrayList<>();
+        for (ListaCanciones listaCanciones : dictionary.values()) {
+            if (listaCanciones.getIdEvento().equals(idEvento)) {
+                cancionesReproducida.addAll(listaCanciones.getCancionReproducida());
+            }
+        }
+        return cancionesReproducida;
     }
 
     @Override
@@ -137,6 +180,8 @@ public class ListaCancionesImpl implements ListaCancionesService {
                 for (Cancion cancion : listaCanciones.getCanciones()) {
                     if (cancion.getID().equals(id)) {
                         listaCanciones.getCanciones().remove(cancion);
+                        listaCanciones.getCancionesPendientes().remove(cancion);
+                        listaCanciones.getCancionReproducida().remove(cancion);
                         return cancion;
                     }
                 }

@@ -17,7 +17,13 @@ public interface ListaCancionesService {
 
     public List<Cancion> getByautor(String autor, Integer idEvento);
 
+    public List<Cancion> mostrarReproducida(Integer idEvento);
+
+    public List<Cancion> mostrarPendientes(Integer idEvento);
+
     public Cancion editarEstado(Integer id, Integer idEvento) throws CancionNotExistException;
+
+    public Cancion pasarReproducir(Integer id,Integer idEvento)throws CancionNotExistException;
 
     public Cancion remove(Integer id, Integer idEvento) throws CancionNotExistException;
 }
