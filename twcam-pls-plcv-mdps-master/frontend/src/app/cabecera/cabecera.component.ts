@@ -7,6 +7,7 @@ import {
   faAddressCard,
   faSignInAlt,
   faSignOutAlt,
+  faCalendar
 } from "@fortawesome/free-solid-svg-icons";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { LoginComponent } from "../login/login.component";
@@ -24,6 +25,7 @@ export class CabeceraComponent implements OnInit {
   faAddressCard = faAddressCard;
   faSignInAlt = faSignInAlt;
   faSignOutAlt = faSignOutAlt;
+  faCalendar = faCalendar;
 
   login = { nombre: "", rol: "" };
 

@@ -1,0 +1,22 @@
+<div class="container" fxLayout="column" fxLayoutGap="10px">
+  <div fxFlex *ngIf="vEventos.length>0">
+
+    <mat-grid-list cols="3" rowHeight="300px">
+      <mat-grid-tile *ngFor="let elemento of vEventos">
+        <img class="zoom" height="200px" width="200px" src={{elemento.imagen}} alt={{elemento.nombre}}>
+        <mat-grid-tile-footer>
+          <h1 mat-line> {{elemento.nombre | uppercase}} </h1>
+          <p mat-line>
+            <span> {{elemento.tematica}} </span>
+          </p>
+          <button mat-line>Entradas</button>
+        </mat-grid-tile-footer>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  <div [hidden]="vEventos.length>0 || errorMensaje">
+    <mat-spinner></mat-spinner>
+    <h4>Cargando . . .</h4>
+  </div>
+
+</div>

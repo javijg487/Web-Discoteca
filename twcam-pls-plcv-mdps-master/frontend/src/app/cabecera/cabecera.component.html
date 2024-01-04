@@ -12,6 +12,9 @@
   <a mat-button routerLink="/reservas" routerLinkActive="activo"
     ><fa-icon [icon]="faAddressCard"></fa-icon> Reservas
   </a>
+  <a mat-button routerLink="/eventos" routerLinkActive="activo"
+    ><fa-icon [icon]="faCalendar"></fa-icon> Eventos
+  </a>
 
   <span class="flex-spacer"></span>
   <div *ngIf="login.nombre == null || login.nombre == ''; else elseBlock">

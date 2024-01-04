@@ -49,6 +49,8 @@ import { ListReservasComponent } from './list-reservas/list-reservas.component';
 import { MatTableModule } from "@angular/material/table";
 import { PagosComponent } from './pagos/pagos.component';
 import { PedirCancionComponent } from './pedir-cancion/pedir-cancion.component';
+import { EventosComponent } from "./eventos/eventos.component";
+import { CrearEventoComponent } from './crear-evento/crear-evento.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,8 @@ import { PedirCancionComponent } from './pedir-cancion/pedir-cancion.component';
     ListReservasComponent,
     PagosComponent,
     PedirCancionComponent,
+    EventosComponent,
+    CrearEventoComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,24 @@
+<form [formGroup]="eventoForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label>Nombre de evento:</label>
+      <input type="text" formControlName="nombre">
+    </div>
+    <div>
+      <label>Nombre del DJ:</label>
+      <input type="text" formControlName="dj">
+    </div>
+    <div>
+      <label>Fecha:</label>
+      <input type="datetime-local" formControlName="fecha">
+    </div>
+    <div>
+      <label>Temática:</label>
+      <input type="text" formControlName="tematica">
+    </div>
+    <div>
+      <label>Imagen</label>
+      <input type="file" accept="image/*" formControlName="imagen">
+    </div>
+    <button type="submit">Enviar</button>
+  </form>
+  
