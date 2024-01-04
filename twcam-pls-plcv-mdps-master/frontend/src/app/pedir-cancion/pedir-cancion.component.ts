@@ -13,6 +13,10 @@ import { getUserData } from "../utils/getUserData";
 export class PedirCancionComponent implements OnInit {
   opinionForm!: FormGroup;
   vCanciones: Cancion[] = [];
+  vCancionesPendientes: Cancion[] = [];
+  vCancionesReproducidas: Cancion[] = [];
+
+
   cancionSeleccionada: Cancion | null = null;
   cancionReproducida: string = "Ninguna canción se esta repoduciendo";
   errorMensaje: string = "";
@@ -28,8 +32,7 @@ export class PedirCancionComponent implements OnInit {
   ActivarAutor: boolean = false;
   mostrarMensaje: boolean =true;
 
-  vCancionesfiltro: Cancion[] = [];
-
+ 
   filtroTematica: boolean = false;
   filtroTematica2: boolean = false;
   filtroTematica3: boolean = false;
@@ -47,6 +50,9 @@ export class PedirCancionComponent implements OnInit {
       this.Idevento = params["eventoId"];
     });
     this.getTodasCanciones();
+    this.getPendientes();
+    this.getReproducidas();
+    
   }
 
   getTodasCanciones():void{
@@ -75,11 +81,26 @@ export class PedirCancionComponent implements OnInit {
     this.pedirCancionService.getCancionesTematica(this.tematica,this.Idevento).subscribe(canciones => this.vCanciones = canciones);
   }
 
+  getPendientes():void{
+    this.pedirCancionService.getCancionesPendientes(this.Idevento).subscribe(canciones => this.vCancionesPendientes = canciones);
+  }
+
+  getReproducidas():void{
+    this.pedirCancionService.getCancionesReproducidas(this.Idevento).subscribe(canciones => this.vCancionesReproducidas = canciones);
+  }
+
   pasarCancionPendiente(cancion:Cancion):void{
     this.pedirCancionService.editarEstadoCancion(cancion.id,this.Idevento).subscribe(
       errorMensaje => this.errorMensaje = <any>errorMensaje);
       setTimeout(() => {
-        this.getTodasCanciones();
+        this.getPendientes();
+      }, 100);
+  }
+  pasarCancionReproduciendo(cancion:Cancion):void{
+    this.pedirCancionService.pasarCancionReproducir(cancion.id,this.Idevento).subscribe(
+      errorMensaje => this.errorMensaje = <any>errorMensaje);
+      setTimeout(() => {
+        this.getReproducidas();
       }, 100);
   }
 
@@ -88,6 +109,14 @@ export class PedirCancionComponent implements OnInit {
       errorMensaje => this.errorMensaje = <any>errorMensaje);
       setTimeout(() => {
         this.getTodasCanciones();
+        this.getPendientes();
+      }, 100);
+  }
+  deleteCancionesReproducidas(cancion: Cancion): void {
+    this.pedirCancionService.deleteCancionReproducida(cancion.id,this.Idevento).subscribe(
+      errorMensaje => this.errorMensaje = <any>errorMensaje);
+      setTimeout(() => {
+        this.getReproducidas();
       }, 100);
   }
 
@@ -108,13 +137,20 @@ export class PedirCancionComponent implements OnInit {
   }
 
   reproducirCancion(): void {
-    this.cancionReproducida = this.cancionSeleccionada?.nombre + " - " + this.cancionSeleccionada?.autor;
-    this.deleteCanciones(this.cancionSeleccionada!); //Para indicar que seguro que no es nulo (!)
+
+    this.pasarCancionReproduciendo(this.cancionSeleccionada!);
+
+    if(this.vCancionesReproducidas.length>=1){
+      this.deleteCancionesReproducidas(this.vCancionesReproducidas[0]);
+      //Para indicar que seguro que no es nulo (!)
+    }
+    this.deleteCanciones(this.cancionSeleccionada!);
+    this.cancionSeleccionada= null;
   }
 
   pedirCancion(){
     this.pasarCancionPendiente(this.cancionSeleccionada!);
-    
+    this.cancionSeleccionada= null;
   }
 
   isDisabled(): boolean {
