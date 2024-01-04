@@ -13,18 +13,20 @@ public class Evento {
     private Usuario dj;
     private String fecha;
     private String tematica;
+    private String imagen;
     /*
      * Me falta añadir la Pista
      */
     
 
-    public Evento(Integer id,String nombre, Usuario dj, String fecha, String tematica) {
+    public Evento(Integer id,String nombre, Usuario dj, String fecha, String tematica, String imagen) {
         
         this.nombre = nombre;
         this.id = id;
         this.dj = dj;
         this.fecha = fecha;
         this.tematica = tematica;
+        this.imagen = imagen;
         
     }
 
@@ -48,6 +50,10 @@ public class Evento {
         return nombre;
     }
 
+    public String getImagen() {
+        return imagen;
+    }
+
     public void setId(Integer id){
         this.id = id;
     }
@@ -66,6 +72,10 @@ public class Evento {
 
     public void setTematica(String tematica) {
         this.tematica = tematica;
-    }   
+    } 
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
 
 }

@@ -6,7 +6,8 @@
             "nombre": "DJ 1"
         },
         "fecha": "2024-06-15T21:00",
-        "tematica": "Rock"
+        "tematica": "Rock",
+        "imagen": "../../assets/images/rock.jpeg"
     },
     {
         "id": 2,
@@ -15,7 +16,8 @@
             "nombre": "DJ 2"
         },
         "fecha": "2024-06-15T21:00",
-        "tematica": "Reggaeton"
+        "tematica": "Reggaeton",
+        "imagen": "../../assets/images/edm.jpeg"
     },
     {
         "id": 3,
@@ -24,6 +26,8 @@
             "nombre": "DJ 3"
         },
         "fecha": "2024-06-15T21:00",
-        "tematica": "Pop"
+        "tematica": "Pop",
+        "imagen": "../../assets/images/pop.jpeg"
+        
     }
 ]
