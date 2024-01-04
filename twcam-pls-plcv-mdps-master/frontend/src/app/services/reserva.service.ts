@@ -36,10 +36,10 @@ export class ReservaService {
 
   editarEstadoReserva(
     reservaId: number,
-    estado: String
-  ): Observable<{ estado: String }> {
+    estado: string
+  ): Observable<{ estado: string }> {
     return this.http
-      .put<Reserva>(
+      .put<{ estado: string }>(
         baseAPIURL + `reservas/${reservaId}`,
         { estado },
         httpOptions

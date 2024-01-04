@@ -6,7 +6,20 @@
     </div>
   </div>
   <form [formGroup]="eventoForm" novalidate class="invitados-form">
-    <div class="invitados">
+    <div>
+      <mat-radio-group formControlName="tipoReserva">
+        <mat-radio-button class="example-margin" value="salaVip">
+          Sala VIP
+        </mat-radio-button>
+        <mat-radio-button class="example-margin" value="individual">
+          Individual
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div
+      class="invitados"
+      *ngIf="eventoForm.get('tipoReserva')!.value === 'salaVip'"
+    >
       <div
         formArrayName="invitados"
         *ngFor="let t of invitados.controls; let i = index"
@@ -72,16 +85,16 @@
           </div>
         </div>
       </div>
+      <button type="button" color="primary" (click)="addInvitado()" mat-mini-fab>
+        +
+      </button>
     </div>
-    <button type="button" color="primary" (click)="addInvitado()" mat-mini-fab>
-      +
-    </button>
 
     <div>
       <button
         (click)="onSubmit()"
         type="button"
-        [disabled]="eventoForm.invalid"
+        [disabled]="eventoForm.invalid && eventoForm.controls.tipoReserva.value === 'salaVip'"
         color="primary"
         mat-raised-button
         class="submit-button"

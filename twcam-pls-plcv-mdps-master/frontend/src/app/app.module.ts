@@ -25,6 +25,7 @@ import { FormsModule } from "@angular/forms";
 
 import { MatSelectModule } from "@angular/material/select";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { MatRadioModule } from "@angular/material/radio";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatSliderModule } from "@angular/material/slider";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
@@ -45,7 +46,7 @@ import { ContactoComponent } from "./contacto/contacto.component";
 import { LoginComponent } from "./login/login.component";
 import { baseURL } from "./compartido/baseurl";
 import { CrearReservaComponent } from "./crear-reserva/crear-reserva.component";
-import { ListReservasComponent } from './list-reservas/list-reservas.component';
+import { ListReservasComponent } from "./list-reservas/list-reservas.component";
 import { MatTableModule } from "@angular/material/table";
 import { PagosComponent } from './pagos/pagos.component';
 import { PedirCancionComponent } from './pedir-cancion/pedir-cancion.component';
@@ -92,7 +93,8 @@ import { CrearEventoComponent } from './crear-evento/crear-evento.component';
     MatSliderModule,
     MatProgressSpinnerModule,
     HttpClientModule,
-    MatTableModule
+    MatTableModule,
+    MatRadioModule
   ],
   providers: [
     ProductoService,

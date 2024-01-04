@@ -18,6 +18,7 @@
           matInput
           placeholder="Numero de tarjeta"
           type="number"
+          min="0"
           formControlName="numero"
         />
         <mat-error>{{ erroresForm.numero }}</mat-error>
@@ -30,6 +31,7 @@
           placeholder="Fecha de vencimiento"
           type="text"
           formControlName="fechaVencimiento"
+          maxlength="5"
         />
         <mat-error>{{ erroresForm.fechaVencimiento }}</mat-error>
       </mat-form-field>
@@ -39,6 +41,7 @@
           placeholder="Codigo de seguridad"
           type="text"
           formControlName="cvv"
+          maxlength="3"
         />
         <mat-error>{{ erroresForm.cvv }}</mat-error>
       </mat-form-field>
