@@ -1,19 +1,16 @@
 package es.uv.etse.twcam.backend.business.Eventos;
 
-
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import es.uv.etse.twcam.backend.business.IncorrectProductException;
-import es.uv.etse.twcam.backend.business.ProductException;
-import es.uv.etse.twcam.backend.business.ProductNotExistException;
+import es.uv.etse.twcam.backend.business.ElementNotExistsException;
+import es.uv.etse.twcam.backend.business.GeneralException;
+import es.uv.etse.twcam.backend.business.IncorrectElementException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Comparator;
 
 public class EventoServiceImpl implements EventoService {
 
@@ -62,16 +59,16 @@ public class EventoServiceImpl implements EventoService {
     }
 
     @Override
-    public Evento getById(Integer id) throws ProductNotExistException {
-       if (dictionary.containsKey(id)) {
-			return dictionary.get(id);
-		} else {
-			throw new ProductNotExistException(id);
-		}
+    public Evento getById(Integer id) throws ElementNotExistsException {
+        if (dictionary.containsKey(id)) {
+            return dictionary.get(id);
+        } else {
+            throw new ElementNotExistsException("Evento", id);
+        }
     }
-    
+
     @Override
-    public Evento create(Evento evento) throws ProductException {
+    public Evento create(Evento evento) throws GeneralException {
 
         Integer cont = 0;
         List<Evento> eventos = listAll();
@@ -85,8 +82,7 @@ public class EventoServiceImpl implements EventoService {
             if (fechaEventoActual.isAfter(fechaEventoCrear) && cont < 3) {
                 break;
             } else if (cont == 3) {
-                throw new IncorrectProductException("Ya hay 3 eventos en un día");
-
+                throw new GeneralException("Ya hay 3 eventos en un día");
             } else if (fechaEventoActual.isEqual(fechaEventoCrear)) {
                 cont++;
             }
@@ -99,7 +95,7 @@ public class EventoServiceImpl implements EventoService {
             currentIndex++;
             return evento;
         } else {
-            throw new IncorrectProductException("Ya hay 3 eventos en un día");
+            throw new IncorrectElementException("Ya hay 3 eventos en un día");
         }
 
     }

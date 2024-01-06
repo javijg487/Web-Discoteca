@@ -117,6 +117,20 @@ public class EventosEndpoint extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doOptions(HttpServletRequest request, HttpServletResponse response) {
+
+        addCORSHeaders(response);
+
+        try {
+            super.doOptions(request, response);
+        } catch (ServletException se) {
+            logger.error("Error genérico en la clase padre");
+        } catch (IOException ioe) {
+            logger.error("Error genérico de salida la clase padre");
+        }
+    }
+
     protected static Integer getEventoId(HttpServletRequest request) throws APIRESTException { // <5>
 
         String url = request.getRequestURL().toString();

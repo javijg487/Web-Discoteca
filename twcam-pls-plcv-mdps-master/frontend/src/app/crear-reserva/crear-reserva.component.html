@@ -5,7 +5,7 @@
       <hr />
     </div>
   </div>
-  <form [formGroup]="eventoForm" novalidate class="invitados-form">
+  <form [formGroup]="reservaForm" novalidate class="invitados-form">
     <div class="invitados">
       <div
         formArrayName="invitados"
@@ -81,7 +81,7 @@
       <button
         (click)="onSubmit()"
         type="button"
-        [disabled]="eventoForm.invalid"
+        [disabled]="reservaForm.invalid"
         color="primary"
         mat-raised-button
         class="submit-button"

@@ -17,7 +17,7 @@ import { getUserData } from "../utils/getUserData";
   styleUrls: ["./crear-reserva.component.scss"],
 })
 export class CrearReservaComponent {
-  eventoForm!: FormGroup;
+  reservaForm!: FormGroup;
   eventoId!: String;
   username: String = getUserData().nombre;
 
@@ -34,7 +34,7 @@ export class CrearReservaComponent {
   };
 
   ngOnInit() {
-    this.eventoForm = this.fb.group({
+    this.reservaForm = this.fb.group({
       invitados: this.fb.array([this.createInvitado()], Validators.required),
     });
 
@@ -44,7 +44,7 @@ export class CrearReservaComponent {
   }
 
   get invitados(): FormArray {
-    return <FormArray>this.eventoForm.get("invitados");
+    return <FormArray>this.reservaForm.get("invitados");
   }
 
   addInvitado() {
@@ -63,10 +63,10 @@ export class CrearReservaComponent {
   }
 
   onSubmit() {
-    if (this.eventoForm.status == "VALID") {
+    if (this.reservaForm.status == "VALID") {
       this.reservaService
         .enviarReserva({
-          ...this.eventoForm.value,
+          ...this.reservaForm.value,
           eventoId: this.eventoId,
           usuario: this.username,
         })
