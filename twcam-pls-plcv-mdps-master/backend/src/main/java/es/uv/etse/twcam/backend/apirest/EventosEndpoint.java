@@ -95,7 +95,7 @@ public class EventosEndpoint extends HttpServlet {
             if (evento == null) {
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 addCORSHeaders(response);
-                logger.error("Formato incorrecto, no se pudo crear la reserva");
+                logger.error("Formato incorrecto, no se pudo crear el evento");
             } else {
                 evento = service.create(evento);
 
@@ -114,6 +114,20 @@ public class EventosEndpoint extends HttpServlet {
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             logger.error("Evento no creado", e);
+        }
+    }
+
+    @Override
+    protected void doOptions(HttpServletRequest request, HttpServletResponse response) {
+
+        addCORSHeaders(response);
+
+        try {
+            super.doOptions(request, response);
+        } catch (ServletException se) {
+            logger.error("Error genérico en la clase padre");
+        } catch (IOException ioe) {
+            logger.error("Error genérico de salida la clase padre");
         }
     }
 

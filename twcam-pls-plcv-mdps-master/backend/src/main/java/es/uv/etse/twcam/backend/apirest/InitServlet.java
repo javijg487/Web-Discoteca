@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import es.uv.etse.twcam.backend.business.Producto;
+import es.uv.etse.twcam.backend.business.GeneralException;
 import es.uv.etse.twcam.backend.business.ProductException;
 import es.uv.etse.twcam.backend.business.ProductsService;
 import es.uv.etse.twcam.backend.business.ProductsServiceDictionaryImpl;
@@ -185,7 +186,7 @@ public class InitServlet extends HttpServlet {
     }
 
     public static EventoService initEventoService(InputStream jsonStream)
-            throws ProductException { // <3>
+            throws GeneralException { // <3>
 
         EventoServiceImpl service = EventoServiceImpl.getInstance();
 

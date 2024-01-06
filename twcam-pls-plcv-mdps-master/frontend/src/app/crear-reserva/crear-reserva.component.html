@@ -5,7 +5,7 @@
       <hr />
     </div>
   </div>
-  <form [formGroup]="eventoForm" novalidate class="invitados-form">
+  <form [formGroup]="reservaForm" novalidate class="invitados-form">
     <div>
       <mat-radio-group formControlName="tipoReserva">
         <mat-radio-button class="example-margin" value="salaVip">
@@ -18,7 +18,7 @@
     </div>
     <div
       class="invitados"
-      *ngIf="eventoForm.get('tipoReserva')!.value === 'salaVip'"
+      *ngIf="reservaForm.get('tipoReserva')!.value === 'salaVip'"
     >
       <div
         formArrayName="invitados"
@@ -94,7 +94,7 @@
       <button
         (click)="onSubmit()"
         type="button"
-        [disabled]="eventoForm.invalid && eventoForm.controls.tipoReserva.value === 'salaVip'"
+        [disabled]="reservaForm.invalid && reservaForm.controls.tipoReserva.value === 'salaVip'"
         color="primary"
         mat-raised-button
         class="submit-button"

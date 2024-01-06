@@ -16,6 +16,10 @@
     ><fa-icon [icon]="faCalendar"></fa-icon> Eventos
   </a>
 
+  <a *ngIf="userRole === 'admin'" mat-button routerLink="/crear-evento" routerLinkActive="activo"
+    ><fa-icon [icon]="faPlus"></fa-icon> Crear Evento
+  </a>
+
   <span class="flex-spacer"></span>
   <div *ngIf="login.nombre == null || login.nombre == ''; else elseBlock">
     <a mat-button routerLink="/login" routerLinkActive="activo">

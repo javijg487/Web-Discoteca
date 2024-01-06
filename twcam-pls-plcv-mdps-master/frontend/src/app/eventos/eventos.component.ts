@@ -7,8 +7,8 @@ import { EventoService } from '../services/evento.service';
   templateUrl: './eventos.component.html',
   styleUrls: ['./eventos.component.scss'],
 })
-export class EventosComponent{
-  vEventos: Evento[] = [];
+export class EventosComponent {
+  vEventos: Array<any>= [];
   errorMensaje: string = "";
   eventoSeleccionado = new Evento();
 
@@ -16,8 +16,7 @@ export class EventosComponent{
     @Inject('baseURL') public BaseURL: string) { }
 
   ngOnInit(){
-    this.eventoService.getEventos().subscribe(eventos => this.vEventos = eventos,
-      errorMensaje => this.errorMensaje = <any>errorMensaje);
+    this.eventoService.getEventos().subscribe(eventos => this.vEventos = eventos);
   }
 
   seleccionarEvento(evento:Evento){

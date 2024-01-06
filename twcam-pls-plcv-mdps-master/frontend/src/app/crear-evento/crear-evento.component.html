@@ -1,24 +1,31 @@
-<form [formGroup]="eventoForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label>Nombre de evento:</label>
-      <input type="text" formControlName="nombre">
-    </div>
-    <div>
-      <label>Nombre del DJ:</label>
-      <input type="text" formControlName="dj">
-    </div>
-    <div>
-      <label>Fecha:</label>
-      <input type="datetime-local" formControlName="fecha">
-    </div>
-    <div>
-      <label>Temática:</label>
-      <input type="text" formControlName="tematica">
-    </div>
-    <div>
-      <label>Imagen</label>
-      <input type="file" accept="image/*" formControlName="imagen">
-    </div>
-    <button type="submit">Enviar</button>
-  </form>
-  
+<form [formGroup]="eventForm" (ngSubmit)="onSubmitEvento()">
+  <div>
+    <label>Nombre de evento:</label>
+    <input type="text" formControlName="nombre">
+  </div>
+  <div>
+    <label>Nombre del DJ:</label>
+    <select formControlName="dj" name="" id="">
+      <option value="DJ1">DJ 1</option>
+      <option value="DJ2">DJ 2</option>
+      <!-- Solucionar esto
+      <option *ngFor="let dj of vDjs">{{ dj.nombre }}</option>
+      -->
+    </select>
+  </div>
+  <div>
+    <label>Fecha:</label>
+    <input type="date" formControlName="fecha">
+  </div>
+  <div>
+    <label>Temática:</label>
+    <select formControlName="tematica">
+      <option value="Pop">Pop</option>
+      <option value="Rock">Rock</option>
+      <option value="Reggaeton">Reggaeton</option>
+      <option value="Electro">Electro</option>
+    </select>
+  </div>
+  <button type="submit" mat-button mat-raised-button
+    color="primary">Submit</button>
+</form>

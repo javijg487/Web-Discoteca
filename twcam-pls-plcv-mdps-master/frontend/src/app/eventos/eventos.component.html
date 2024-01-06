@@ -9,7 +9,10 @@
           <p mat-line>
             <span> {{elemento.tematica}} </span>
           </p>
-          <button mat-line>Entradas</button>
+          <div mat-line>
+            <a mat-button routerLink="/crear-reserva/{{elemento.id}}" routerLinkActive="activo">Reserva Sala Vip</a>
+          </div>
+          
         </mat-grid-tile-footer>
       </mat-grid-tile>
     </mat-grid-list>

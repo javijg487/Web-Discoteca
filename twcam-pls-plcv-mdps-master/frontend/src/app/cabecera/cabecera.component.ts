@@ -1,4 +1,5 @@
 import { Component, OnInit, Inject, HostListener } from "@angular/core";
+import { getUserData } from "../utils/getUserData";
 
 import {
   faHome,
@@ -7,7 +8,8 @@ import {
   faAddressCard,
   faSignInAlt,
   faSignOutAlt,
-  faCalendar
+  faCalendar,
+  faPlus
 } from "@fortawesome/free-solid-svg-icons";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { LoginComponent } from "../login/login.component";
@@ -26,6 +28,8 @@ export class CabeceraComponent implements OnInit {
   faSignInAlt = faSignInAlt;
   faSignOutAlt = faSignOutAlt;
   faCalendar = faCalendar;
+  faPlus = faPlus;
+  userRole:String = getUserData().rol;
 
   login = { nombre: "", rol: "" };
 

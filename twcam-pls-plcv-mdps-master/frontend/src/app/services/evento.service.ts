@@ -28,7 +28,7 @@ export class EventoService {
 
   enviarEvento(consulta: Evento):Observable<Evento>{
     return this.http
-      .post<Evento>(baseAPIURL + "reservas", consulta, httpOptions)
+      .post<Evento>(baseAPIURL + "eventos", consulta, httpOptions)
       .pipe(catchError(this.procesaHttpmsjService.gestionError));
   }
 }
