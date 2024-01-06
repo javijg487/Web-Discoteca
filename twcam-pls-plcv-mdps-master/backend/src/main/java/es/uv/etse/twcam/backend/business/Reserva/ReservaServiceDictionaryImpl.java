@@ -32,8 +32,8 @@ public class ReservaServiceDictionaryImpl implements ReservaService {
 
 	public static void clearInstance() {
 		if (the != null) {
-			the = null;
 			the.dictionary.clear();
+			the = null;
 		}
 	}
 
@@ -81,6 +81,6 @@ public class ReservaServiceDictionaryImpl implements ReservaService {
 		dictionary.put(currentIndex, reserva);
 		currentIndex += 1;
 
-		return reserva;
+		return dictionary.get(currentIndex - 1);
 	}
 }

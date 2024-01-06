@@ -26,4 +26,6 @@ public interface ListaCancionesService {
     public Cancion pasarReproducir(Integer id,Integer idEvento)throws CancionNotExistException;
 
     public Cancion remove(Integer id, Integer idEvento) throws CancionNotExistException;
+
+    public Cancion removeReproducidas(Integer id, Integer idEvento) throws CancionNotExistException;
 }

@@ -2,7 +2,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Evento } from '../compartido/evento';
 import { EventoService } from '../services/evento.service';
 
-
 @Component({
   selector: 'app-eventos',
   templateUrl: './eventos.component.html',
@@ -16,26 +15,11 @@ export class EventosComponent {
   constructor(private eventoService: EventoService,
     @Inject('baseURL') public BaseURL: string) { }
 
-
-  cargarEventos() {
-    this.eventoService.getEventos().subscribe(
-      eventos => {
-        this.vEventos = eventos;
-        console.log("Eventos cargados:", this.vEventos); // Imprime en consola
-      },
-      errorMensaje => {
-        this.errorMensaje = <any>errorMensaje;
-        console.error("Error al cargar eventos:", this.errorMensaje); // Imprime el error en consola
-      }
-    );
+  ngOnInit(){
+    this.eventoService.getEventos().subscribe(eventos => this.vEventos = eventos);
   }
 
-  ngOnInit() {
-    this.cargarEventos();
-
-  }
-
-  seleccionarEvento(evento: Evento) {
+  seleccionarEvento(evento:Evento){
     this.eventoSeleccionado = evento;
   }
 }

@@ -5,23 +5,23 @@
     <h2>Filtros</h2>
 
     <div>
-      <h3 class="titulo">Temática <input type="checkbox" [(ngModel)]="ActivarTematica" /></h3>
+      <h3 class="titulo">Temática <input type="checkbox" [(ngModel)]="ActivarTematica" [disabled]="ActivarAutor || ActivarDuracion"/></h3>
 
       <div>
         <label>
-          <input type="checkbox" [(ngModel)]="filtroTematica" [disabled]="!ActivarTematica" />
+          <input type="checkbox" [(ngModel)]="filtroTematica" [disabled]="!ActivarTematica||filtroTematica2||filtroTematica3||filtroTematica4" />
           Rock
         </label>
         <label>
-          <input type="checkbox" [(ngModel)]="filtroTematica2" [disabled]="!ActivarTematica" />
+          <input type="checkbox" [(ngModel)]="filtroTematica2" [disabled]="!ActivarTematica||filtroTematica||filtroTematica3||filtroTematica4" />
           Electro
         </label>
         <label>
-          <input type="checkbox" [(ngModel)]="filtroTematica3" [disabled]="!ActivarTematica" />
+          <input type="checkbox" [(ngModel)]="filtroTematica3" [disabled]="!ActivarTematica||filtroTematica||filtroTematica2||filtroTematica4" />
           Reggaeton
         </label>
         <label>
-          <input type="checkbox" [(ngModel)]="filtroTematica4" [disabled]="!ActivarTematica" />
+          <input type="checkbox" [(ngModel)]="filtroTematica4" [disabled]="!ActivarTematica||filtroTematica||filtroTematica2||filtroTematica3" />
           Pop
         </label>
       </div>
@@ -30,13 +30,13 @@
 
 
 
-    <h3 class="titulo">Autor <input type="checkbox" [(ngModel)]="ActivarAutor" /></h3>
+    <h3 class="titulo">Autor <input type="checkbox" [(ngModel)]="ActivarAutor" [disabled]="ActivarTematica || ActivarDuracion" /></h3>
 
     <mat-form-field class="centrar agrandar" [formGroup]="opinionForm" *ngIf="ActivarAutor">
       <input matInput formControlName="autor" placeholder="Autor" type="text" required>
     </mat-form-field>
 
-    <h3 class="titulo">Duración <input type="checkbox" [(ngModel)]="ActivarDuracion" /></h3>
+    <h3 class="titulo">Duración <input type="checkbox" [(ngModel)]="ActivarDuracion" [disabled]="ActivarTematica || ActivarAutor"/></h3>
     <div>
       <mat-slider min="0" max="5" step="1" value="1" [formGroup]="opinionForm" class="centrar agrandar" discrete
         discrete [disabled]="!ActivarDuracion">
@@ -105,18 +105,18 @@
       </div>
 
 
-      <div *ngIf="(vCanciones.length === 0 && !errorMensaje)">
+      <div *ngIf="(vCancionesPendientes.length === 0 && !errorMensaje)">
         <p>No hay canciones pendientes.</p>
       </div>
 
-      <div *ngIf="vCanciones.length > 0">
+      <div *ngIf="vCancionesPendientes.length > 0">
 
 
-        <div class="selected" *ngFor="let cancion of vCanciones" (click)="onSelectCancion(cancion)"
+        <div class="selected" *ngFor="let cancion of vCancionesPendientes" (click)="onSelectCancion(cancion)"
           [class.selected-fijo]="cancion === cancionSeleccionada">
-          <ng-container *ngIf="cancion.estado === 'pendiente'">
+          
             {{ cancion.nombre }} - {{ cancion.autor }}
-          </ng-container>
+          
   
         </div>
 
@@ -136,7 +136,24 @@
     <div class="texto-color">
       <h2 class="titulo">Reproduciendo</h2>
 
-      <h3>{{cancionReproducida}}</h3>
+      <div *ngIf="errorMensaje">
+        <p>{{ errorMensaje }}</p>
+      </div>
+
+
+      <div *ngIf="(vCancionesReproducidas.length === 0 && !errorMensaje)">
+        <p>No hay canciones reproduciendose.</p>
+      </div>
+
+      <div *ngIf="vCancionesReproducidas.length > 0">
+
+        <div  *ngFor="let cancion of vCancionesReproducidas" >
+        
+            {{ cancion.nombre }} - {{ cancion.autor }}
+  
+        </div>
+
+      </div>
 
     </div>
   </div>

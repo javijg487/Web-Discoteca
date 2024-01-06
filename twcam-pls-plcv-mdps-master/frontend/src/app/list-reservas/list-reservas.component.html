@@ -5,10 +5,10 @@
       <hr />
     </div>
   </div>
-  
+
   <table
     mat-table
-    [dataSource]="reservas"
+    [dataSource]="tableData"
     multiTemplateDataRows
     class="mat-elevation-z8"
   >
@@ -16,7 +16,7 @@
       matColumnDef="{{ column }}"
       *ngFor="let column of columnsToDisplay"
     >
-      <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+      <th mat-header-cell *matHeaderCellDef>{{ tableHeaderLabels[column] }}</th>
       <td mat-cell *matCellDef="let element">{{ element[column] + "" }}</td>
     </ng-container>
 
@@ -33,13 +33,15 @@
           "
         >
           <div class="example-element-description">
-            <h3>Lista de invitados</h3>
-            <div
-              *ngFor="let invitado of element.invitados"
-              class="invitado-row"
-            >
-              <span><strong>Nombre:</strong> {{ invitado.nombre }}</span>
-              <span><strong>DNI:</strong> {{ invitado.dni }}</span>
+            <div *ngIf="!element.esIndividual">
+              <h3>Lista de invitados</h3>
+              <div
+                *ngFor="let invitado of element.invitados"
+                class="invitado-row"
+              >
+                <span><strong>Nombre:</strong> {{ invitado.nombre }}</span>
+                <span><strong>DNI:</strong> {{ invitado.dni }}</span>
+              </div>
             </div>
             <div
               *ngIf="userRole === 'admin' && element.estado.includes('Pagada')"
@@ -79,7 +81,9 @@
               </button>
             </div>
             <div
-              *ngIf="userRole === 'cliente' && element.estado === 'Aprobada'"
+              *ngIf="
+                userRole === 'cliente' && element.estado.includes('Aprobada')
+              "
               class="invitado-row"
             >
               <h3>Controles</h3>
@@ -112,4 +116,5 @@
       class="expand-row"
     ></tr>
   </table>
+  <div *ngIf="tableData.length === 0">No se han encontrado registros</div>
 </div>

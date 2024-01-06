@@ -35,7 +35,8 @@ export class CrearReservaComponent {
 
   ngOnInit() {
     this.reservaForm = this.fb.group({
-      invitados: this.fb.array([this.createInvitado()], Validators.required),
+      invitados: this.fb.array([this.createInvitado()]),
+      tipoReserva: ["salaVip", Validators.required],
     });
 
     this.route.params.subscribe((params) => {
@@ -63,16 +64,20 @@ export class CrearReservaComponent {
   }
 
   onSubmit() {
-    if (this.reservaForm.status == "VALID") {
-      this.reservaService
-        .enviarReserva({
-          ...this.reservaForm.value,
-          eventoId: this.eventoId,
-          usuario: this.username,
-        })
-        .subscribe((reserva) => {
-          this.router.navigate([`/pagos/${reserva.id}`]);
-        });
+    const isSingleTicket = this.reservaForm.controls.tipoReserva.value === 'individual';
+    const requestBody = {
+      ...this.reservaForm.value,
+      esIndividual: isSingleTicket,
+      eventoId: this.eventoId,
+      usuario: this.username,
+    };
+    if (isSingleTicket) {
+      delete requestBody.invitados;
+    }
+    if (this.reservaForm.status == "VALID" || isSingleTicket) {
+      this.reservaService.enviarReserva(requestBody).subscribe((reserva) => {
+        this.router.navigate([`/pagos/${reserva.id}`]);
+      });
     }
   }
 }

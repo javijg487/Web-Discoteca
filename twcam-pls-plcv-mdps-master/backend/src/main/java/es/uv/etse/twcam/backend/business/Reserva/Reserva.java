@@ -11,13 +11,15 @@ public class Reserva {
   private String usuario;
   private String estado;
   private ArrayList<Invitado> invitados;
+  private Boolean esIndividual;
 
-  public Reserva(Integer id, Integer eventoId, String usuario, ArrayList<Invitado> invitados, String estado) {
+  public Reserva(Integer id, Integer eventoId, String usuario, ArrayList<Invitado> invitados, String estado, Boolean esIndividual) {
     this.id = id;
     this.eventoId = eventoId;
     this.usuario = usuario;
     this.estado = estado;
     this.invitados = invitados;
+    this.esIndividual = esIndividual;
   }
 
   public Integer getId() {
@@ -40,6 +42,10 @@ public class Reserva {
     return invitados;
   }
 
+  public Boolean getEsIndividual() {
+    return esIndividual;
+  }
+
   public void setId(Integer id) {
     this.id = id;
   }
@@ -58,6 +64,10 @@ public class Reserva {
 
   public void setInvitados(ArrayList<Invitado> invitados) {
     this.invitados = invitados;
+  }
+
+  public void setEsIndividual(Boolean esIndividual) {
+    this.esIndividual = esIndividual;
   }
 
   @Override

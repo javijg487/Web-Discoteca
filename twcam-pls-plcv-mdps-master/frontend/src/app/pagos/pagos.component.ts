@@ -15,22 +15,28 @@ export class PagosComponent {
   pagosForm!: FormGroup;
 
   erroresForm: any = {
-    numero: "Numero de tarjeta requerido",
-    fechaVencimiento: "Fecha de vencimiento requerida",
-    cvv: "Codigo de seguridad requerido"
+    numero: "Numero de tarjeta incorrecto",
+    fechaVencimiento: "Usar formato MM/YY",
+    cvv: "Codigo de seguridad requerido",
   };
 
   constructor(
     private fb: FormBuilder,
     private reservaService: ReservaService,
     private route: ActivatedRoute,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.pagosForm = this.fb.group({
       numero: ["", Validators.required],
-      fechaVencimiento: ["", Validators.required],
+      fechaVencimiento: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^(0[1-9]|1[0-2])/?([0-9]{4}|[0-9]{2})$"),
+        ],
+      ],
       cvv: ["", [Validators.required]],
     });
     this.route.params.subscribe((params) => {
@@ -46,7 +52,12 @@ export class PagosComponent {
   pagar() {
     if (this.pagosForm.status == "VALID") {
       this.reservaService
-        .editarEstadoReserva(this.reservaId, "Pagada (Esperando aprobacion)")
+        .editarEstadoReserva(
+          this.reservaId,
+          this.reserva.esIndividual
+            ? "Aprobada"
+            : "Pagada (Esperando aprobacion)"
+        )
         .subscribe(() => {
           this.router.navigate(["/reservas"]);
         });
