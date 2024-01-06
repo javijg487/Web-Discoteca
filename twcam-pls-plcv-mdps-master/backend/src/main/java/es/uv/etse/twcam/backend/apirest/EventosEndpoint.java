@@ -95,7 +95,7 @@ public class EventosEndpoint extends HttpServlet {
             if (evento == null) {
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 addCORSHeaders(response);
-                logger.error("Formato incorrecto, no se pudo crear la reserva");
+                logger.error("Formato incorrecto, no se pudo crear el evento");
             } else {
                 evento = service.create(evento);
 

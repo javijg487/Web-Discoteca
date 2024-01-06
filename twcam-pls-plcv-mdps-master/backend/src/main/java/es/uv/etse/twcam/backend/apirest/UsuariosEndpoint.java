@@ -60,7 +60,7 @@ public class UsuariosEndpoint extends HttpServlet {
 		List<Usuario_no_password> usuarios = null;
 		String action = null;
 
-		action = request.getHeader("Action");
+		action = request.getParameter("rol");
 
 		logger.info("GET at {}", request.getContextPath());
 

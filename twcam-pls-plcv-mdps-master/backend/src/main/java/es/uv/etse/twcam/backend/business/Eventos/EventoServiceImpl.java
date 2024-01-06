@@ -1,6 +1,6 @@
 package es.uv.etse.twcam.backend.business.Eventos;
 
-import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -11,7 +11,7 @@ import es.uv.etse.twcam.backend.business.IncorrectProductException;
 import es.uv.etse.twcam.backend.business.ProductException;
 import es.uv.etse.twcam.backend.business.ProductNotExistException;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 
@@ -50,11 +50,11 @@ public class EventoServiceImpl implements EventoService {
         List<Evento> eventos = new ArrayList<>();
         eventos.addAll(dictionary.values());
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         eventos.sort((e1, e2) -> {
-            LocalDateTime fecha1 = LocalDateTime.parse(e1.getFecha(), formatter);
-            LocalDateTime fecha2 = LocalDateTime.parse(e2.getFecha(), formatter);
+            LocalDate fecha1 = LocalDate.parse(e1.getFecha(), formatter);
+            LocalDate fecha2 = LocalDate.parse(e2.getFecha(), formatter);
             return fecha1.compareTo(fecha2);
         });
 
@@ -75,12 +75,12 @@ public class EventoServiceImpl implements EventoService {
 
         Integer cont = 0;
         List<Evento> eventos = listAll();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-        LocalDateTime fechaEventoCrear = LocalDateTime.parse(evento.getFecha(), formatter);
-        LocalDateTime fechaEventoActual = null;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate fechaEventoCrear = LocalDate.parse(evento.getFecha(), formatter);
+        LocalDate fechaEventoActual = null;
 
         for (Evento ev : eventos) {
-            fechaEventoActual = LocalDateTime.parse(ev.getFecha(), formatter);
+            fechaEventoActual = LocalDate.parse(ev.getFecha(), formatter);
 
             if (fechaEventoActual.isAfter(fechaEventoCrear) && cont < 3) {
                 break;
@@ -94,6 +94,7 @@ public class EventoServiceImpl implements EventoService {
 
         if (cont < 3) {
             evento.setId(currentIndex);
+            evento.setPista(cont);
             dictionary.put(currentIndex, evento);
             currentIndex++;
             return evento;

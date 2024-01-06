@@ -9,6 +9,7 @@ import es.uv.etse.twcam.backend.business.Reserva.Reserva;
 
 public class Evento {
     private Integer id;
+    private Integer pista;
     private String nombre;
     private Usuario dj;
     private String fecha;
@@ -19,9 +20,10 @@ public class Evento {
      */
     
 
-    public Evento(Integer id,String nombre, Usuario dj, String fecha, String tematica, String imagen) {
+    public Evento(Integer id, Integer pista, String nombre, Usuario dj, String fecha, String tematica, String imagen) {
         
         this.nombre = nombre;
+        this.pista = pista;
         this.id = id;
         this.dj = dj;
         this.fecha = fecha;
@@ -32,6 +34,10 @@ public class Evento {
 
     public Integer getId(){
         return id;
+    }
+
+    public Integer getPista(){
+        return pista;
     }
 
     public Usuario getDj() {
@@ -58,6 +64,11 @@ public class Evento {
         this.id = id;
     }
     
+    public void setPista(Integer pista){
+        this.pista = pista;
+    }
+    
+
     public void setDj(Usuario dj) {
         this.dj = dj;
     }
