@@ -2,7 +2,7 @@ package es.uv.etse.twcam.backend.business.Login;
 
 import java.util.List;
 
-import es.uv.etse.twcam.backend.business.ProductException;
+
 import es.uv.etse.twcam.backend.business.ProductNotExistException;
 import es.uv.etse.twcam.backend.business.UsuarioNotExistException;
 
@@ -26,7 +26,7 @@ public interface UsuarioService {
      * @param password contraseña del usuario
      * @return Producto asociado al indentificador.
      */
-    public Usuario_no_password validarCredenciales(Usuario usu) throws ProductException; 
+    public Usuario_no_password validarCredenciales(Usuario usu) throws UsuarioNotExistException; 
 
-    public List<Usuario_no_password> mostrarDJ() throws UsuarioNotExistException;
+    public List<Usuario_no_password> mostrarDJ();
 }

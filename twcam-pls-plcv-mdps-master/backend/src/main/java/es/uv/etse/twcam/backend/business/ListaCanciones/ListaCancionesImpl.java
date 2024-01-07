@@ -23,6 +23,7 @@ public class ListaCancionesImpl implements ListaCancionesService {
 
         if (the == null) {
             the = new ListaCancionesImpl();
+
         }
 
         return the;
@@ -30,8 +31,9 @@ public class ListaCancionesImpl implements ListaCancionesService {
 
     public static void clearInstance() {
         if (the != null) {
-            the = null;
             the.dictionary.clear();
+            the = null;
+
         }
     }
 
@@ -136,8 +138,7 @@ public class ListaCancionesImpl implements ListaCancionesService {
                 for (Cancion cancion : listaCanciones.getCanciones()) {
                     if (cancion.getID().equals(id)) {
                         if (listaCanciones.getCancionReproducida() == null) {
-                            listaCanciones.setCancionReproducida(new ArrayList<>()); // O inicializa la lista
-                                                                                     // apropiadamente
+                            listaCanciones.setCancionReproducida(new ArrayList<>());
                         }
                         listaCanciones.getCancionReproducida().add(cancion);
                         return cancion;

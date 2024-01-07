@@ -9,7 +9,7 @@ public interface ListaCancionesService {
 
     public List<Cancion> listAllCanciones(Integer idEvento);
 
-    public ListaCanciones create(ListaCanciones listaCanciones) ;
+    public ListaCanciones create(ListaCanciones listaCanciones);
 
     public List<Cancion> getByduracion(String duracion, Integer idEvento);
 

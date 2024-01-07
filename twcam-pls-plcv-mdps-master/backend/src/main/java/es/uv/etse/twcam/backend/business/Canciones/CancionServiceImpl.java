@@ -30,8 +30,9 @@ public class CancionServiceImpl implements CancionService {
 
 	public static void clearInstance() {
 		if (the != null) {
-			the = null;
 			the.dictionary.clear();
+			the = null;
+			
 		}
 	}
 

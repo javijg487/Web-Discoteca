@@ -9,7 +9,6 @@ import es.uv.etse.twcam.backend.business.IncorrectProductException;
 import es.uv.etse.twcam.backend.business.ProductException;
 import es.uv.etse.twcam.backend.business.UsuarioNotExistException;
 
-
 public class UsuarioServiceImpl implements UsuarioService {
 
 	/**
@@ -59,8 +58,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 	/**
 	 * Añade un usuario al servicio.
 	 * 
-	 * @param usu Información del producto.
-	 * @return Producto añadido por el servicio.
+	 * @param usu Información del usuario.
+	 * @return Usuario añadido por el servicio.
 	 * @throws ProductException Indicador de error en la adición.
 	 */
 	public Usuario create(Usuario usu) throws ProductException {
@@ -68,7 +67,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 		if (usu != null && usu.getNombre() != null) {
 			dictionary.put(usu.getNombre(), usu);
 		} else {
-			throw new IncorrectProductException("Producto o su nombre son nulos");
+			throw new IncorrectProductException("Usuario o su nombre son nulos");
 		}
 
 		return usu;
@@ -76,54 +75,53 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	@Override
-    public List<Usuario_no_password> listAllUsuario() {
-		
-        List<Usuario_no_password> usuariosInfo = new ArrayList<>();
+	public List<Usuario_no_password> listAllUsuario() {
 
-        for (Usuario usuario : dictionary.values()) {
-            Usuario_no_password usuarioInfo = new Usuario_no_password(usuario.getNombre(), usuario.getRol());
-            usuariosInfo.add(usuarioInfo);
-        }
+		List<Usuario_no_password> usuariosInfo = new ArrayList<>();
 
-        return usuariosInfo;
-    }
+		for (Usuario usuario : dictionary.values()) {
+			Usuario_no_password usuarioInfo = new Usuario_no_password(usuario.getNombre(), usuario.getRol());
+			usuariosInfo.add(usuarioInfo);
+		}
+
+		return usuariosInfo;
+	}
 
 	@Override
 	public Usuario find(String nombre) throws UsuarioNotExistException {
 
-		if (dictionary.containsKey(nombre)) {
+		if (nombre != null && dictionary.containsKey(nombre)) {
 			return dictionary.get(nombre);
 		} else {
-			if (nombre == null) {
-				throw new UsuarioNotExistException(nombre);
-			} else {
-				return null;
+			throw new UsuarioNotExistException(nombre);
+		}
+	}
+
+	@Override
+	public Usuario_no_password validarCredenciales(Usuario usu) throws UsuarioNotExistException {
+		if (usu != null && usu.getNombre() != null) {
+			Usuario usuario = find(usu.getNombre());
+			if (usuario != null && usuario.getPassword().equals(usu.getPassword())) {
+				return new Usuario_no_password(usuario.getNombre(), usuario.getRol());
+
+			}
+
+		}
+		return null;
+	}
+
+	@Override
+	public List<Usuario_no_password> mostrarDJ()  {
+		List<Usuario_no_password> nombresDJ = new ArrayList<>();
+
+		for (Usuario usuario : dictionary.values()) {
+			if ("dj".equals(usuario.getRol())) {
+				Usuario_no_password usuarioInfo = new Usuario_no_password(usuario.getNombre(), usuario.getRol());
+				nombresDJ.add(usuarioInfo);
 			}
 		}
+
+		return nombresDJ;
 	}
-
-	@Override
-	public Usuario_no_password validarCredenciales(Usuario usu) throws ProductException {
-		Usuario usuario = find(usu.getNombre());
-		if (usuario != null && usuario.getPassword().equals(usu.getPassword())) {
-			return new Usuario_no_password(usuario.getNombre(), usuario.getRol());
-		} else {
-			return null;
-		}
-	}
-
-	@Override
-	public List<Usuario_no_password> mostrarDJ() throws UsuarioNotExistException {
-		List<Usuario_no_password> nombresDJ = new ArrayList<>();
-		
-        for (Usuario usuario : dictionary.values()) {
-            if ("dj".equals(usuario.getRol())) {
-				 Usuario_no_password usuarioInfo = new Usuario_no_password(usuario.getNombre(), usuario.getRol());
-                nombresDJ.add(usuarioInfo);
-            }
-        }
-
-        return nombresDJ;
-    }
 
 }

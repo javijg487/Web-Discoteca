@@ -9,7 +9,7 @@ public class Cancion {
     
 
 
-    public Cancion(int id, String nombre, String autor, String duracion, String tematica, String estado) {
+    public Cancion(int id, String nombre, String autor, String duracion, String tematica) {
 		
         this.id = id;
 		this.nombre = nombre;

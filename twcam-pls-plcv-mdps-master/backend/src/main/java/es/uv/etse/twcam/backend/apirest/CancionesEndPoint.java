@@ -207,7 +207,7 @@ public class CancionesEndPoint extends HttpServlet {
 			
         if (pathInfo != null) {
              pathParts = pathInfo.split("/");
-			 System.out.println("RUTA COMPLETA "+ pathInfo);
+		
         }
 
 			if (id == null) {
