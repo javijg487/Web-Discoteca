@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <a mat-button routerLink="/inicio" class="logo-link">
+  <a mat-button routerLink="/" class="logo-link">
     <img
       class="logo"
       src="/assets/images/penya.svg"
@@ -38,7 +38,7 @@
     <div>
       <span>
         {{ login.nombre }}
-        <a href=" " (click)="cerrarSesion()" routerLink="/inicio"
+        <a href=" " (click)="cerrarSesion()" routerLink="/"
           ><fa-icon [icon]="faSignOutAlt" class="color_out"></fa-icon>
         </a>
       </span>

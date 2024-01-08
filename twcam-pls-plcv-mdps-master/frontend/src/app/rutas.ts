@@ -10,7 +10,7 @@ import { EventosComponent } from "./eventos/eventos.component";
 import { CrearEventoComponent } from "./crear-evento/crear-evento.component";
 
 export const rutas: Routes = [
-  { path: "inicio", component: InicioComponent },
+  { path: "", component: InicioComponent },
   { path: "login", component: LoginComponent },
   { path: "reservas", component: ListReservasComponent },
   { path: "crear-reserva/:eventoId", component: CrearReservaComponent },
@@ -18,5 +18,5 @@ export const rutas: Routes = [
   {path: "canciones/:eventoId", component: PedirCancionComponent},
   {path: "eventos", component: EventosComponent},
   {path: "crear-evento", component: CrearEventoComponent},
-  { path: "", redirectTo: "/inicio", pathMatch: "full" },
+  { path: "", redirectTo: "/", pathMatch: "full" },
 ];

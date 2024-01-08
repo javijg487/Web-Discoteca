@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
         // Manejar la respuesta del servidor
         this.autenticarService.guardardatos(response);
         console.log("Inicio de sesión exitoso", response);
-        window.location.href ='/inicio';
+        window.location.href ='/';
         
       },
       (error) => {
