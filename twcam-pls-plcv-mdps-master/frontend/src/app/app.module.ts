@@ -9,13 +9,11 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { FlexLayoutModule } from "@angular/flex-layout";
 
 import "hammerjs";
-import { ProductosComponent } from "./productos/productos.component";
 import { MatListModule } from "@angular/material/list";
 
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from "@angular/material/button";
-import { DetalleProductoComponent } from "./detalle-producto/detalle-producto.component";
 import { MatDialogModule } from "@angular/material/dialog";
 
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -34,15 +32,11 @@ import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 
 import { HttpClientModule } from "@angular/common/http";
 
-import { ProductoService } from "./services/producto.service";
-import { EmpleadoService } from "./services/empleado.service";
 import { ProcesaHTTPMsjService } from "./services/procesa-httpmsj.service";
 
 import { CabeceraComponent } from "./cabecera/cabecera.component";
 import { PieComponent } from "./pie/pie.component";
 import { InicioComponent } from "./inicio/inicio.component";
-import { NosotrosComponent } from "./nosotros/nosotros.component";
-import { ContactoComponent } from "./contacto/contacto.component";
 import { LoginComponent } from "./login/login.component";
 import { baseURL } from "./compartido/baseurl";
 import { CrearReservaComponent } from "./crear-reserva/crear-reserva.component";
@@ -56,13 +50,9 @@ import { CrearEventoComponent } from './crear-evento/crear-evento.component';
 @NgModule({
   declarations: [
     AppComponent,
-    ProductosComponent,
-    DetalleProductoComponent,
     CabeceraComponent,
     PieComponent,
     InicioComponent,
-    NosotrosComponent,
-    ContactoComponent,
     LoginComponent,
     CrearReservaComponent,
     ListReservasComponent,
@@ -97,8 +87,6 @@ import { CrearEventoComponent } from './crear-evento/crear-evento.component';
     MatRadioModule
   ],
   providers: [
-    ProductoService,
-    EmpleadoService,
     { provide: "baseURL", useValue: baseURL },
     ProcesaHTTPMsjService,
   ],

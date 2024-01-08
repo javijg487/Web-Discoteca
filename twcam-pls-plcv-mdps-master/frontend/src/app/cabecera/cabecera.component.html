@@ -1,22 +1,30 @@
 <mat-toolbar color="primary">
-  <span><img src="/assets/images/logo.png" height="30" width="30" /></span>
-  <a mat-button routerLink="/inicio" routerLinkActive="activo"
-    ><fa-icon [icon]="faHome"></fa-icon> Inicio
+  <a mat-button routerLink="/inicio" class="logo-link">
+    <img
+      class="logo"
+      src="/assets/images/penya.svg"
+      height="30"
+      width="30"
+      fill="#FFF"
+    />
+    Penyita
   </a>
-  <a mat-button routerLink="/nosotros" routerLinkActive="activo"
-    ><fa-icon [icon]="faInfo"></fa-icon> Nosotros
-  </a>
-  <a mat-button routerLink="/productos" routerLinkActive="activo"
-    ><fa-icon [icon]="faList"></fa-icon> Productos
-  </a>
-  <a mat-button routerLink="/reservas" routerLinkActive="activo"
+  <a
+    mat-button
+    routerLink="/reservas"
+    routerLinkActive="activo"
+    *ngIf="userRole === 'admin' || userRole === 'cliente'"
     ><fa-icon [icon]="faAddressCard"></fa-icon> Reservas
   </a>
   <a mat-button routerLink="/eventos" routerLinkActive="activo"
     ><fa-icon [icon]="faCalendar"></fa-icon> Eventos
   </a>
 
-  <a *ngIf="userRole === 'admin'" mat-button routerLink="/crear-evento" routerLinkActive="activo"
+  <a
+    *ngIf="userRole === 'admin'"
+    mat-button
+    routerLink="/crear-evento"
+    routerLinkActive="activo"
     ><fa-icon [icon]="faPlus"></fa-icon> Crear Evento
   </a>
 
@@ -30,7 +38,7 @@
     <div>
       <span>
         {{ login.nombre }}
-        <a href=" " (click)="cerrarSesion()"  routerLink="/inicio"
+        <a href=" " (click)="cerrarSesion()" routerLink="/inicio"
           ><fa-icon [icon]="faSignOutAlt" class="color_out"></fa-icon>
         </a>
       </span>

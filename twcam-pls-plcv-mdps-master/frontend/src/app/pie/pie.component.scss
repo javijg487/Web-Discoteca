@@ -13,6 +13,10 @@ $background-pale: #D1C4E9;
     color: white;
     background-color: #06232c;
     @include zero-margin(0px, 0px);
+
+    &-inner {
+        padding: 20px
+    }
 }
 
 

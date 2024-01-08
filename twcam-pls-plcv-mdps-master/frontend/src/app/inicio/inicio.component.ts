@@ -1,24 +1,24 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from "@angular/core";
 
-import { Producto } from '../compartido/producto';
-
-import { ProductoService } from '../services/producto.service';
+import { EventoService } from "../services/evento.service";
+import { Evento } from "../compartido/evento";
 
 @Component({
-  selector: 'app-inicio',
-  templateUrl: './inicio.component.html',
-  styleUrls: ['./inicio.component.scss']
+  selector: "app-inicio",
+  templateUrl: "./inicio.component.html",
+  styleUrls: ["./inicio.component.scss"],
 })
 export class InicioComponent implements OnInit {
+  eventos: Evento[] = [];
 
-  productosOferta:Producto[] = [];
-
-  constructor(private productoService:ProductoService,
-    @Inject('baseURL') public BaseURL:string) { }
+  constructor(
+    private eventoService: EventoService,
+    @Inject("baseURL") public BaseURL: string
+  ) {}
 
   ngOnInit(): void {
-   
-    this.productoService.getProductosOferta().subscribe(productos=>this.productosOferta = productos);
+    this.eventoService
+      .getEventos()
+      .subscribe((eventos) => (this.eventos = eventos));
   }
-
 }

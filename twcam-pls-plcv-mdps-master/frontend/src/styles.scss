@@ -1,28 +1,28 @@
-
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
-
-
-
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 $lt-gray: #ddd;
-$background-dark: #512DA8;
-$background-light: #9575CD;
-$background-pale: #D1C4E9;
-$primary-color-dark:   #512DA8;
-$primary-color:        #673AB7;
-$primary-color-light:  #D1C4E9;
-$primary-color-text:   #FFFFFF;
-$accent-color:         #FFC107;
-$primary-text-color:   #212121;
+$background-dark: #512da8;
+$background-light: #9575cd;
+$background-pale: #d1c4e9;
+$primary-color-dark: #512da8;
+$primary-color: #673ab7;
+$primary-color-light: #d1c4e9;
+$primary-color-text: #ffffff;
+$accent-color: #ffc107;
+$primary-text-color: #212121;
 $secondary-text-color: #757575;
-$divider-color:        #BDBDBD;
+$divider-color: #bdbdbd;
 
 @mixin zero-margin($pad-up-down, $pad-left-right) {
-    margin: 0px auto;
-    padding: $pad-up-down $pad-left-right;
+  margin: 0px auto;
+  padding: $pad-up-down $pad-left-right;
 }
 
-// some basic resets 
+// some basic resets
+
+h2 {
+  color: white !important;
+}
 
 app-root {
   display: flex;
@@ -31,34 +31,72 @@ app-root {
   justify-content: space-between;
 }
 
-body { 
-  padding: 0; 
-  margin: 0; 
-  font-family: sans-serif; 
+body {
+  color: white;
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
   min-height: 100vh;
-  display:flex; flex-direction:column;
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+}
+
+.mdc-radio__outer-circle {
+  border-color: white !important;
+}
+
+.mdc-radio__inner-circle {
+  border-color: $accent-color !important;
+}
+
+.mat-mdc-raised-button:disabled {
+  background-color: #bdbdbd !important;
+}
+
+.mat-mdc-radio-button .mdc-form-field {
+  color: white;
 }
 
 .container {
-    margin: 50px 10%;
-}/* You can add global styles to this file, and also import other style files */
-
-
-
-
-
-
+  margin: 50px 10%;
+} /* You can add global styles to this file, and also import other style files */
 
 .background-primary {
-    background-color: $background-dark!important;
-  }
+  background-color: $background-dark !important;
+}
 .background-accent {
-    background-color: $accent-color!important;
-  }
+  background-color: $accent-color !important;
+}
 .text-floral-white {
-    color: floralwhite!important;
+  color: floralwhite !important;
 }
 
 .flex-spacer {
   flex: 1 1 auto;
+}
+
+.logo {
+  margin-right: 10px;
+
+  &-link {
+    margin-right: 20px;
+    .mdc-button__label {
+      font-size: 25px;
+      display: flex !important;
+    }
+  }
+}
+
+.mat-mdc-slider.mat-primary {
+  --mdc-slider-handle-color: white;
+  --mdc-slider-focus-handle-color: white;
+  --mdc-slider-hover-handle-color: white;
+  --mdc-slider-active-track-color: white;
+  --mdc-slider-inactive-track-color: white;
+  --mdc-slider-with-tick-marks-active-container-color: white;
+  --mdc-slider-with-tick-marks-inactive-container-color: white;
+  --mat-mdc-slider-ripple-color: white;
+  --mat-mdc-slider-hover-ripple-color: rgba(63, 81, 181, 0.05);
+  --mat-mdc-slider-focus-ripple-color: rgba(63, 81, 181, 0.2);
 }

@@ -96,6 +96,22 @@
                 Marcar llegada
               </button>
             </div>
+            <div
+              *ngIf="
+                userRole === 'cliente' && element.estado.includes('En uso')
+              "
+              class="invitado-row"
+            >
+              <h3>Controles</h3>
+              <button
+                mat-raised-button
+                color="primary"
+                class="aprobar-button"
+                (click)="onPedirCancionesClick(element.eventoId)"
+              >
+                Pedir canciones
+              </button>
+            </div>
           </div>
         </div>
       </td>

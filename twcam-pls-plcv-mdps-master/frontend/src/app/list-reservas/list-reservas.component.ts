@@ -130,6 +130,10 @@ export class ListReservasComponent {
   pagar(reservaId: number) {
     this.router.navigate([`/pagos/${reservaId}`]);
   }
+
+  onPedirCancionesClick(eventoId: number) {
+    this.router.navigate([`/canciones/${eventoId}`])
+  }
 }
 
 export interface PeriodicElement {

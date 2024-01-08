@@ -1,5 +1,3 @@
-import { Comentario } from "./comentario";
-
 export class Reserva {
   id?: number;
   eventoId: number;

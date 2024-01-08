@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { Consulta } from "../compartido/consulta";
 import { Observable, catchError } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { baseAPIURL, baseURL, httpOptions } from "../compartido/baseurl";

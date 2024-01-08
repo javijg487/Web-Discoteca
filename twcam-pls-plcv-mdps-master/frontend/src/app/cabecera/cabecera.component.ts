@@ -9,10 +9,9 @@ import {
   faSignInAlt,
   faSignOutAlt,
   faCalendar,
-  faPlus
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
-import { MatDialog, MatDialogRef } from "@angular/material/dialog";
-import { LoginComponent } from "../login/login.component";
+import { MatDialog } from "@angular/material/dialog";
 import { AutenticarService } from "../services/autenticar.service";
 
 @Component({
@@ -29,7 +28,7 @@ export class CabeceraComponent implements OnInit {
   faSignOutAlt = faSignOutAlt;
   faCalendar = faCalendar;
   faPlus = faPlus;
-  userRole:String = getUserData().rol;
+  userRole: String = getUserData().rol;
 
   login = { nombre: "", rol: "" };
 
@@ -47,7 +46,7 @@ export class CabeceraComponent implements OnInit {
   ngOnInit(): void {}
 
   @HostListener("window:storage", ["$event"])
-  procesar(event: StorageEvent) {
+  procesar() {
     this.autenticarService.getLogin().subscribe((login) => {
       this.login = login;
       console.log("Login actualizado:", this.login);
@@ -60,6 +59,6 @@ export class CabeceraComponent implements OnInit {
       .cerrarSesion()
       .subscribe((login) => (this.login = login));
     console.log("Login actualizado_cerrarSesion", this.login);
-    return false;
+    window.location.href = "/";
   }
 }

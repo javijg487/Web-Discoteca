@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Evento } from '../compartido/evento';
 import { EventoService } from '../services/evento.service';
+import { getUserData } from '../utils/getUserData';
 
 @Component({
   selector: 'app-eventos',
@@ -11,6 +12,7 @@ export class EventosComponent {
   vEventos: Array<any>= [];
   errorMensaje: string = "";
   eventoSeleccionado = new Evento();
+  userRole: String = getUserData().rol;
 
   constructor(private eventoService: EventoService,
     @Inject('baseURL') public BaseURL: string) { }
