@@ -9,6 +9,10 @@ $background-moredark: #e0ab4c;
   padding: $pad-up-down $pad-left-right;
 }
 
+.navegacion {
+    font-size: 18px;
+}
+
 .jumbotron {
   @include zero-margin(0px, 0px);
   background: $background-light;
@@ -21,6 +25,7 @@ $background-moredark: #e0ab4c;
 }
 
 .mat-toolbar.mat-primary {
+    height: 70px;
   background-color: #06232c;
 }
 
@@ -29,11 +34,7 @@ $background-moredark: #e0ab4c;
 }
 
 .logo {
-  margin-right: 10px;
-
-  &-link {
-    
-  }
+  margin-right: 0px;
 }
 
 

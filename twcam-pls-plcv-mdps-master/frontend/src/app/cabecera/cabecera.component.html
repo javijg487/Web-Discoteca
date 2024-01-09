@@ -2,25 +2,30 @@
   <a mat-button routerLink="/" class="logo-link">
     <img
       class="logo"
-      src="/assets/images/penya.svg"
-      height="30"
-      width="30"
+      src="/assets/images/Logo.png"
+      height="85px"
+      width="85px"
       fill="#FFF"
     />
-    Penyita
   </a>
   <a
+    class="navegacion"
     mat-button
     routerLink="/reservas"
     routerLinkActive="activo"
     *ngIf="userRole === 'admin' || userRole === 'cliente'"
     ><fa-icon [icon]="faAddressCard"></fa-icon> Reservas
   </a>
-  <a mat-button routerLink="/eventos" routerLinkActive="activo"
+  <a
+    mat-button
+    routerLink="/eventos"
+    routerLinkActive="activo"
+    class="navegacion"
     ><fa-icon [icon]="faCalendar"></fa-icon> Eventos
   </a>
 
   <a
+    class="navegacion"
     *ngIf="userRole === 'admin'"
     mat-button
     routerLink="/crear-evento"

@@ -94,6 +94,7 @@
         color="primary"
         (click)="addInvitado()"
         mat-mini-fab
+        *ngIf="invitados.length < 9"
       >
         +
       </button>
