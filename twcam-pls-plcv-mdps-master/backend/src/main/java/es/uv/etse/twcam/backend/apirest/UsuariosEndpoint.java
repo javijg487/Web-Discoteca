@@ -35,15 +35,7 @@ public class UsuariosEndpoint extends HttpServlet {
 	 * Logger
 	 */
 	private static final Logger logger = LogManager.getLogger(UsuariosEndpoint.class.getName()); // <7>
-
-	/**
-	 * Gson parser
-	 */
 	private final Gson g = new GsonBuilder().create();
-
-	/**
-	 * Servicio sobre productos.
-	 */
 	private static UsuarioService service = UsuarioServiceImpl.getInstance();
 
 	/**

@@ -1,6 +1,6 @@
 package es.uv.etse.twcam.backend.business;
 
-public class UsuarioNotExistException extends ProductException {
+public class UsuarioNotExistException extends GeneralException {
 
 	private static final long serialVersionUID = 1L;
 

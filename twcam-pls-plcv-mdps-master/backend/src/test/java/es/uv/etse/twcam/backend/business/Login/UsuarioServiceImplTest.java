@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import es.uv.etse.twcam.backend.business.ProductException;
+import es.uv.etse.twcam.backend.business.GeneralException;
 import es.uv.etse.twcam.backend.business.UsuarioNotExistException;
 
 import org.apache.logging.log4j.*;
@@ -54,7 +54,7 @@ public class UsuarioServiceImplTest {
 
     @Test
     @Order(2)
-    void testCreate() throws ProductException {
+    void testCreate() throws GeneralException {
 
         Usuario usuario1 = new Usuario("cliente4", "cliente4", "cliente");
         Usuario creaUsuario = service.create(usuario1);

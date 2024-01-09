@@ -20,7 +20,6 @@ import es.uv.etse.twcam.backend.business.Eventos.EventoServiceImpl;
 import es.uv.etse.twcam.backend.business.Reserva.ReservaService;
 import es.uv.etse.twcam.backend.business.Reserva.ReservaServiceDictionaryImpl;
 
-
 import org.apache.logging.log4j.*;
 
 @WebServlet("/api/eventos/*") // <1>
@@ -39,7 +38,7 @@ public class EventosEndpoint extends HttpServlet {
 
     public EventosEndpoint() {
         super();
-        logger.info("Product EndPoint creado"); // <7>
+        logger.info("Eventos EndPoint creado"); // <7>
     }
 
     @Override

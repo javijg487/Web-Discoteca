@@ -5,34 +5,18 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import es.uv.etse.twcam.backend.business.IncorrectProductException;
-import es.uv.etse.twcam.backend.business.ProductException;
+import es.uv.etse.twcam.backend.business.GeneralException;
+import es.uv.etse.twcam.backend.business.IncorrectElementException;
 import es.uv.etse.twcam.backend.business.UsuarioNotExistException;
 
 public class UsuarioServiceImpl implements UsuarioService {
-
-	/**
-	 * Instancia única.
-	 */
 	private static UsuarioServiceImpl the;
-
-	/**
-	 * Diccionario para el almacenamiento de productos.
-	 */
 	protected Map<String, Usuario> dictionary;
 
-	/**
-	 * Crea un servicio sin datos.
-	 */
 	private UsuarioServiceImpl() {
 		dictionary = new Hashtable<>();
 	}
 
-	/**
-	 * Obtiene la instancia única del servicio.
-	 * 
-	 * @return Instancia única.
-	 */
 	public static UsuarioServiceImpl getInstance() {
 
 		if (the == null) {
@@ -42,10 +26,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return the;
 	}
 
-	/**
-	 * Limpia la instancia única del servicio.
-	 * 
-	 */
 	public static void clearInstance() {
 
 		if (the != null) {
@@ -55,19 +35,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	}
 
-	/**
-	 * Añade un usuario al servicio.
-	 * 
-	 * @param usu Información del usuario.
-	 * @return Usuario añadido por el servicio.
-	 * @throws ProductException Indicador de error en la adición.
-	 */
-	public Usuario create(Usuario usu) throws ProductException {
+	public Usuario create(Usuario usu) throws GeneralException {
 
 		if (usu != null && usu.getNombre() != null) {
 			dictionary.put(usu.getNombre(), usu);
 		} else {
-			throw new IncorrectProductException("Usuario o su nombre son nulos");
+			throw new IncorrectElementException("Usuario o su nombre son nulos");
 		}
 
 		return usu;
@@ -111,7 +84,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	@Override
-	public List<Usuario_no_password> mostrarDJ()  {
+	public List<Usuario_no_password> mostrarDJ() {
 		List<Usuario_no_password> nombresDJ = new ArrayList<>();
 
 		for (Usuario usuario : dictionary.values()) {
@@ -123,5 +96,4 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 		return nombresDJ;
 	}
-
 }

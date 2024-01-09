@@ -27,25 +27,10 @@ import org.apache.logging.log4j.*;
 public class CancionesEndPoint extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * Logger
-	 */
 	private static final Logger logger = LogManager.getLogger(CancionesEndPoint.class.getName()); // <7>
-
-	/**
-	 * Gson parser
-	 */
 	private final Gson g = new GsonBuilder().create();
-
-	/**
-	 * Servicio sobre productos.
-	 */
 	private static ListaCancionesService service2 = ListaCancionesImpl.getInstance();
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public CancionesEndPoint() {
 		super();
 		logger.info("Cancion EndPoint creado"); // <7>
@@ -135,8 +120,6 @@ public class CancionesEndPoint extends HttpServlet {
 		}
 	}
 
-	
-
 	@Override
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) {
 		Integer id = null;
@@ -204,11 +187,10 @@ public class CancionesEndPoint extends HttpServlet {
 
 			logger.info("DELETE at {} with ID: {}", request.getContextPath(), id);
 
-			
-        if (pathInfo != null) {
-             pathParts = pathInfo.split("/");
-		
-        }
+			if (pathInfo != null) {
+				pathParts = pathInfo.split("/");
+
+			}
 
 			if (id == null) {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -216,9 +198,9 @@ public class CancionesEndPoint extends HttpServlet {
 				logger.error("ID de cancion no proporcionado en la solicitud DELETE");
 			} else {
 				try {
-					if (pathParts != null && pathParts[1].equals("reproducir")){
+					if (pathParts != null && pathParts[1].equals("reproducir")) {
 						service2.removeReproducidas(id, idEvento);
-					}else{
+					} else {
 						service2.remove(id, idEvento);
 					}
 					response.setStatus(HttpServletResponse.SC_NO_CONTENT);

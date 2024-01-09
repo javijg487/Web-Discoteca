@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import es.uv.etse.twcam.backend.business.ProductException;
+import es.uv.etse.twcam.backend.business.GeneralException;
 
 import org.apache.logging.log4j.*;
 
@@ -50,7 +50,7 @@ public class CancionServiceImplTest {
 
   @Test
   @Order(2)
-  void testCreate() throws ProductException {
+  void testCreate() throws GeneralException {
     ArrayList<Cancion> canciones = new ArrayList<Cancion>();
 
     Cancion cancion = new Cancion(1, "La playa del ingles", "Quevedo", "3:58", "reggaeton");
@@ -76,8 +76,8 @@ public class CancionServiceImplTest {
 
     try {
       service.create(null);
-      fail("El valor nulo en producto no estaba controlado");
-    } catch (ProductException e) {
+      fail("El valor nulo en cancion no estaba controlado");
+    } catch (GeneralException e) {
       logger.info("El valor nulo ha sido controlado correctamente.");
     }
 

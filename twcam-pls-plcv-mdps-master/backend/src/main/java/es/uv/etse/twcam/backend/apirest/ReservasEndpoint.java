@@ -24,7 +24,7 @@ public class ReservasEndpoint extends HttpServlet {
 
   private static final long serialVersionUID = 1L;
 
-  private static final Logger logger = LogManager.getLogger(ProductosEndpoint.class.getName());
+  private static final Logger logger = LogManager.getLogger(ReservasEndpoint.class.getName());
 
   private final Gson g = new GsonBuilder().create();
 
@@ -106,7 +106,7 @@ public class ReservasEndpoint extends HttpServlet {
 
     } catch (Exception e) {
       response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-      logger.error("Producto no actualizado", e);
+      logger.error("Reserva no actualizada", e);
     }
   }
 

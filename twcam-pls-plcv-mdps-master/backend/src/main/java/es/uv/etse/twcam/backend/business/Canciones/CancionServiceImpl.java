@@ -5,8 +5,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import es.uv.etse.twcam.backend.business.IncorrectProductException;
-import es.uv.etse.twcam.backend.business.ProductException;
+import es.uv.etse.twcam.backend.business.GeneralException;
+import es.uv.etse.twcam.backend.business.IncorrectElementException;
 
 public class CancionServiceImpl implements CancionService {
 	private static CancionServiceImpl the;
@@ -36,12 +36,12 @@ public class CancionServiceImpl implements CancionService {
 		}
 	}
 
-	public Cancion create(Cancion cancion) throws ProductException {
+	public Cancion create(Cancion cancion) throws GeneralException {
 
 		if (cancion != null && cancion.getID() != null) {
 			dictionary.put(String.valueOf(cancion.getID()), cancion);
 		} else {
-			throw new IncorrectProductException("Cancion o su nombre son nulos");
+			throw new IncorrectElementException("Cancion o su nombre son nulos");
 		}
 
 		return cancion;
