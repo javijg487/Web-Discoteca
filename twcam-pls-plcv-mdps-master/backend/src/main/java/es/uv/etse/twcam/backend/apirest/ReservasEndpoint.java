@@ -115,7 +115,6 @@ public class ReservasEndpoint extends HttpServlet {
       throws ServletException, IOException {
 
     Integer id = null;
-    Reserva reservaRequest = getReservaFromInputStream(request.getInputStream());
 
     try {
       id = getReservaId(request, true);
@@ -123,26 +122,26 @@ public class ReservasEndpoint extends HttpServlet {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       logger.error("El ID no fue provisto", e);
     }
-
-    Reserva reserva = service.getById(id);
-
-    if (reservaRequest == null) {
-      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-      logger.error("El nuevo estado de la reserva no fue provisto");
-    } else if (reserva == null) {
-      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-      logger.error("El ID de la reserva no fue provisto");
-    } else {
-      response.setStatus(HttpServletResponse.SC_ACCEPTED);
-      reserva.setEstado(reservaRequest.getEstado());
-      service.denyPending(reserva);
-    }
-
-    logger.info("PUT at: {} with {} ", request.getContextPath(), id);
-
-    addCORSHeaders(response);
-
     try {
+      Reserva reserva = service.getById(id);
+      Reserva reservaRequest = getReservaFromInputStream(request.getInputStream());
+
+      if (reservaRequest == null) {
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        logger.error("El nuevo estado de la reserva no fue provisto");
+      } else if (reserva == null) {
+        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        logger.error("El ID de la reserva no fue provisto");
+      } else {
+        response.setStatus(HttpServletResponse.SC_ACCEPTED);
+        reserva.setEstado(reservaRequest.getEstado());
+        service.denyPending(reserva);
+      }
+
+      logger.info("PUT at: {} with {} ", request.getContextPath(), id);
+
+      addCORSHeaders(response);
+
       PrintWriter pw = response.getWriter();
       pw.println(g.toJson(reserva));
       pw.flush();
