@@ -12,12 +12,20 @@ import es.uv.etse.twcam.backend.business.IncorrectElementException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import es.uv.etse.twcam.backend.business.Canciones.Cancion;
+import es.uv.etse.twcam.backend.business.Canciones.CancionServiceImpl;
+import es.uv.etse.twcam.backend.business.ListaCanciones.ListaCanciones;
+import es.uv.etse.twcam.backend.business.ListaCanciones.ListaCancionesImpl;
+import es.uv.etse.twcam.backend.business.ListaCanciones.ListaCancionesService;
+
 public class EventoServiceImpl implements EventoService {
 
     private static EventoServiceImpl the;
 
     protected Map<Integer, Evento> dictionary;
     protected int currentIndex;
+    CancionServiceImpl cancionService = CancionServiceImpl.getInstance();
+    ListaCancionesImpl listaService = ListaCancionesImpl.getInstance();
 
     private EventoServiceImpl() {
         dictionary = new Hashtable<>();
@@ -72,9 +80,11 @@ public class EventoServiceImpl implements EventoService {
 
         Integer cont = 0;
         List<Evento> eventos = listAll();
+        List<Cancion> canciones = cancionService.listAll();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate fechaEventoCrear = LocalDate.parse(evento.getFecha(), formatter);
         LocalDate fechaEventoActual = null;
+        
 
         for (Evento ev : eventos) {
             fechaEventoActual = LocalDate.parse(ev.getFecha(), formatter);
@@ -93,6 +103,11 @@ public class EventoServiceImpl implements EventoService {
             evento.setPista(cont);
             evento.setImagen("../../assets/images/" + evento.getTematica().toLowerCase() + ".jpeg");
             dictionary.put(currentIndex, evento);
+            
+            //Se crea una lista de canciones
+            ListaCanciones listaCanciones = new ListaCanciones(currentIndex, canciones, null, null);
+            listaService.create(listaCanciones);
+            
             currentIndex++;
             return evento;
         } else {

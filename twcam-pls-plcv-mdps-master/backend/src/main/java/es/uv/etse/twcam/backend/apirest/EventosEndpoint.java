@@ -19,6 +19,8 @@ import es.uv.etse.twcam.backend.business.Eventos.EventoService;
 import es.uv.etse.twcam.backend.business.Eventos.EventoServiceImpl;
 import es.uv.etse.twcam.backend.business.Reserva.ReservaService;
 import es.uv.etse.twcam.backend.business.Reserva.ReservaServiceDictionaryImpl;
+import es.uv.etse.twcam.backend.business.ListaCanciones.ListaCancionesImpl;
+import es.uv.etse.twcam.backend.business.ListaCanciones.ListaCancionesService;
 
 import org.apache.logging.log4j.*;
 
@@ -35,6 +37,7 @@ public class EventosEndpoint extends HttpServlet {
 
     private static EventoService service = EventoServiceImpl.getInstance();
     private static ReservaService reservaService = ReservaServiceDictionaryImpl.getInstance();
+    private static ListaCancionesService listaService = ListaCancionesImpl.getInstance();
 
     public EventosEndpoint() {
         super();
@@ -105,6 +108,7 @@ public class EventosEndpoint extends HttpServlet {
                 logger.error("Formato incorrecto, no se pudo crear el evento");
             } else {
                 evento = service.create(evento);
+                
 
                 logger.info("POST at: {} with {} ", request.getContextPath(), evento);
 
