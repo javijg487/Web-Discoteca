@@ -80,7 +80,7 @@ public class ReservaServiceDictionaryImpl implements ReservaService {
 
 			Integer sameEventReservasCounter = 0;
 			for (Map.Entry<Integer, Reserva> entry : dictionary.entrySet()) {
-				if (reserva.getEventoId() == entry.getValue().getEventoId()
+				if (reserva.getEventoId().equals(entry.getValue().getEventoId()) 
 						&& (entry.getValue().getEstado().equals("Aprobada")) || entry.getValue().getEstado().equals("En uso")) {
 					sameEventReservasCounter += 1;
 				}
@@ -89,7 +89,7 @@ public class ReservaServiceDictionaryImpl implements ReservaService {
 			if (sameEventReservasCounter >= 3) {
 				for (Map.Entry<Integer, Reserva> entry : dictionary.entrySet()) {
 					String estado = entry.getValue().getEstado();
-					if (reserva.getEventoId() == entry.getValue().getEventoId() && (estado.contains("Pendiente")
+					if (reserva.getEventoId().equals(entry.getValue().getEventoId()) && (estado.contains("Pendiente")
 							|| estado.contains("Pagada"))) {
 						Reserva newReserva = entry.getValue();
 						newReserva.setEstado("Denegada");
@@ -116,7 +116,7 @@ public class ReservaServiceDictionaryImpl implements ReservaService {
 	public boolean tieneSalasDisponibles(Integer eventoId) {
 		Integer sameEventReservasCounter = 0;
 		for (Map.Entry<Integer, Reserva> entry : dictionary.entrySet()) {
-			if (eventoId == entry.getValue().getEventoId()
+			if (eventoId.equals(entry.getValue().getEventoId())
 					&& (entry.getValue().getEstado().equals("Aprobada") || entry.getValue().getEstado().equals("En uso"))) {
 				sameEventReservasCounter += 1;
 			}
