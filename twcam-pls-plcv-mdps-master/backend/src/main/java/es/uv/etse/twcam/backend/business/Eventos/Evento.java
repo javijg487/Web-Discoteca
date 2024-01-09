@@ -15,9 +15,6 @@ public class Evento {
     private String fecha;
     private String tematica;
     private String imagen;
-    /*
-     * Me falta añadir la Pista
-     */
     
 
     public Evento(Integer id, Integer pista, String nombre, Usuario dj, String fecha, String tematica, String imagen) {

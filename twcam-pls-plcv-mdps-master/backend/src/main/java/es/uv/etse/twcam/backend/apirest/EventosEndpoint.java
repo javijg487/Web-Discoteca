@@ -20,6 +20,7 @@ import es.uv.etse.twcam.backend.business.Eventos.EventoServiceImpl;
 import es.uv.etse.twcam.backend.business.Reserva.ReservaService;
 import es.uv.etse.twcam.backend.business.Reserva.ReservaServiceDictionaryImpl;
 
+
 import org.apache.logging.log4j.*;
 
 @WebServlet("/api/eventos/*") // <1>
@@ -123,6 +124,39 @@ public class EventosEndpoint extends HttpServlet {
             logger.error("Evento no creado", e);
         }
     }
+
+   protected void doPut(HttpServletRequest request, HttpServletResponse response) 
+	throws ServletException, IOException {
+		
+		Evento evento = null;
+		
+		try {
+
+			evento = getEventoFromInputStream(request.getInputStream());
+           
+			if (evento == null) {
+				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+				addCORSHeaders(response);
+				logger.error("Evento no actualizado por no se puede extraer desde JSON");
+			} else {
+				evento = service.update(evento);
+
+				logger.info("PUT at: {} with {} ", request.getContextPath(), evento);
+
+				response.setStatus(HttpServletResponse.SC_ACCEPTED);
+				addCORSHeaders(response); // <2>
+
+				PrintWriter pw = response.getWriter();
+				pw.println(g.toJson(evento));
+				pw.flush();
+				pw.close();
+			}
+			
+		} catch (Exception e) {
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND); // <3>
+			logger.error("Producto no actualizado", e); // <7>
+		}
+	}
 
     @Override
     protected void doOptions(HttpServletRequest request, HttpServletResponse response) {

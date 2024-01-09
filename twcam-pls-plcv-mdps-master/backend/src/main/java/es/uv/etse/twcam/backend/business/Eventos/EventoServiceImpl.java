@@ -91,6 +91,7 @@ public class EventoServiceImpl implements EventoService {
         if (cont < 3) {
             evento.setId(currentIndex);
             evento.setPista(cont);
+            evento.setImagen("../../assets/images/" + evento.getTematica().toLowerCase() + ".jpeg");
             dictionary.put(currentIndex, evento);
             currentIndex++;
             return evento;
@@ -98,5 +99,37 @@ public class EventoServiceImpl implements EventoService {
             throw new IncorrectElementException("Ya hay 3 eventos en un día");
         }
 
+    }
+
+    public Evento update(Evento evento) throws GeneralException {
+        Integer cont = 0;
+        List<Evento> eventos = listAll();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate fechaEventoModificar = LocalDate.parse(evento.getFecha(), formatter);
+        LocalDate fechaEventoActual = null;
+
+        if (evento != null && dictionary.containsKey(evento.getId())) {
+            for (Evento ev : eventos) {
+                fechaEventoActual = LocalDate.parse(ev.getFecha(), formatter);
+
+                if (fechaEventoActual.isAfter(fechaEventoModificar) && cont < 3) {
+                    break;
+                } else if (cont == 3) {
+                    throw new GeneralException("Ya hay 3 eventos en un día");
+                } else if (fechaEventoActual.isEqual(fechaEventoModificar)) {
+                    cont++;
+                }
+            }
+
+            if (cont < 3) {
+                dictionary.put(evento.getId(), evento);
+            } else {
+                throw new GeneralException("La pista introducida no es válida");
+            }
+        } else {
+            throw new IncorrectElementException("No se puede modificar un evento que no existe");
+        }
+
+        return evento;
     }
 }
