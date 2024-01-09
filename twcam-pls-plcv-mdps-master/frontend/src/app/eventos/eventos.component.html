@@ -1,25 +1,43 @@
 <div class="container" fxLayout="column" fxLayoutGap="10px">
-  <div fxFlex *ngIf="vEventos.length>0">
-
+  <div fxFlex *ngIf="vEventos.length > 0">
     <mat-grid-list cols="3" rowHeight="350px">
       <mat-grid-tile *ngFor="let elemento of vEventos">
-        <img class="zoom" height="200px" width="200px" src={{elemento.imagen}} alt={{elemento.nombre}}>
+        <img
+          class="zoom"
+          height="200px"
+          width="200px"
+          src="{{ elemento.imagen }}"
+          alt="{{ elemento.nombre }}"
+        />
         <mat-grid-tile-footer class="card-footer">
-          <h1 mat-line> {{elemento.nombre | uppercase}} </h1>
+          <h1 mat-line>{{ elemento.nombre | uppercase }}</h1>
           <p mat-line>
-            <span> {{elemento.tematica}} </span>
+            <span> {{ elemento.tematica }} </span>
           </p>
           <div mat-line *ngIf="userRole === 'cliente'">
-            <a class="reserva-button" mat-raised-button routerLink="/crear-reserva/{{elemento.id}}" routerLinkActive="activo">Reservar</a>
+            <a
+              class="reserva-button"
+              mat-raised-button
+              routerLink="/crear-reserva/{{elemento.id}}"
+              routerLinkActive="activo"
+              >Reservar</a
+            >
           </div>
-          
+          <div mat-line *ngIf="!userRole">
+            <a
+              class="reserva-button"
+              mat-raised-button
+              routerLink="/login"
+              routerLinkActive="activo"
+              >Reservar</a
+            >
+          </div>
         </mat-grid-tile-footer>
       </mat-grid-tile>
     </mat-grid-list>
   </div>
-  <div [hidden]="vEventos.length>0 || errorMensaje">
+  <div [hidden]="vEventos.length > 0 || errorMensaje">
     <mat-spinner></mat-spinner>
     <h4>Cargando . . .</h4>
   </div>
-
 </div>
