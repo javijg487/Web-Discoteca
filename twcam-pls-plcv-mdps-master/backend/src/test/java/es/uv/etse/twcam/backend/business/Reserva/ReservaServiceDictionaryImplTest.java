@@ -59,13 +59,13 @@ public class ReservaServiceDictionaryImplTest {
     invitado = new Invitado("Maria", "000000B");
     invitados.add(invitado);
 
-    Reserva testReserva = new Reserva(321415, 1, "cliente1", invitados, "TEST", false);
+    Reserva testReserva = new Reserva(321415, 1, "cliente1", invitados, null, false);
     Reserva reservaReal = service.create(testReserva);
 
     assertEquals(reservaReal.getId(), 0);
     assertEquals(reservaReal.getEstado(), "Pendiente de Pago");
 
-    Reserva testReserva2 = new Reserva(321415, 1, "cliente2", invitados, "TEST", false);
+    Reserva testReserva2 = new Reserva(321415, 1, "cliente2", invitados, null, false);
     Reserva reservaReal2 = service.create(testReserva2);
 
     assertEquals(reservaReal2.getId(), 1);
@@ -87,10 +87,10 @@ public class ReservaServiceDictionaryImplTest {
     Reserva reserva = service.listAll().get(0);
     assertEquals("Pendiente de Pago", reserva.getEstado());
 
-    reserva.setEstado("Aceptada");
+    reserva.setEstado("Aprobada");
     reserva = service.update(reserva);
     assertNotNull(reserva);
-    assertEquals("Aceptada", reserva.getEstado());
+    assertEquals("Aprobada", reserva.getEstado());
   }
 
   @Test
@@ -118,17 +118,42 @@ public class ReservaServiceDictionaryImplTest {
 
   @Test
   @Order(8)
+  void testDenyPending() {
+    ArrayList<Invitado> invitados = new ArrayList<Invitado>();
+    Invitado invitado = new Invitado("Samuel", "12345A");
+    invitados.add(invitado);
+    invitado = new Invitado("Maria", "000000B");
+    invitados.add(invitado);
+
+    Reserva reserva = new Reserva(321415, 1, "cliente1", invitados, "Aprobada", false);
+    service.create(reserva);
+    service.create(reserva);
+
+    service.denyPending(service.getById(1));
+
+    assertEquals(service.getById(0).getEstado(), "Denegada");
+  }
+
+  @Test
+  @Order(9)
+  void testTieneSalasDisponibles() {
+    assertEquals(service.tieneSalasDisponibles(1), false);
+    assertEquals(service.tieneSalasDisponibles(0), true);
+  }
+
+  @Test
+  @Order(10)
   void testFailedUpdate() {
     try {
       service.update(null);
-      fail("El valor nulo en producto no estaba controlado");
+      fail("El valor nulo en reserva no estaba controlado");
     } catch (GeneralException e) {
       logger.info("El valor nulo ha sido controlado correctamente.");
     }
   }
 
   @Test
-  @Order(10)
+  @Order(11)
   void testClearInstance() {
 
     ReservaServiceDictionaryImpl.clearInstance();

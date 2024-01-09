@@ -5,11 +5,8 @@
       <hr />
     </div>
   </div>
-  <h3>Lista de invitados</h3>
-  <div *ngFor="let invitado of reserva.invitados" class="invitado-row">
-    <span><strong>Nombre:</strong> {{ invitado.nombre }}</span>
-    <span><strong>DNI:</strong> {{ invitado.dni }}</span>
-  </div>
+  <h3>{{ reserva.esIndividual ? "Entrada individual" : "Sala VIP" }}</h3>
+  <h3>Valor a pagar: {{ reserva.esIndividual ? "€15" : "€100" }}</h3>
   <h3>Datos del pago</h3>
   <form [formGroup]="pagosForm" novalidate class="pagos-form">
     <div>

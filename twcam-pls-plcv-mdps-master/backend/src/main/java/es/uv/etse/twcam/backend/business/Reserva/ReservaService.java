@@ -14,4 +14,8 @@ public interface ReservaService {
   public Reserva create(Reserva reserva);
 
   public Reserva update(Reserva reserva) throws GeneralException;
+
+  public void denyPending(Reserva reserva);
+
+  public boolean tieneSalasDisponibles(Integer eventoId);
 }

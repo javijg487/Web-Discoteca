@@ -47,7 +47,7 @@ public class ReservasEndpoint extends HttpServlet {
     try {
       id = getReservaId(request, false);
     } catch (Exception ex) {
-      logger.error("Error al obtener el ID", ex);
+      // No existe necesidad de tener un ID
     }
 
     if (id != null) {
@@ -115,7 +115,7 @@ public class ReservasEndpoint extends HttpServlet {
       throws ServletException, IOException {
 
     Integer id = null;
-    String nuevoEstado = getReservaFromInputStream(request.getInputStream()).getEstado();
+    Reserva reservaRequest = getReservaFromInputStream(request.getInputStream());
 
     try {
       id = getReservaId(request, true);
@@ -126,12 +126,16 @@ public class ReservasEndpoint extends HttpServlet {
 
     Reserva reserva = service.getById(id);
 
-    if (reserva == null) {
+    if (reservaRequest == null) {
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      logger.error("El nuevo estado de la reserva no fue provisto");
+    } else if (reserva == null) {
       response.setStatus(HttpServletResponse.SC_NOT_FOUND);
       logger.error("El ID de la reserva no fue provisto");
     } else {
       response.setStatus(HttpServletResponse.SC_ACCEPTED);
-      reserva.setEstado(nuevoEstado);
+      reserva.setEstado(reservaRequest.getEstado());
+      service.denyPending(reserva);
     }
 
     logger.info("PUT at: {} with {} ", request.getContextPath(), id);

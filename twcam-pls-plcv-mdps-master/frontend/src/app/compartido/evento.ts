@@ -8,6 +8,7 @@ export class Evento {
   fecha: string;
   tematica: string;
   imagen?: string;
+  tieneSalasDisponibles?: boolean;
 
   constructor() {
     this.id = -1;

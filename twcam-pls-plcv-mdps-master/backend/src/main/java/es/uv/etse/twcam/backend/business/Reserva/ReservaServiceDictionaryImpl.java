@@ -74,13 +74,57 @@ public class ReservaServiceDictionaryImpl implements ReservaService {
 		return reserva;
 	}
 
+	public void denyPending(Reserva reserva) {
+		if (reserva != null && dictionary.containsKey(reserva.getId()) && reserva.getEsIndividual() == false
+				&& reserva.getEstado().equals("Aprobada")) {
+
+			Integer sameEventReservasCounter = 0;
+			for (Map.Entry<Integer, Reserva> entry : dictionary.entrySet()) {
+				if (reserva.getEventoId() == entry.getValue().getEventoId()
+						&& (entry.getValue().getEstado().equals("Aprobada")) || entry.getValue().getEstado().equals("En uso")) {
+					sameEventReservasCounter += 1;
+				}
+			}
+
+			if (sameEventReservasCounter >= 3) {
+				for (Map.Entry<Integer, Reserva> entry : dictionary.entrySet()) {
+					String estado = entry.getValue().getEstado();
+					if (reserva.getEventoId() == entry.getValue().getEventoId() && (estado.contains("Pendiente")
+							|| estado.contains("Pagada"))) {
+						Reserva newReserva = entry.getValue();
+						newReserva.setEstado("Denegada");
+						dictionary.put(entry.getValue().getId(), newReserva);
+					}
+				}
+
+			}
+		}
+	}
+
 	public Reserva create(Reserva reserva) {
 		reserva.setId(currentIndex);
-		reserva.setEstado("Pendiente de Pago");
+		if (reserva.getEstado() == null) {
+			reserva.setEstado("Pendiente de Pago");
+		}
 
 		dictionary.put(currentIndex, reserva);
 		currentIndex += 1;
 
 		return dictionary.get(currentIndex - 1);
+	}
+
+	public boolean tieneSalasDisponibles(Integer eventoId) {
+		Integer sameEventReservasCounter = 0;
+		for (Map.Entry<Integer, Reserva> entry : dictionary.entrySet()) {
+			if (eventoId == entry.getValue().getEventoId()
+					&& (entry.getValue().getEstado().equals("Aprobada") || entry.getValue().getEstado().equals("En uso"))) {
+				sameEventReservasCounter += 1;
+			}
+		}
+
+		if (sameEventReservasCounter >= 3) {
+			return false;
+		}
+		return true;
 	}
 }

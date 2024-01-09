@@ -1,0 +1,71 @@
+[
+  {
+    "id": 4,
+    "eventoId": 3,
+    "usuario": "cliente1",
+    "estado": "Pagada (Esperando aprobacion)",
+    "invitados": [
+      {
+        "nombre": "Miguel",
+        "dni": "00000F"
+      }
+    ],
+    "esIndividual": false
+  },
+  {
+    "id": 3,
+    "eventoId": 3,
+    "usuario": "cliente1",
+    "estado": "Pagada (Esperando aprobacion)",
+    "invitados": [
+      {
+        "nombre": "Santiago",
+        "dni": "12345A"
+      },
+      {
+        "nombre": "Camila",
+        "dni": "12345B"
+      }
+    ],
+    "esIndividual": false
+  },
+  {
+    "id": 2,
+    "eventoId": 3,
+    "usuario": "cliente1",
+    "estado": "Aprobada",
+    "invitados": [
+      {
+        "nombre": "Alberto",
+        "dni": "12345C"
+      }
+    ],
+    "esIndividual": false
+  },
+  {
+    "id": 1,
+    "eventoId": 1,
+    "usuario": "cliente1",
+    "estado": "Pagada (Esperando aprobacion)",
+    "invitados": [
+      {
+        "nombre": "Marco",
+        "dni": "00000A"
+      }
+    ],
+    "esIndividual": false
+  },
+  {
+    "id": 0,
+    "eventoId": 3,
+    "usuario": "cliente1",
+    "estado": "Aprobada",
+    "invitados": [
+      {
+        "nombre": "Emma",
+        "dni": "12345D"
+      }
+    ],
+    "esIndividual": false
+  }
+]

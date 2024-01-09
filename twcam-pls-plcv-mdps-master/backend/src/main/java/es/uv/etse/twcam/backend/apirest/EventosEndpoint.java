@@ -12,10 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 
 import es.uv.etse.twcam.backend.business.Eventos.Evento;
 import es.uv.etse.twcam.backend.business.Eventos.EventoService;
 import es.uv.etse.twcam.backend.business.Eventos.EventoServiceImpl;
+import es.uv.etse.twcam.backend.business.Reserva.ReservaService;
+import es.uv.etse.twcam.backend.business.Reserva.ReservaServiceDictionaryImpl;
 
 import org.apache.logging.log4j.*;
 
@@ -31,6 +34,7 @@ public class EventosEndpoint extends HttpServlet {
     private final Gson g = new GsonBuilder().create();
 
     private static EventoService service = EventoServiceImpl.getInstance();
+    private static ReservaService reservaService = ReservaServiceDictionaryImpl.getInstance();
 
     public EventosEndpoint() {
         super();
@@ -59,7 +63,10 @@ public class EventosEndpoint extends HttpServlet {
         } else {
             try {
                 Evento ev = service.getById(id);
-                result = g.toJson(ev);
+                JsonElement jsonElement = g.toJsonTree(ev);
+                jsonElement.getAsJsonObject().addProperty("tieneSalasDisponibles",
+                        reservaService.tieneSalasDisponibles(id));
+                result = g.toJson(jsonElement);
             } catch (Exception e) {
                 logger.error("Evento no encontrado");
             }

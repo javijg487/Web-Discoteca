@@ -2,13 +2,17 @@
   <div fxFlex>
     <div>
       <h3>Nueva reserva</h3>
+      <p><strong>Nombre del evento:</strong> {{ evento.nombre }}</p>
+      <p><strong>Fecha: </strong>{{ evento.fecha }}</p>
+      <p><strong>Temática: </strong>{{ evento.tematica }}</p>
       <hr />
     </div>
   </div>
   <form [formGroup]="reservaForm" novalidate class="invitados-form">
+    <div *ngIf="!evento.tieneSalasDisponibles">Lo sentimos, en el momento no hay salas VIP disponibles para este evento</div>
     <div>
       <mat-radio-group formControlName="tipoReserva">
-        <mat-radio-button class="example-margin" value="salaVip">
+        <mat-radio-button *ngIf="evento.tieneSalasDisponibles" class="example-margin" value="salaVip">
           Sala VIP
         </mat-radio-button>
         <mat-radio-button class="example-margin" value="individual">
@@ -85,7 +89,12 @@
           </div>
         </div>
       </div>
-      <button type="button" color="primary" (click)="addInvitado()" mat-mini-fab>
+      <button
+        type="button"
+        color="primary"
+        (click)="addInvitado()"
+        mat-mini-fab
+      >
         +
       </button>
     </div>
@@ -94,12 +103,15 @@
       <button
         (click)="onSubmit()"
         type="button"
-        [disabled]="reservaForm.invalid && reservaForm.controls.tipoReserva.value === 'salaVip'"
+        [disabled]="
+          reservaForm.invalid &&
+          reservaForm.controls.tipoReserva.value === 'salaVip'
+        "
         color="primary"
         mat-raised-button
         class="submit-button"
       >
-        Submit
+        Reservar
       </button>
     </div>
   </form>

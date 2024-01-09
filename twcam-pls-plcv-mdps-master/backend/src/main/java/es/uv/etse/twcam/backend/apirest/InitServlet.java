@@ -29,6 +29,9 @@ import es.uv.etse.twcam.backend.business.ListaCanciones.ListaCancionesService;
 import es.uv.etse.twcam.backend.business.Login.Usuario;
 import es.uv.etse.twcam.backend.business.Login.UsuarioService;
 import es.uv.etse.twcam.backend.business.Login.UsuarioServiceImpl;
+import es.uv.etse.twcam.backend.business.Reserva.Reserva;
+import es.uv.etse.twcam.backend.business.Reserva.ReservaService;
+import es.uv.etse.twcam.backend.business.Reserva.ReservaServiceDictionaryImpl;
 
 /**
  * Servlet de inicializaci&oacute;n
@@ -54,39 +57,31 @@ public class InitServlet extends HttpServlet {
             logger.info("Starting angular-j2e-example apirest ...");
 
             String jsonFile = getServletConfig().getInitParameter("json-database"); // <1>
-
             InputStream jsonStream = getServletContext().getResourceAsStream(jsonFile); // <2>
-
             initProductsService(jsonStream); // <3>
 
             String jsonFileusu = getServletConfig().getInitParameter("json-database-usuarios"); // <1>
-
             InputStream jsonStreamusu = getServletContext().getResourceAsStream(jsonFileusu); // <2>
-
             initUsuarioService(jsonStreamusu); // <3>
 
             String jsonFilecancion = getServletConfig().getInitParameter("json-database-canciones"); // <1>
-
             InputStream jsonStreamcancion = getServletContext().getResourceAsStream(jsonFilecancion); // <2>
-
             initCancionService(jsonStreamcancion);
 
             String jsonlistaCanciones = getServletConfig().getInitParameter("json-database-listaCanciones"); // <1>
-
             InputStream jsonStreamlistaCanciones = getServletContext().getResourceAsStream(jsonlistaCanciones); // <2>
-
             initListaCancionService(jsonStreamlistaCanciones);
 
             String jsonEventos = getServletConfig().getInitParameter("json-database-eventos"); // <1>
-
             InputStream jsonStreamEventos = getServletContext().getResourceAsStream(jsonEventos); // <2>
-
             initEventoService(jsonStreamEventos);
+
+            String jsonReservas = getServletConfig().getInitParameter("json-database-reservas"); // <1>
+            InputStream jsonStreamReservas = getServletContext().getResourceAsStream(jsonReservas); // <2>
+            initReservaService(jsonStreamReservas);
 
             logger.info("proyecto-discoteca apirest is started");
 
-            
-            
         } catch (Exception e) {
             logger.error("proyecto-discoteca apirest is not able to be started: ", e);
             throw new ServletException(e);
@@ -200,6 +195,22 @@ public class InitServlet extends HttpServlet {
             service.create(evento);
         }
 
+        logger.info("Cargados {} productos", eventos.length);
+
+        return service;
+    }
+
+    public static ReservaService initReservaService(InputStream jsonStream)
+            throws GeneralException { // <3>
+
+        ReservaServiceDictionaryImpl service = ReservaServiceDictionaryImpl.getInstance();
+        Reader jsonReader = new InputStreamReader(jsonStream);
+        Gson gson = new GsonBuilder().create();
+        Reserva[] eventos = gson.fromJson(jsonReader, Reserva[].class);
+
+        for (Reserva evento : eventos) {
+            service.create(evento);
+        }
         logger.info("Cargados {} productos", eventos.length);
 
         return service;

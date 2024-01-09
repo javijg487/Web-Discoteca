@@ -10,6 +10,8 @@ import {
 import { ReservaService } from "../services/reserva.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { getUserData } from "../utils/getUserData";
+import { EventoService } from "../services/evento.service";
+import { Evento } from "../compartido/evento";
 
 @Component({
   selector: "app-crear-reserva",
@@ -20,10 +22,12 @@ export class CrearReservaComponent {
   reservaForm!: FormGroup;
   eventoId!: String;
   username: String = getUserData().nombre;
+  evento: Evento = new Evento();
 
   constructor(
     private fb: FormBuilder,
     private reservaService: ReservaService,
+    private eventoService: EventoService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -41,6 +45,14 @@ export class CrearReservaComponent {
 
     this.route.params.subscribe((params) => {
       this.eventoId = params["eventoId"];
+      this.eventoService
+        .getEvento(Number(this.eventoId))
+        .subscribe((evento) => {
+          this.evento = evento;
+          if (!evento.tieneSalasDisponibles) {
+            this.reservaForm.controls.tipoReserva.setValue("individual");
+          }
+        });
     });
   }
 
@@ -64,7 +76,8 @@ export class CrearReservaComponent {
   }
 
   onSubmit() {
-    const isSingleTicket = this.reservaForm.controls.tipoReserva.value === 'individual';
+    const isSingleTicket =
+      this.reservaForm.controls.tipoReserva.value === "individual";
     const requestBody = {
       ...this.reservaForm.value,
       esIndividual: isSingleTicket,

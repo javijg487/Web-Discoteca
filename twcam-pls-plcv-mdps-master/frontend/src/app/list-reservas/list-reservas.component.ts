@@ -6,11 +6,13 @@ import {
   transition,
   trigger,
 } from "@angular/animations";
+import { forkJoin } from "rxjs";
+
 import { Reserva } from "../compartido/reserva";
 import { ReservaService } from "../services/reserva.service";
 import { getUserData } from "../utils/getUserData";
 import { Router } from "@angular/router";
-// import { forkJoin } from "rxjs";
+import { EventoService } from "../services/evento.service";
 
 /**
  * @title Table with expandable rows
@@ -45,58 +47,41 @@ export class ListReservasComponent {
   tableData: Array<Object> = [];
   userRole: String = getUserData().rol;
   username: String = getUserData().nombre;
-  eventos: Array<any> = [
-    {
-      id: 3,
-      nombre: "Evento 3",
-      dj: {
-        nombre: "DJ 3",
-      },
-      fecha: "2024-06-15T21:00",
-      tematica: "Pop",
-    },
-    {
-      id: 2,
-      nombre: "Evento 2",
-      dj: {
-        nombre: "DJ 2",
-      },
-      fecha: "2024-06-15T21:00",
-      tematica: "Reggaeton",
-    },
-    {
-      id: 1,
-      nombre: "Evento 1",
-      dj: {
-        nombre: "DJ 1",
-      },
-      fecha: "2024-06-15T21:00",
-      tematica: "Rock",
-    },
-  ];
+  eventos: Array<any> = [];
 
-  constructor(private reservaService: ReservaService, private router: Router) {}
+  constructor(
+    private reservaService: ReservaService,
+    private eventoService: EventoService,
+    private router: Router
+  ) {}
 
   cargarReservas() {
     const usernameForGet = this.userRole === "cliente" ? this.username : null;
     // TODO: Create forkJoin for Eventos & Reservas
-    // forkJoin([p1, p2, p3], function (p1, p2, p3) {
-    //   /* your combining code here */
-    // });
-    this.reservaService.getReservas(usernameForGet).subscribe((reservas) => {
-      this.tableData = reservas.map((reserva) => {
-        const eventoDeReserva = this.eventos.find(
-          (evento) => evento.id === reserva.eventoId
-        );
-        return {
-          ...reserva,
-          tipoDeReserva: reserva.esIndividual ? "Individual" : "Sala VIP",
-          nombreEvento: eventoDeReserva.nombre,
-          fecha: eventoDeReserva.fecha.replace(/T.*/,'').split('-').reverse().join('-'),
-        };
-      });
-      console.log(this.tableData);
-    });
+    forkJoin(
+      [
+        this.reservaService.getReservas(usernameForGet),
+        this.eventoService.getEventos(),
+      ],
+      (reservas, eventos) => {
+        this.eventos = eventos;
+        this.tableData = reservas.map((reserva) => {
+          const eventoDeReserva = this.eventos.find(
+            (evento) => evento.id === reserva.eventoId
+          );
+          return {
+            ...reserva,
+            tipoDeReserva: reserva.esIndividual ? "Individual" : "Sala VIP",
+            nombreEvento: eventoDeReserva.nombre,
+            fecha: eventoDeReserva.fecha
+              .replace(/T.*/, "")
+              .split("-")
+              .reverse()
+              .join("-"),
+          };
+        });
+      }
+    ).subscribe();
   }
 
   ngOnInit() {
@@ -132,7 +117,7 @@ export class ListReservasComponent {
   }
 
   onPedirCancionesClick(eventoId: number) {
-    this.router.navigate([`/canciones/${eventoId}`])
+    this.router.navigate([`/canciones/${eventoId}`]);
   }
 }
 
