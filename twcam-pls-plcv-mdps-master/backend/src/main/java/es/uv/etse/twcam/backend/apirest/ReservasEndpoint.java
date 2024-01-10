@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import es.uv.etse.twcam.backend.business.GeneralException;
 import es.uv.etse.twcam.backend.business.Reserva.Reserva;
 import es.uv.etse.twcam.backend.business.Reserva.ReservaService;
 import es.uv.etse.twcam.backend.business.Reserva.ReservaServiceDictionaryImpl;
@@ -35,9 +36,20 @@ public class ReservasEndpoint extends HttpServlet {
     logger.info("Reservas EndPoint creado");
   }
 
+  private void finishConnection(HttpServletResponse response, String jsonString) {
+    try {
+      addCORSHeaders(response);
+      PrintWriter pw = response.getWriter();
+      pw.println(jsonString);
+      pw.flush();
+      pw.close();
+    } catch (IOException ex) {
+      logger.error("Imposible enviar respuesta", ex);
+    }
+  }
+
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-
     Integer id = null;
     String result = null;
     String username = request.getParameter("username");
@@ -63,46 +75,27 @@ public class ReservasEndpoint extends HttpServlet {
       result = g.toJson(reserva);
     }
 
-    addCORSHeaders(response);
-
     response.setStatus(HttpServletResponse.SC_ACCEPTED);
 
-    try {
-      PrintWriter pw = response.getWriter();
-      pw.println(result);
-      pw.flush();
-      pw.close();
-    } catch (IOException ex) {
-      logger.error("Imposible enviar respuesta", ex);
-    }
+    finishConnection(response, result);
   }
 
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-
     try {
-
       Reserva reserva = getReservaFromInputStream(request.getInputStream());
 
       if (reserva == null) {
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        addCORSHeaders(response);
         logger.error("Formato incorrecto, no se pudo crear la reserva");
       } else {
         reserva = service.create(reserva);
-
         logger.info("POST at: {} with {} ", request.getContextPath(), reserva);
-
         response.setStatus(HttpServletResponse.SC_ACCEPTED);
 
-        addCORSHeaders(response);
-
-        PrintWriter pw = response.getWriter();
-        pw.println(g.toJson(reserva));
-        pw.flush();
-        pw.close();
       }
+      finishConnection(response, g.toJson(reserva));
 
     } catch (Exception e) {
       response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -113,41 +106,25 @@ public class ReservasEndpoint extends HttpServlet {
   @Override
   protected void doPut(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-
-    Integer id = null;
-
     try {
-      id = getReservaId(request, true);
-    } catch (Exception e) {
-      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-      logger.error("El ID no fue provisto", e);
-    }
-    try {
-      Reserva reserva = service.getById(id);
-      Reserva reservaRequest = getReservaFromInputStream(request.getInputStream());
+      Reserva reserva = getReservaFromInputStream(request.getInputStream());
 
-      if (reservaRequest == null) {
+      if (reserva == null) {
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         logger.error("El nuevo estado de la reserva no fue provisto");
-      } else if (reserva == null) {
-        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-        logger.error("El ID de la reserva no fue provisto");
       } else {
         response.setStatus(HttpServletResponse.SC_ACCEPTED);
-        reserva.setEstado(reservaRequest.getEstado());
+        service.update(reserva);
         service.denyPending(reserva);
       }
 
-      logger.info("PUT at: {} with {} ", request.getContextPath(), id);
+      logger.info("PUT at: {} with {} ", request.getContextPath(), reserva.getId());
 
-      addCORSHeaders(response);
-
-      PrintWriter pw = response.getWriter();
-      pw.println(g.toJson(reserva));
-      pw.flush();
-      pw.close();
+      finishConnection(response, g.toJson(reserva));
     } catch (IOException ex) {
       logger.error("Imposible enviar respuesta", ex);
+    } catch (GeneralException ex) {
+      logger.error("No se encontro la reserva");
     }
   }
 
@@ -166,11 +143,8 @@ public class ReservasEndpoint extends HttpServlet {
   }
 
   private Integer getReservaId(HttpServletRequest request, Boolean required) throws APIRESTException {
-
     String url = request.getRequestURL().toString();
-
     int posIni = url.lastIndexOf("/");
-
     int posEnd = url.lastIndexOf("?");
 
     if (posEnd < 0) {
@@ -187,7 +161,6 @@ public class ReservasEndpoint extends HttpServlet {
     }
 
     return Integer.parseInt(id);
-
   }
 
   private Reserva getReservaFromInputStream(InputStream stream) {

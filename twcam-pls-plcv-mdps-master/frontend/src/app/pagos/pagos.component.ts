@@ -51,16 +51,12 @@ export class PagosComponent {
 
   pagar() {
     if (this.pagosForm.status == "VALID") {
-      this.reservaService
-        .editarEstadoReserva(
-          this.reservaId,
-          this.reserva.esIndividual
-            ? "Aprobada"
-            : "Pagada (Esperando aprobacion)"
-        )
-        .subscribe(() => {
-          this.router.navigate(["/reservas"]);
-        });
+      this.reserva.estado = this.reserva.esIndividual
+        ? "Aprobada"
+        : "Pagada (Esperando aprobacion)";
+      this.reservaService.editarEstadoReserva(this.reserva).subscribe(() => {
+        this.router.navigate(["/reservas"]);
+      });
     } else {
       this.pagosForm.markAllAsTouched();
     }

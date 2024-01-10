@@ -33,16 +33,9 @@ export class ReservaService {
       .pipe(catchError(this.procesaHttpmsjService.gestionError));
   }
 
-  editarEstadoReserva(
-    reservaId: number,
-    estado: string
-  ): Observable<{ estado: string }> {
+  editarEstadoReserva(reserva: Reserva): Observable<Reserva> {
     return this.http
-      .put<{ estado: string }>(
-        baseAPIURL + `reservas/${reservaId}`,
-        { estado },
-        httpOptions
-      )
+      .put<Reserva>(baseAPIURL + `reservas/${reserva.id}`, reserva, httpOptions)
       .pipe(catchError(this.procesaHttpmsjService.gestionError));
   }
 }

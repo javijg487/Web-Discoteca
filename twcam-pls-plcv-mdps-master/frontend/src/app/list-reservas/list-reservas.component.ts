@@ -88,28 +88,25 @@ export class ListReservasComponent {
     this.cargarReservas();
   }
 
-  onApprovalClick(reservaId: number) {
-    this.reservaService
-      .editarEstadoReserva(reservaId, "Aprobada")
-      .subscribe(() => {
-        this.cargarReservas();
-      });
+  onApprovalClick(reserva: Reserva) {
+    reserva.estado = "Aprobada";
+    this.reservaService.editarEstadoReserva(reserva).subscribe(() => {
+      this.cargarReservas();
+    });
   }
 
-  onDenialClick(reservaId: number) {
-    this.reservaService
-      .editarEstadoReserva(reservaId, "Denegada")
-      .subscribe(() => {
-        this.cargarReservas();
-      });
+  onDenialClick(reserva: Reserva) {
+    reserva.estado = "Denegada";
+    this.reservaService.editarEstadoReserva(reserva).subscribe(() => {
+      this.cargarReservas();
+    });
   }
 
-  onInUseClick(reservaId: number) {
-    this.reservaService
-      .editarEstadoReserva(reservaId, "En uso")
-      .subscribe(() => {
-        this.cargarReservas();
-      });
+  onInUseClick(reserva: Reserva) {
+    reserva.estado = "En uso";
+    this.reservaService.editarEstadoReserva(reserva).subscribe(() => {
+      this.cargarReservas();
+    });
   }
 
   pagar(reservaId: number) {
