@@ -116,9 +116,9 @@ public class ReservasEndpoint extends HttpServlet {
         response.setStatus(HttpServletResponse.SC_ACCEPTED);
         service.update(reserva);
         service.denyPending(reserva);
-      }
 
-      logger.info("PUT at: {} with {} ", request.getContextPath(), reserva.getId());
+        logger.info("PUT at: {} with {} ", request.getContextPath(), reserva.getId());
+      }
 
       finishConnection(response, g.toJson(reserva));
     } catch (IOException ex) {
