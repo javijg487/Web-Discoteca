@@ -22,28 +22,14 @@ public class ListaCanciones {
         return idEvento;
     }
 
-    public void setIdEvento(int idEvento) {
-        this.idEvento = idEvento;
-    }
-  
     public List<Cancion> getCanciones() {
         return canciones;
     }
-
-    public void setCanciones(List<Cancion> canciones) {
-        this.canciones = canciones;
-    }
-
 
     public List<Cancion> getCancionesPendientes() {
         return cancionesPendientes;
     }
 
-    public void setCancionesPendientes(List<Cancion> cancionesPendientes) {
-        this.cancionesPendientes = cancionesPendientes;
-    }
-
-    
     public List<Cancion>  getCancionReproducida() {
         return cancionReproducida;
     }

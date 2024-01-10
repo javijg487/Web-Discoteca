@@ -23,6 +23,10 @@ public class Cancion {
         return id;
     }
 
+    public String getNombre(){
+        return nombre;
+    }
+
     public String getAutor(){
         return autor;
     }
@@ -31,32 +35,7 @@ public class Cancion {
         return duracion;
     }
 
-    public String getNombre(){
-        return nombre;
-    }
-
     public String getTematica(){
         return tematica;
     }
-
-    public void setID(Integer id) {
-        this.id = id;
-    }
-
-    public void setAutor(String autor) {
-        this.autor = autor;
-    }
-
-    public void setDuracion(String duracion) {
-        this.duracion = duracion;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public void setTematica(String tematica) {
-        this.tematica = tematica;
-    }
-
 }
