@@ -16,7 +16,11 @@
       "password": "dj2",
       "rol": "dj"
     },
-
+    {
+      "nombre": "dj3",
+      "password": "dj3",
+      "rol": "dj"
+    },
     { 
       "nombre": "cliente1",
       "password": "cliente1",

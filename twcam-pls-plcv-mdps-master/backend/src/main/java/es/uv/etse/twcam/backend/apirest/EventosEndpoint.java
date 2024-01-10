@@ -108,7 +108,6 @@ public class EventosEndpoint extends HttpServlet {
                 logger.error("Formato incorrecto, no se pudo crear el evento");
             } else {
                 evento = service.create(evento);
-                
 
                 logger.info("POST at: {} with {} ", request.getContextPath(), evento);
 
@@ -128,38 +127,69 @@ public class EventosEndpoint extends HttpServlet {
         }
     }
 
-   protected void doPut(HttpServletRequest request, HttpServletResponse response) 
-	throws ServletException, IOException {
-		
-		Evento evento = null;
-		
-		try {
+    protected void doPut(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-			evento = getEventoFromInputStream(request.getInputStream());
-           
-			if (evento == null) {
-				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-				addCORSHeaders(response);
-				logger.error("Evento no actualizado por no se puede extraer desde JSON");
-			} else {
-				evento = service.update(evento);
+        Evento evento = null;
 
-				logger.info("PUT at: {} with {} ", request.getContextPath(), evento);
+        try {
 
-				response.setStatus(HttpServletResponse.SC_ACCEPTED);
-				addCORSHeaders(response); // <2>
+            evento = getEventoFromInputStream(request.getInputStream());
 
-				PrintWriter pw = response.getWriter();
-				pw.println(g.toJson(evento));
-				pw.flush();
-				pw.close();
-			}
-			
-		} catch (Exception e) {
-			response.setStatus(HttpServletResponse.SC_NOT_FOUND); // <3>
-			logger.error("Producto no actualizado", e); // <7>
-		}
-	}
+            if (evento == null) {
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                addCORSHeaders(response);
+                logger.error("Evento no actualizado por no se puede extraer desde JSON");
+            } else {
+                evento = service.update(evento);
+
+                logger.info("PUT at: {} with {} ", request.getContextPath(), evento);
+
+                response.setStatus(HttpServletResponse.SC_ACCEPTED);
+                addCORSHeaders(response); // <2>
+
+                PrintWriter pw = response.getWriter();
+                pw.println(g.toJson(evento));
+                pw.flush();
+                pw.close();
+            }
+
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND); // <3>
+            logger.error("Producto no actualizado", e); // <7>
+        }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) {
+        Integer id = null;
+        String[] pathParts = null;
+        String pathInfo = request.getPathInfo();
+
+        try {
+            id = getEventoId(request);
+        } catch (Exception ex) {
+            logger.error("Error al obtener el ID del evento", ex);
+        }
+        if (id != null) {
+
+            logger.info("DELETE at {} with ID: {}", request.getContextPath(), id);
+
+            try {
+                service.remove(id);
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                addCORSHeaders(response);
+
+            } catch (Exception e) {
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                logger.error("Evento no encontrado para eliminar", e);
+            }
+        } else {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            logger.error("Id del evento nulo");
+        }
+
+    }
 
     @Override
     protected void doOptions(HttpServletRequest request, HttpServletResponse response) {

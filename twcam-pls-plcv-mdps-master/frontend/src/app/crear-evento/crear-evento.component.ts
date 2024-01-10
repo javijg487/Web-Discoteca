@@ -58,12 +58,16 @@ export class CrearEventoComponent implements OnInit {
   onSubmitEvento() {
    console.log(this.eventForm.status)
     // Aquí procesarías los datos del formulario
-    this.eventoService
+    if (this.eventForm.status == "VALID"){
+      this.eventoService
       .enviarEvento({
         ...this.eventForm.value,
         dj: { nombre: this.eventForm.value.dj },
       })
-      .subscribe();
+      .subscribe(() =>
+        this.router.navigate(['/eventos/']));
+    }
+    
 
     this.eventForm.reset({
       nombre: "",

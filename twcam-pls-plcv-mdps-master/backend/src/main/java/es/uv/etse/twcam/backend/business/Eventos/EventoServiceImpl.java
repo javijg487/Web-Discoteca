@@ -81,6 +81,7 @@ public class EventoServiceImpl implements EventoService {
         Integer cont = 0;
         List<Evento> eventos = listAll();
         List<Cancion> canciones = cancionService.listAll();
+        List<Cancion> listaVacia = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate fechaEventoCrear = LocalDate.parse(evento.getFecha(), formatter);
         LocalDate fechaEventoActual = null;
@@ -105,7 +106,7 @@ public class EventoServiceImpl implements EventoService {
             dictionary.put(currentIndex, evento);
             
             //Se crea una lista de canciones
-            ListaCanciones listaCanciones = new ListaCanciones(currentIndex, canciones, null, null);
+            ListaCanciones listaCanciones = new ListaCanciones(currentIndex, canciones, listaVacia, listaVacia);
             listaService.create(listaCanciones);
             
             currentIndex++;
@@ -116,6 +117,7 @@ public class EventoServiceImpl implements EventoService {
 
     }
 
+    @Override
     public Evento update(Evento evento) throws GeneralException {
         Integer cont = 0;
         List<Evento> eventos = listAll();
@@ -146,5 +148,17 @@ public class EventoServiceImpl implements EventoService {
         }
 
         return evento;
+    }
+
+    @Override
+    public Evento remove(Integer id) throws ElementNotExistsException{
+        Evento evento = dictionary.get(id);
+
+        if(evento != null){
+            dictionary.remove(id);
+            return null;
+        }else{
+            throw new ElementNotExistsException("Evento", id);
+        }
     }
 }

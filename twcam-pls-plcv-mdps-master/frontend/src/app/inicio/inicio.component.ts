@@ -19,6 +19,6 @@ export class InicioComponent implements OnInit {
   ngOnInit(): void {
     this.eventoService
       .getEventos()
-      .subscribe((eventos) => (this.eventos = eventos));
+      .subscribe((eventos) => (this.eventos = eventos.slice(0,3)));
   }
 }
