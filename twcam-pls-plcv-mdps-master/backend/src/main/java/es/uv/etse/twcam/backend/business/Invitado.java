@@ -11,19 +11,8 @@ public class Invitado {
     this.dni = dni;
   }
 
-  /**
-   * @param estrellas the estrellas to set
-   */
-  public void setNombre(String nombre) {
-    this.nombre = nombre;
-  }
-
   public String getNombre() {
     return nombre;
-  }
-
-  public void setDni(String dni) {
-    this.dni = dni;
   }
 
   public String getDni() {
