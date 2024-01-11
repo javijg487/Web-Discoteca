@@ -108,7 +108,8 @@ export class PedirCancionComponent implements OnInit {
     this.pedirCancionService.deleteCancion(cancion.id,this.Idevento).subscribe(
       errorMensaje => this.errorMensaje = <any>errorMensaje);
       setTimeout(() => {
-        this.getTodasCanciones();
+        
+        this.filtrarCancion();
         this.getPendientes();
       }, 100);
   }
@@ -116,7 +117,9 @@ export class PedirCancionComponent implements OnInit {
     this.pedirCancionService.deleteCancionReproducida(cancion.id,this.Idevento).subscribe(
       errorMensaje => this.errorMensaje = <any>errorMensaje);
       setTimeout(() => {
+        
         this.getReproducidas();
+        
       }, 100);
   }
 
@@ -132,6 +135,8 @@ export class PedirCancionComponent implements OnInit {
       this.getDuracion();
     } else if (this.ActivarTematica) {
       this.getTematica();
+    }else{
+      this.getTodasCanciones();
     }
     this.cancionSeleccionada = null;
   }
