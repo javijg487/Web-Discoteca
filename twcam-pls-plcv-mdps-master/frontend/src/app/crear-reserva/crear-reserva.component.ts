@@ -50,7 +50,7 @@ export class CrearReservaComponent {
         .subscribe((evento) => {
           this.evento = evento;
           if (!evento.tieneSalasDisponibles) {
-            this.reservaForm.controls.tipoReserva.setValue("individual");
+            this.reservaForm.controls['tipoReserva'].setValue("individual");
           }
         });
     });
@@ -77,7 +77,7 @@ export class CrearReservaComponent {
 
   onSubmit() {
     const isSingleTicket =
-      this.reservaForm.controls.tipoReserva.value === "individual";
+      this.reservaForm.controls['tipoReserva'].value === "individual";
     const requestBody = {
       ...this.reservaForm.value,
       esIndividual: isSingleTicket,

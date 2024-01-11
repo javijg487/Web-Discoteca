@@ -89,6 +89,7 @@ import { CrearEventoComponent } from './crear-evento/crear-evento.component';
   providers: [
     { provide: "baseURL", useValue: baseURL },
     ProcesaHTTPMsjService,
+    HttpClientModule
   ],
   bootstrap: [AppComponent],
 })
