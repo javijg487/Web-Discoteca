@@ -56,9 +56,9 @@ public class ListaCancionesImplTest {
   @Test
   @Order(2)
   void testCreate() {
-    ArrayList<Cancion> canciones = new ArrayList<Cancion>();
-    ArrayList<Cancion> cancionesPendientes = new ArrayList<Cancion>();
-    ArrayList<Cancion> cancionesReproducir = new ArrayList<Cancion>();
+    ArrayList<Cancion> canciones = new ArrayList<>();
+    ArrayList<Cancion> cancionesPendientes = new ArrayList<>();
+    ArrayList<Cancion> cancionesReproducir = new ArrayList<>();
 
     Cancion cancion = new Cancion(1, "La playa del ingles", "Quevedo", "3:58", "reggaeton");
 
@@ -74,9 +74,9 @@ public class ListaCancionesImplTest {
     cancionesReproducir.add(cancion);
 
     ListaCanciones testListaCanciones = new ListaCanciones(1, canciones, cancionesPendientes, cancionesReproducir);
-    ListaCanciones ListaCancion = service.create(testListaCanciones);
+    ListaCanciones listaCancion = service.create(testListaCanciones);
 
-    assertNotNull(ListaCancion);
+    assertNotNull(listaCancion);
 
   }
 

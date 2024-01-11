@@ -137,9 +137,6 @@ public class ListaCancionesImpl implements ListaCancionesService {
             if (listaCanciones.getIdEvento().equals(idEvento)) {
                 for (Cancion cancion : listaCanciones.getCanciones()) {
                     if (cancion.getID().equals(id)) {
-                        if (listaCanciones.getCancionReproducida() == null) {
-                            listaCanciones.setCancionReproducida(new ArrayList<>());
-                        }
                         listaCanciones.getCancionReproducida().add(cancion);
                         return cancion;
                     }

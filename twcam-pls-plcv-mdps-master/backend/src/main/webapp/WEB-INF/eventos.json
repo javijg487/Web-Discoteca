@@ -3,7 +3,7 @@
         "id": 1,
         "nombre": "Evento 1",
         "dj": {
-            "nombre": "DJ 1"
+            "nombre": "dj1"
         },
         "fecha": "2024-06-15",
         "tematica": "Rock",
@@ -13,7 +13,7 @@
         "id": 2,
         "nombre": "Evento 2",
         "dj": {
-            "nombre": "DJ 2"
+            "nombre": "dj2"
         },
         "fecha": "2024-06-15",
         "tematica": "Reggaeton",
@@ -23,7 +23,7 @@
         "id": 3,
         "nombre": "Evento 3",
         "dj": {
-            "nombre": "DJ 3"
+            "nombre": "dj3"
         },
         "fecha": "2024-06-15",
         "tematica": "Pop",

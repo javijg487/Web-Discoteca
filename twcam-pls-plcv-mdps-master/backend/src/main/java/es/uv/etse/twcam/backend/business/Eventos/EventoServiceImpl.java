@@ -16,7 +16,6 @@ import es.uv.etse.twcam.backend.business.Canciones.Cancion;
 import es.uv.etse.twcam.backend.business.Canciones.CancionServiceImpl;
 import es.uv.etse.twcam.backend.business.ListaCanciones.ListaCanciones;
 import es.uv.etse.twcam.backend.business.ListaCanciones.ListaCancionesImpl;
-import es.uv.etse.twcam.backend.business.ListaCanciones.ListaCancionesService;
 
 public class EventoServiceImpl implements EventoService {
 
@@ -81,7 +80,8 @@ public class EventoServiceImpl implements EventoService {
         Integer cont = 0;
         List<Evento> eventos = listAll();
         List<Cancion> canciones = cancionService.listAll();
-        List<Cancion> listaVacia = new ArrayList<>();
+        List<Cancion> listaPendientes = new ArrayList<>();
+        List<Cancion> listaReproducidas = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate fechaEventoCrear = LocalDate.parse(evento.getFecha(), formatter);
         LocalDate fechaEventoActual = null;
@@ -106,7 +106,7 @@ public class EventoServiceImpl implements EventoService {
             dictionary.put(currentIndex, evento);
             
             //Se crea una lista de canciones
-            ListaCanciones listaCanciones = new ListaCanciones(currentIndex, canciones, listaVacia, listaVacia);
+            ListaCanciones listaCanciones = new ListaCanciones(currentIndex, canciones, listaPendientes, listaReproducidas);
             listaService.create(listaCanciones);
             
             currentIndex++;

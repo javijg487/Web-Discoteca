@@ -32,6 +32,17 @@
               >Reservar</a
             >
           </div>
+          <div mat-line *ngIf="userName === elemento.dj.nombre">
+            <a
+              class="reserva-button"
+              mat-raised-button
+              routerLink="/canciones/{{elemento.id}}"
+              routerLinkActive="activo"
+              >Pinchar Canción</a
+            >
+            
+          </div>
+
         </mat-grid-tile-footer>
       </mat-grid-tile>
     </mat-grid-list>

@@ -13,6 +13,7 @@ export class EventosComponent {
   errorMensaje: string = "";
   eventoSeleccionado = new Evento();
   userRole: String = getUserData().rol;
+  userName: String = getUserData().nombre;
 
   constructor(private eventoService: EventoService,
     @Inject('baseURL') public BaseURL: string) { }
