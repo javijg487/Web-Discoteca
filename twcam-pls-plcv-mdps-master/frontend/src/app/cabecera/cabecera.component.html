@@ -35,7 +35,7 @@
 
   <span class="flex-spacer"></span>
   <div *ngIf="login.nombre == null || login.nombre == ''; else elseBlock">
-    <a mat-button routerLink="/login" routerLinkActive="activo">
+    <a mat-button routerLink="/login" routerLinkActive="activo" class="login">
       <fa-icon [icon]="faSignInAlt"></fa-icon> Login</a
     >
   </div>
