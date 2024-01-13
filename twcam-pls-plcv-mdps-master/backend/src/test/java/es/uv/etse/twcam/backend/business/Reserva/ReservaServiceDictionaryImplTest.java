@@ -39,6 +39,11 @@ public class ReservaServiceDictionaryImplTest {
   }
 
   @BeforeAll
+  public static void clearInstance() {
+    ReservaServiceDictionaryImpl.clearInstance();
+  }
+
+  @BeforeAll
   public static void setLogger() {
     logger = LogManager.getLogger(ReservaServiceDictionaryImpl.class.getName());
   }
