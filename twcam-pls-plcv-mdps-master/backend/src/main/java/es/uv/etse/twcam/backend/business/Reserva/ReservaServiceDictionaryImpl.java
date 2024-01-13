@@ -74,13 +74,21 @@ public class ReservaServiceDictionaryImpl implements ReservaService {
 		return reserva;
 	}
 
+	public void delete(Integer id) throws ElementNotExistsException {
+		if (dictionary.containsKey(id)) {
+			dictionary.remove(id);
+		} else {
+			throw new ElementNotExistsException("Reserva", id);
+		}
+	}
+
 	public void denyPending(Reserva reserva) {
 		if (reserva != null && dictionary.containsKey(reserva.getId()) && reserva.getEsIndividual() == false
 				&& reserva.getEstado().equals("Aprobada")) {
 
 			Integer sameEventReservasCounter = 0;
 			for (Map.Entry<Integer, Reserva> entry : dictionary.entrySet()) {
-				if (reserva.getEventoId().equals(entry.getValue().getEventoId()) 
+				if (reserva.getEventoId().equals(entry.getValue().getEventoId())
 						&& (entry.getValue().getEstado().equals("Aprobada")) || entry.getValue().getEstado().equals("En uso")) {
 					sameEventReservasCounter += 1;
 				}

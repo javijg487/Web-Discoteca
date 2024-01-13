@@ -65,7 +65,9 @@ public class ReservasEndpoint extends HttpServlet {
     if (id != null) {
       Reserva reserva = null;
       reserva = service.getById(id);
-      result = g.toJson(reserva);
+      if (reserva != null) {
+        result = g.toJson(reserva);
+      }
     } else if (username == null) {
       List<Reserva> reservas = null;
       reservas = service.listAll();
@@ -75,7 +77,11 @@ public class ReservasEndpoint extends HttpServlet {
       result = g.toJson(reserva);
     }
 
-    response.setStatus(HttpServletResponse.SC_ACCEPTED);
+    if (result != null) {
+      response.setStatus(HttpServletResponse.SC_ACCEPTED);
+    } else {
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+    }
 
     finishConnection(response, result);
   }
@@ -111,7 +117,9 @@ public class ReservasEndpoint extends HttpServlet {
 
       if (reserva == null) {
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        logger.error("El nuevo estado de la reserva no fue provisto");
+        logger.error("El valor de la reserva no fue provisto");
+      } else if (service.getById(reserva.getId()) == null) {
+        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
       } else {
         response.setStatus(HttpServletResponse.SC_ACCEPTED);
         service.update(reserva);
@@ -129,6 +137,37 @@ public class ReservasEndpoint extends HttpServlet {
   }
 
   @Override
+  protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+    try {
+
+      Integer reservaId = getReservaId(request, true);
+
+      if (reservaId == null) {
+        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        addCORSHeaders(response);
+        logger.error("Reserva no actualizada por no se puede extraer desde JSON");
+      } else {
+        service.delete(reservaId);
+
+        logger.info("DELETE at: {} with {} ", request.getContextPath(), reservaId);
+
+        response.setStatus(HttpServletResponse.SC_ACCEPTED);
+        addCORSHeaders(response);
+
+        PrintWriter pw = response.getWriter();
+        pw.println("Reserva borrada exitosamente");
+        pw.flush();
+        pw.close();
+      }
+
+    } catch (Exception e) {
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+      logger.error("Empleado no actualizado", e);
+    }
+  }
+
+  @Override
   protected void doOptions(HttpServletRequest request, HttpServletResponse response) {
 
     addCORSHeaders(response);
@@ -142,7 +181,7 @@ public class ReservasEndpoint extends HttpServlet {
     }
   }
 
-  private Integer getReservaId(HttpServletRequest request, Boolean required) throws APIRESTException {
+  protected static Integer getReservaId(HttpServletRequest request, Boolean required) throws APIRESTException {
     String url = request.getRequestURL().toString();
     int posIni = url.lastIndexOf("/");
     int posEnd = url.lastIndexOf("?");
