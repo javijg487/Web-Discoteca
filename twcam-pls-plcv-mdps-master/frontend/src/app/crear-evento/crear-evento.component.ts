@@ -31,9 +31,36 @@ export class CrearEventoComponent implements OnInit {
   }
 
   erroresForm: any = {
-    nombre: "El nombre es obligatorio",
-    dni: "El DNI es obligatorio",
+    'nombre': '',
+    'fecha': '',
+    'tematica':'',
+    'dj':'',
   };
+
+  mensajesError: any = {
+
+    'nombre': {
+      'required': 'El nombre es obligatorio.',
+
+      'minlength': 'El nombre debe tener una longitud mínima de 2 caracteres.',
+
+      'maxlength': 'El nombre no puede exceder de 25 caracteres.'
+    },
+
+    'fecha': {
+      'required': 'La fecha es obligatoria.',
+    },
+
+    'tematica': {
+      'required': 'La temática es obligatoria.',
+    },
+
+    'dj': {
+      'required': 'El DJ es obligatorio.',
+    },
+
+
+  }
 
   ngOnInit() {
     this.djService.getDjs().subscribe((djs) => (this.vDjs = djs));
@@ -53,21 +80,23 @@ export class CrearEventoComponent implements OnInit {
       fecha: ["", [Validators.required]],
       tematica: ["", [Validators.required]],
     });
+
+    this.eventForm.valueChanges.subscribe(datos => this.onCambioValor(datos));
   }
 
   onSubmitEvento() {
-   console.log(this.eventForm.status)
-    // Aquí procesarías los datos del formulario
-    if (this.eventForm.status == "VALID"){
+    console.log(this.eventForm.status)
+
+    if (this.eventForm.status == "VALID") {
       this.eventoService
-      .enviarEvento({
-        ...this.eventForm.value,
-        dj: { nombre: this.eventForm.value.dj },
-      })
-      .subscribe(() =>
-        this.router.navigate(['/eventos/']));
+        .enviarEvento({
+          ...this.eventForm.value,
+          dj: { nombre: this.eventForm.value.dj },
+        })
+        .subscribe(() =>
+          this.router.navigate(['/eventos/']));
     }
-    
+
 
     this.eventForm.reset({
       nombre: "",
@@ -75,5 +104,21 @@ export class CrearEventoComponent implements OnInit {
       fecha: "",
       tematica: "",
     });
+  }
+
+  onCambioValor(data?: any) {
+    if (!this.eventForm) { return; }
+    const form = this.eventForm;
+    for (const field in this.erroresForm) {
+      // Se borrarán los mensajes de error previos
+      this.erroresForm[field] = '';
+      const control = form.get(field);
+      if (control && control.dirty && !control.valid) {
+        const messages = this.mensajesError[field];
+        for (const key in control.errors) {
+          this.erroresForm[field] += messages[key] + ' ';
+        }
+      }
+    }
   }
 }
