@@ -156,7 +156,7 @@ public class EventosEndpoint extends HttpServlet {
 
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND); // <3>
-            logger.error("Producto no actualizado", e); // <7>
+            logger.error("Evento no actualizado", e); // <7>
         }
     }
 

@@ -1,11 +1,7 @@
 package es.uv.etse.twcam.backend.business.Eventos;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
 import es.uv.etse.twcam.backend.business.Login.Usuario;
-import es.uv.etse.twcam.backend.business.Canciones.Cancion;
-import es.uv.etse.twcam.backend.business.Reserva.Reserva;
+
 
 public class Evento {
     private Integer id;
