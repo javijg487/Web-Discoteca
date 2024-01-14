@@ -19,8 +19,20 @@
 
 .full-width-date{
     width: 100%;
-    height: 65px;
+    height: 50px;
     border-radius: .5em .5em 0em 0em;
     border-color: transparent;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+button{
+  width: 100%;  
+}
+
+.fecha{
+    margin-bottom: 1em;
+}
+
+hr{
+    border: 2px solid #e0ab4c;
 }

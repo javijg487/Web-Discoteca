@@ -1,38 +1,37 @@
 <div class="form-container">
   <form novalidate [formGroup]="eventForm" (ngSubmit)="onSubmitEvento()" required>
     <label>Nombre de evento</label>
-    <br>
+    <hr>
     <mat-form-field class="full-width">
       <input matInput formControlName="nombre" placeholder="Nombre" type="text" required>
       <mat-hint>
         <span [hidden]="!(erroresForm.nombre)">
-          {{erroresForm.autor}}</span>
+          {{erroresForm.nombre}}</span>
       </mat-hint>
     </mat-form-field>
 
-    <p>
+    <div>
       <mat-label>Elige un DJ</mat-label>
-      <br>
+      <hr>
       <mat-form-field class="full-width">
         <mat-select formControlName="dj">
           <mat-option *ngFor="let dj of vDjs" [value]="dj.nombre">
             {{ dj.nombre }}
           </mat-option>
         </mat-select>
-
       </mat-form-field>
-    </p>
+    </div>
 
-    <p >
+    <div class="fecha">
       <mat-label>Fecha</mat-label>
-      <br>
+      <hr>
       <input type="date" formControlName="fecha" class="full-width-date">
-    </p>
+    </div>
 
 
-    <p>
+    <div>
       <mat-label>Elige temática</mat-label>
-      <br>
+      <hr>
       <mat-form-field class="full-width">
         <mat-label>Temática</mat-label>
         <mat-select formControlName="tematica">
@@ -42,7 +41,7 @@
           <mat-option value="Electro">Electro</mat-option>
         </mat-select>
       </mat-form-field>
-    </p>
+    </div>
 
 
 

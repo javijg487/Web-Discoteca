@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from "@angular/core";
-
+import { getUserData } from '../utils/getUserData';
 import { EventoService } from "../services/evento.service";
 import { Evento } from "../compartido/evento";
 
@@ -10,6 +10,7 @@ import { Evento } from "../compartido/evento";
 })
 export class InicioComponent implements OnInit {
   eventos: Evento[] = [];
+  userRole: String = getUserData().rol;
 
   constructor(
     private eventoService: EventoService,
