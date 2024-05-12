@@ -1,0 +1,36 @@
+[
+    {
+      "nombre": "admin1",
+      "password": "admin1",
+      "rol": "admin"
+    },
+    
+    {
+      "nombre": "dj1",
+      "password": "dj1",
+      "rol": "dj"
+    },
+
+    {
+      "nombre": "dj2",
+      "password": "dj2",
+      "rol": "dj"
+    },
+    {
+      "nombre": "dj3",
+      "password": "dj3",
+      "rol": "dj"
+    },
+    { 
+      "nombre": "cliente1",
+      "password": "cliente1",
+      "rol": "cliente"
+    },
+    
+    { 
+      "nombre": "cliente2",
+      "password": "cliente2",
+      "rol": "cliente"
+    }
+  ]
+  

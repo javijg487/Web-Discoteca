@@ -1,0 +1,23 @@
+
+mat-grid-tile img{
+    transition: transform 0.5s ease; 
+    margin-bottom: 3.5em;
+    border-radius: 10%;
+}
+
+mat-grid-tile{
+    text-align: center;
+}
+
+mat-grid-tile img:hover{
+    transform: scale(1.1);
+}
+
+.card-footer {
+    height: auto !important;
+    padding: 10px !important;
+}
+
+.reserva-button {
+    margin-top: 10px;
+}

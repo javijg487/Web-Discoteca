@@ -1,0 +1,136 @@
+<div class="container" fxLayout="column" fxLayoutGap="10px">
+  <div fxFlex>
+    <div>
+      <h3>{{ userRole === "cliente" ? "Mis " : "" }}Reservas</h3>
+      <hr />
+    </div>
+  </div>
+
+  <table
+    mat-table
+    [dataSource]="tableData"
+    multiTemplateDataRows
+    class="mat-elevation-z8"
+  >
+    <ng-container
+      matColumnDef="{{ column }}"
+      *ngFor="let column of columnsToDisplay"
+    >
+      <th mat-header-cell *matHeaderCellDef>{{ tableHeaderLabels[column] }}</th>
+      <td mat-cell *matCellDef="let element">{{ element[column] + "" }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="expandedDetail">
+      <td
+        mat-cell
+        *matCellDef="let element"
+        [attr.colspan]="columnsToDisplay.length"
+      >
+        <div
+          class="reserva-detail"
+          [@detailExpand]="
+            element == expandedElement ? 'expanded' : 'collapsed'
+          "
+        >
+          <div class="example-element-description">
+            <div *ngIf="!element.esIndividual">
+              <h3>Lista de invitados</h3>
+              <div
+                *ngFor="let invitado of element.invitados"
+                class="invitado-row"
+              >
+                <span><strong>Nombre:</strong> {{ invitado.nombre }}</span>
+                <span><strong>DNI:</strong> {{ invitado.dni }}</span>
+              </div>
+            </div>
+            <div
+              *ngIf="userRole === 'admin' && element.estado.includes('Pagada')"
+              class="invitado-row"
+            >
+              <h3>Controles</h3>
+              <button
+                mat-raised-button
+                color="primary"
+                class="aprobar-button"
+                (click)="onApprovalClick(element)"
+              >
+                Aprobar
+              </button>
+              <button
+                mat-raised-button
+                color="warn"
+                (click)="onDenialClick(element)"
+              >
+                Denegar
+              </button>
+            </div>
+            <div
+              *ngIf="
+                userRole === 'cliente' && element.estado.includes('Pendiente')
+              "
+              class="invitado-row"
+            >
+              <h3>Controles</h3>
+              <button
+                mat-raised-button
+                color="primary"
+                class="aprobar-button"
+                (click)="pagar(element.id)"
+              >
+                Pagar
+              </button>
+            </div>
+            <div
+              *ngIf="
+                userRole === 'cliente' && element.estado.includes('Aprobada')
+              "
+              class="invitado-row"
+            >
+              <h3>Controles</h3>
+              <button
+                mat-raised-button
+                color="primary"
+                class="aprobar-button"
+                (click)="onInUseClick(element)"
+              >
+                Marcar llegada
+              </button>
+            </div>
+            <div
+              *ngIf="
+                userRole === 'cliente' && element.estado.includes('En uso')
+              "
+              class="invitado-row"
+            >
+              <h3>Controles</h3>
+              <button
+                mat-raised-button
+                color="primary"
+                class="aprobar-button"
+                (click)="onPedirCancionesClick(element.eventoId)"
+              >
+                Pedir canciones
+              </button>
+            </div>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr
+      mat-row
+      *matRowDef="let element; columns: columnsToDisplay"
+      id="reserva-row-{{ element.id }}"
+      class="example-element-row"
+      [class.example-expanded-row]="expandedElement === element"
+      (click)="expandedElement = expandedElement === element ? null : element"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: ['expandedDetail']"
+      class="expand-row"
+    ></tr>
+  </table>
+  <div *ngIf="tableData.length === 0">No se han encontrado registros</div>
+</div>

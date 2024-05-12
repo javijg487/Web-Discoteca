@@ -1,0 +1,32 @@
+<div class="container" fxLayout="column" fxLayoutGap="10px">
+  <div fxFlex>
+    <h1>Proximos eventos</h1>
+  </div>
+  <div fxFlex *ngIf="eventos.length > 0">
+    <mat-grid-list cols="4" rowHeight="300px">
+      <mat-grid-tile *ngFor="let elemento of eventos">
+        <ng-container *ngIf="!userRole">
+          <div [routerLink]="['/login']" class="selector">
+            <img height="130px" width="120px" src="{{ elemento.imagen }}" alt="{{ elemento.nombre }}" />
+            <mat-grid-tile-footer>
+              <h1 mat-line>{{ elemento.nombre | uppercase }}</h1>
+            </mat-grid-tile-footer>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="userRole">
+          <div [routerLink]="['/crear-reserva', elemento.id]" class="selector">
+            <img height="130px" width="120px" src="{{ elemento.imagen }}" alt="{{ elemento.nombre }}" />
+            <mat-grid-tile-footer>
+              <h1 mat-line>{{ elemento.nombre | uppercase }}</h1>
+            </mat-grid-tile-footer>
+          </div>
+        </ng-container>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  <div [hidden]="eventos.length > 0">
+    <mat-spinner></mat-spinner>
+    <h4>Cargando . . .</h4>
+  </div>
+</div>

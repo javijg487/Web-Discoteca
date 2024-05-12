@@ -1,0 +1,50 @@
+<div
+  class="container footer"
+  fxLayout="row"
+  fxLayout.sm="column"
+  fxLayout.xs="column"
+  fxLayoutAlign.xs="start center"
+  fxLayoutAlign.sm="start center"
+  fxLayoutAlign.gt-sm="center center"
+  fxLayoutWrap
+  fxLayoutGap="10px"
+>
+  <div fxFlex="100%" fxFlex.gt-sm="100%" class="footer-inner">
+    <div fxLayout="row">
+      <div fxFlex="40%">
+        <h4>Dirección</h4>
+        <address style="text-size-adjust: 80%">
+          Calle nueva <br />
+          Burjassot, Valencia<br />
+          España<br />
+          <i><fa-icon [icon]="faEnvelope"></fa-icon></i>:
+          <a href="mailto:servicio@penyita.net">servicio@penyita.net</a>
+        </address>
+      </div>
+
+      <div fxFlex="20%" fxFlex.gt-sm="45%" fxFlexAlign="center center">
+        <div style="text-align: center">
+          <a
+            mat-icon-button
+            class="btn-facebook"
+            href="http://www.facebook.com/profile.php?id="
+            ><i><fa-icon [icon]="faFacebook"></fa-icon></i
+          ></a>
+          <a mat-icon-button class="btn-twitter" href="http://twitter.com/"
+            ><i><fa-icon [icon]="faTwitter"></fa-icon></i
+          ></a>
+          <a mat-icon-button class="btn-youtube" href="http://youtube.com/"
+            ><i><fa-icon [icon]="faYoutube"></fa-icon></i
+          ></a>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="row">
+      <div fxFlex="100%" fxFlexAlign="center center">
+        <div style="text-align: center">
+          <p>© Copyright 2024 Penyita</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+<div class="form-container">
+  <form novalidate [formGroup]="eventForm" (ngSubmit)="onSubmitEvento()" required>
+    <label>Nombre de evento</label>
+    <hr>
+    <mat-form-field class="full-width">
+      <input matInput formControlName="nombre" placeholder="Nombre" type="text" required>
+      <mat-hint>
+        <span [hidden]="!(erroresForm.nombre)">
+          {{erroresForm.nombre}}</span>
+      </mat-hint>
+    </mat-form-field>
+
+  <p>
+    <mat-label>Elige un DJ</mat-label>
+    <br>
+    <mat-form-field class="full-width">
+      <mat-select formControlName="dj">
+        <mat-option *ngFor="let dj of vDjs" [value]="dj.nombre">
+          {{ dj.nombre }}
+        </mat-option>
+      </mat-select>
+
+    </mat-form-field>
+  </p>
+
+    <div class="fecha">
+      <mat-label>Fecha</mat-label>
+      <hr>
+      <input type="date" formControlName="fecha" class="full-width-date">
+    </div>
+
+
+    <div>
+      <mat-label>Elige temática</mat-label>
+      <hr>
+      <mat-form-field class="full-width">
+        <mat-label>Temática</mat-label>
+        <mat-select formControlName="tematica">
+          <mat-option value="Pop">Pop</mat-option>
+          <mat-option value="Rock">Rock</mat-option>
+          <mat-option value="Reggaeton">Reggaeton</mat-option>
+          <mat-option value="Electro">Electro</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+
+
+    <button type="submit" [disabled]="eventForm.invalid" ngSubmit="onSubmitEvento()" mat-button mat-raised-button
+      color="primary">Submit</button>
+  </form>
+</div>

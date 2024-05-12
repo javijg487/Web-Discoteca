@@ -1,0 +1,62 @@
+
+
+
+<div class="login-container">
+  
+
+  <h2  class ="login-form" class="titulo" >Acceder</h2>
+  <form novalidate #formularioLogin="ngForm" (ngSubmit)="onSubmit()" class="login-form">
+    <div class="form-group">
+      <mat-form-field class ="login-input">
+        <input
+         
+          matInput
+          placeholder="Usuario"
+          type="text"
+          [(ngModel)]="nombre"
+          #nombreInput="ngModel"
+          name="nombre"
+          required
+        />
+        <mat-hint *ngIf="!nombreInput.pristine && nombreInput.errors?.required" class ="texto-color">
+          El nombre de usuario es obligatorio
+        </mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field class ="login-input">
+        <input 
+          matInput
+          placeholder="Contraseña"
+          type="password"
+          [(ngModel)]="password"
+          #passwordInput="ngModel"
+          name="password"
+          required
+        />
+        <mat-hint *ngIf="!passwordInput.pristine && passwordInput.errors?.required" class ="texto-color">
+          La contraseña es obligatoria
+        </mat-hint>
+      </mat-form-field>
+    </div>
+    <mat-hint *ngIf="login_incorrecto"  class ="texto-color_red">
+      El usuario o la contraseña no son correctos. Inténtelo de nuevo. 
+    </mat-hint>
+
+    <div class="flex-spacer"></div>
+
+
+    <button
+      type="submit"
+      mat-button
+      
+      class="login-button"
+      [disabled]="formularioLogin.form.invalid"
+      
+    >
+      Iniciar Sesión
+      
+    </button>
+  </form>
+</div>

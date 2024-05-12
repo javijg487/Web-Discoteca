@@ -1,0 +1,52 @@
+<mat-toolbar color="primary">
+  <a mat-button routerLink="/" class="logo-link">
+    <img
+      class="logo"
+      src="/assets/images/Logo.png"
+      height="85px"
+      width="85px"
+      fill="#FFF"
+    />
+  </a>
+  <a
+    class="navegacion"
+    mat-button
+    routerLink="/reservas"
+    routerLinkActive="activo"
+    *ngIf="userRole === 'admin' || userRole === 'cliente'"
+    ><fa-icon [icon]="faAddressCard"></fa-icon> Reservas
+  </a>
+  <a
+    mat-button
+    routerLink="/eventos"
+    routerLinkActive="activo"
+    class="navegacion"
+    ><fa-icon [icon]="faCalendar"></fa-icon> Eventos
+  </a>
+
+  <a
+    class="navegacion"
+    *ngIf="userRole === 'admin'"
+    mat-button
+    routerLink="/crear-evento"
+    routerLinkActive="activo"
+    ><fa-icon [icon]="faPlus"></fa-icon> Crear Evento
+  </a>
+
+  <span class="flex-spacer"></span>
+  <div *ngIf="login.nombre == null || login.nombre == ''; else elseBlock">
+    <a mat-button routerLink="/login" routerLinkActive="activo" class="login">
+      <fa-icon [icon]="faSignInAlt"></fa-icon> Login</a
+    >
+  </div>
+  <ng-template #elseBlock>
+    <div>
+      <span>
+        {{ login.nombre }}
+        <a href=" " (click)="cerrarSesion()" routerLink="/"
+          ><fa-icon [icon]="faSignOutAlt" class="color_out"></fa-icon>
+        </a>
+      </span>
+    </div>
+  </ng-template>
+</mat-toolbar>

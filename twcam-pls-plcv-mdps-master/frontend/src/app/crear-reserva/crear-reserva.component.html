@@ -1,0 +1,120 @@
+<div class="container" fxLayout="column" fxLayoutGap="10px">
+  <div fxFlex>
+    <div>
+      <h3>Nueva reserva</h3>
+      <p><strong>Nombre del evento:</strong> {{ evento.nombre }}</p>
+      <p><strong>Fecha: </strong>{{ evento.fecha }}</p>
+      <p><strong>Temática: </strong>{{ evento.tematica }}</p>
+      <hr />
+    </div>
+  </div>
+  <form [formGroup]="reservaForm" novalidate class="invitados-form">
+    <div *ngIf="!evento.tieneSalasDisponibles">Lo sentimos, en el momento no hay salas VIP disponibles para este evento</div>
+    <div>
+      <mat-radio-group formControlName="tipoReserva">
+        <mat-radio-button *ngIf="evento.tieneSalasDisponibles" class="example-margin" value="salaVip">
+          Sala VIP
+        </mat-radio-button>
+        <mat-radio-button class="example-margin" value="individual">
+          Individual
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div
+      class="invitados"
+      *ngIf="reservaForm.get('tipoReserva')!.value === 'salaVip'"
+    >
+      <div
+        formArrayName="invitados"
+        *ngFor="let t of invitados.controls; let i = index"
+      >
+        <div [formGroupName]="i">
+          <div class="invitado-fields">
+            <div>
+              <p>Invitado {{ i + 1 }}</p>
+            </div>
+            <div>
+              <mat-form-field>
+                <input
+                  matInput
+                  formControlName="nombre"
+                  placeholder="Nombre"
+                  type="text"
+                  required
+                />
+                <mat-hint>
+                  <span
+                    *ngIf="
+                      invitados.controls[i]
+                        .get('nombre')
+                        ?.hasError('required') &&
+                      invitados.controls[i].get('nombre')?.touched
+                    "
+                  >
+                    {{ erroresForm.nombre }}</span
+                  >
+                </mat-hint>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <input
+                  matInput
+                  formControlName="dni"
+                  placeholder="DNI"
+                  type="text"
+                  required
+                />
+                <mat-hint>
+                  <span
+                    *ngIf="
+                      invitados.controls[i].get('dni')?.hasError('required') &&
+                      invitados.controls[i].get('dni')?.touched
+                    "
+                  >
+                    {{ erroresForm.dni }}</span
+                  >
+                </mat-hint>
+              </mat-form-field>
+            </div>
+            <button
+              type="button"
+              color="warn"
+              (click)="removeInvitado(i)"
+              mat-raised-button
+              *ngIf="invitados.length > 1"
+            >
+              Remover
+            </button>
+          </div>
+        </div>
+      </div>
+      <button
+        type="button"
+        color="primary"
+        (click)="addInvitado()"
+        mat-mini-fab
+        *ngIf="invitados.length < 9"
+        class="add-invitado"
+      >
+        +
+      </button>
+    </div>
+
+    <div>
+      <button
+        (click)="onSubmit()"
+        type="button"
+        [disabled]="
+          reservaForm.invalid &&
+          reservaForm.controls.tipoReserva.value === 'salaVip'
+        "
+        color="primary"
+        mat-raised-button
+        class="submit-button"
+      >
+        Reservar
+      </button>
+    </div>
+  </form>
+</div>

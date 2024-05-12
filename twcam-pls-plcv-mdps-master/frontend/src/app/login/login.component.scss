@@ -1,0 +1,53 @@
+/* Estilos generales */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+  
+  .login-container {
+    max-width: 400px;
+    margin: 100px auto;
+    background-color: #06232c;;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilos para el formulario de login */
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    
+    
+  }
+  .titulo {
+    border-bottom: 4px solid #e0ab4c;
+    color: white;
+    
+  }
+
+  .flex-spacer {
+    flex: 1;
+  }
+  
+  .login-button {
+    background-color: #e0ab4c;
+    color: #fff;
+  }
+
+  .texto-color{
+    color: white;
+  }
+  .texto-color_red{
+    color: red;
+    margin-bottom: 20px;
+  }
+  .login-input{
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+  
